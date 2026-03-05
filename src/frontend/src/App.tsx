@@ -78,7 +78,7 @@ export default function App() {
             Dubal DS E-learning Hub
           </span>
           <span>
-            © {new Date().getFullYear()}. Built with{" "}
+            © {new Date().getFullYear()}. Made with{" "}
             <span className="text-accent">♥</span> using{" "}
             <a
               href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
