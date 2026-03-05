@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Fonts ───────────────────────────────────────────────── */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque[opsz,wdth,wght].woff2") format("woff2");
+  font-display: swap;
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans[wght].woff2") format("woff2");
+  font-display: swap;
+  font-weight: 200 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces[opsz,SOFT,WONK,wght].woff2") format("woff2");
+  font-display: swap;
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* ─── EduPrep India: Deep Indigo + Saffron accent ─── */
+    --background: 0.97 0.006 256;
+    --foreground: 0.18 0.03 258;
+
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.03 258;
+
+    --popover: 1 0 0;
+    --popover-foreground: 0.18 0.03 258;
+
+    /* Deep indigo primary */
+    --primary: 0.38 0.14 264;
+    --primary-foreground: 0.98 0 0;
+
+    /* Lighter indigo secondary */
+    --secondary: 0.92 0.04 258;
+    --secondary-foreground: 0.3 0.1 264;
+
+    --muted: 0.94 0.015 258;
+    --muted-foreground: 0.52 0.04 258;
+
+    /* Saffron accent */
+    --accent: 0.75 0.18 52;
+    --accent-foreground: 0.15 0.04 52;
+
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    --border: 0.88 0.02 258;
+    --input: 0.88 0.02 258;
+    --ring: 0.38 0.14 264;
+
+    /* Category colors */
+    --class10: 0.55 0.16 142;
+    --class12: 0.48 0.18 264;
+    --jee: 0.58 0.19 30;
+    --neet: 0.52 0.17 335;
+
+    --chart-1: 0.55 0.16 142;
+    --chart-2: 0.48 0.18 264;
+    --chart-3: 0.58 0.19 30;
+    --chart-4: 0.52 0.17 335;
+    --chart-5: 0.72 0.18 52;
+
+    --sidebar: 0.18 0.07 264;
+    --sidebar-foreground: 0.92 0.02 258;
+    --sidebar-primary: 0.72 0.18 52;
+    --sidebar-primary-foreground: 0.18 0.04 52;
+    --sidebar-accent: 0.28 0.09 264;
+    --sidebar-accent-foreground: 0.92 0.02 258;
+    --sidebar-border: 0.3 0.07 264;
+    --sidebar-ring: 0.55 0.14 264;
+  }
+
+  .dark {
+    --background: 0.14 0.035 264;
+    --foreground: 0.93 0.015 258;
+
+    --card: 0.19 0.045 264;
+    --card-foreground: 0.93 0.015 258;
+
+    --popover: 0.22 0.05 264;
+    --popover-foreground: 0.93 0.015 258;
+
+    --primary: 0.65 0.16 264;
+    --primary-foreground: 0.12 0.03 264;
+
+    --secondary: 0.25 0.06 264;
+    --secondary-foreground: 0.88 0.02 258;
+
+    --muted: 0.24 0.05 264;
+    --muted-foreground: 0.65 0.04 258;
+
+    --accent: 0.78 0.18 52;
+    --accent-foreground: 0.12 0.04 52;
+
+    --destructive: 0.704 0.191 22.216;
+    --destructive-foreground: 0.12 0 0;
+
+    --border: 0.28 0.06 264;
+    --input: 0.28 0.06 264;
+    --ring: 0.65 0.16 264;
+
+    --sidebar: 0.12 0.035 264;
+    --sidebar-foreground: 0.88 0.02 258;
+    --sidebar-primary: 0.75 0.18 52;
+    --sidebar-primary-foreground: 0.12 0.04 52;
+    --sidebar-accent: 0.22 0.06 264;
+    --sidebar-accent-foreground: 0.88 0.02 258;
+    --sidebar-border: 0.25 0.055 264;
+    --sidebar-ring: 0.55 0.14 264;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Bricolage Grotesque", sans-serif;
+  }
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-border rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/40;
+}
+
+/* ─── Category badge colors ─────────────────────────────── */
+.badge-class10 {
+  background-color: oklch(0.9 0.06 142);
+  color: oklch(0.3 0.12 142);
+  border-color: oklch(0.8 0.1 142);
+}
+.badge-class12 {
+  background-color: oklch(0.88 0.07 264);
+  color: oklch(0.3 0.12 264);
+  border-color: oklch(0.78 0.1 264);
+}
+.badge-jee {
+  background-color: oklch(0.92 0.07 30);
+  color: oklch(0.35 0.14 30);
+  border-color: oklch(0.82 0.1 30);
+}
+.badge-neet {
+  background-color: oklch(0.9 0.07 335);
+  color: oklch(0.35 0.13 335);
+  border-color: oklch(0.8 0.1 335);
+}
+
+/* ─── Hero gradient overlay ─────────────────────────────── */
+.hero-overlay {
+  background: linear-gradient(
+    135deg,
+    oklch(0.22 0.1 264 / 0.88) 0%,
+    oklch(0.28 0.08 264 / 0.75) 50%,
+    oklch(0.2 0.06 280 / 0.85) 100%
+  );
+}
+
+/* ─── Glass card ────────────────────────────────────────── */
+.glass-card {
+  background: oklch(1 0 0 / 0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid oklch(1 0 0 / 0.15);
+}
+
+/* ─── Category card hovers ──────────────────────────────── */
+.cat-card-class10:hover { box-shadow: 0 8px 32px oklch(0.55 0.16 142 / 0.25); }
+.cat-card-class12:hover { box-shadow: 0 8px 32px oklch(0.48 0.18 264 / 0.25); }
+.cat-card-jee:hover     { box-shadow: 0 8px 32px oklch(0.58 0.19 30 / 0.25); }
+.cat-card-neet:hover    { box-shadow: 0 8px 32px oklch(0.52 0.17 335 / 0.25); }
+
+/* ─── Accordion custom ──────────────────────────────────── */
+.subject-accordion [data-state="open"] > div {
+  @apply bg-secondary/50;
+}
+
+/* ─── Print / Animations ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
