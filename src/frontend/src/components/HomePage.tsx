@@ -8,7 +8,7 @@ import {
   PlayCircle,
 } from "lucide-react";
 import type { Section } from "../App";
-import { Category } from "../hooks/useQueries";
+import { Category } from "../types";
 
 interface HomePageProps {
   onCategorySelect: (cat: Category, section: Section) => void;

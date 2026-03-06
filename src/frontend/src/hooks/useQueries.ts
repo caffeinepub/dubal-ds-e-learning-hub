@@ -3,15 +3,10 @@ import { GLOSSARY } from "../data/glossary";
 import type { GlossaryTerm } from "../data/glossary";
 import { QA_BANK } from "../data/qaBank";
 import type { QABankEntry } from "../data/qaBank";
+import { Category } from "../types";
 
-// ── Types ────────────────────────────────────────────────────────────────────
-
-export enum Category {
-  Class10 = "Class10",
-  Class12 = "Class12",
-  JEE = "JEE",
-  NEET = "NEET",
-}
+// Re-export Category so existing imports from useQueries still work
+export { Category };
 
 interface Chapter {
   url?: string;
@@ -42,78 +37,77 @@ interface QuestionPaper {
 // Format: https://ncert.nic.in/textbook/pdf/<bookcode><NN>.pdf
 // Where <NN> is the chapter number zero-padded to 2 digits.
 
-// Class 10 Mathematics chapter PDFs (jemh1)
-const C10_M_CH1 = "https://ncert.nic.in/textbook/pdf/jemh101.pdf";
-const C10_M_CH2 = "https://ncert.nic.in/textbook/pdf/jemh102.pdf";
-const C10_M_CH3 = "https://ncert.nic.in/textbook/pdf/jemh103.pdf";
-const C10_M_CH4 = "https://ncert.nic.in/textbook/pdf/jemh104.pdf";
-const C10_M_CH5 = "https://ncert.nic.in/textbook/pdf/jemh105.pdf";
-const C10_M_CH6 = "https://ncert.nic.in/textbook/pdf/jemh106.pdf";
-const C10_M_CH7 = "https://ncert.nic.in/textbook/pdf/jemh107.pdf";
-const C10_M_CH8 = "https://ncert.nic.in/textbook/pdf/jemh108.pdf";
-const C10_M_CH9 = "https://ncert.nic.in/textbook/pdf/jemh109.pdf";
-const C10_M_CH10 = "https://ncert.nic.in/textbook/pdf/jemh110.pdf";
-const C10_M_CH11 = "https://ncert.nic.in/textbook/pdf/jemh111.pdf";
-const C10_M_CH12 = "https://ncert.nic.in/textbook/pdf/jemh112.pdf";
-const C10_M_CH13 = "https://ncert.nic.in/textbook/pdf/jemh113.pdf";
-const C10_M_CH14 = "https://ncert.nic.in/textbook/pdf/jemh114.pdf";
+// Class 10 Mathematics chapter PDFs
+// Using NCERT's official textbook viewer (textbook.php) which always loads.
+// Direct /textbook/pdf/*.pdf links are blocked by NCERT for external sites.
+const C10_M_CH1 = "https://ncert.nic.in/textbook.php?jemh1=1-1";
+const C10_M_CH2 = "https://ncert.nic.in/textbook.php?jemh1=2-2";
+const C10_M_CH3 = "https://ncert.nic.in/textbook.php?jemh1=3-3";
+const C10_M_CH4 = "https://ncert.nic.in/textbook.php?jemh1=4-4";
+const C10_M_CH5 = "https://ncert.nic.in/textbook.php?jemh1=5-5";
+const C10_M_CH6 = "https://ncert.nic.in/textbook.php?jemh1=6-6";
+const C10_M_CH7 = "https://ncert.nic.in/textbook.php?jemh1=7-7";
+const C10_M_CH8 = "https://ncert.nic.in/textbook.php?jemh1=8-8";
+const C10_M_CH9 = "https://ncert.nic.in/textbook.php?jemh1=9-9";
+const C10_M_CH10 = "https://ncert.nic.in/textbook.php?jemh1=10-10";
+const C10_M_CH11 = "https://ncert.nic.in/textbook.php?jemh1=11-11";
+const C10_M_CH12 = "https://ncert.nic.in/textbook.php?jemh1=12-12";
+const C10_M_CH13 = "https://ncert.nic.in/textbook.php?jemh1=13-13";
+const C10_M_CH14 = "https://ncert.nic.in/textbook.php?jemh1=14-14";
 
-// Class 10 Science chapter PDFs (jesc1)
-const C10_SC_CH1 = "https://ncert.nic.in/textbook/pdf/jesc101.pdf";
-const C10_SC_CH2 = "https://ncert.nic.in/textbook/pdf/jesc102.pdf";
-const C10_SC_CH3 = "https://ncert.nic.in/textbook/pdf/jesc103.pdf";
-const C10_SC_CH4 = "https://ncert.nic.in/textbook/pdf/jesc104.pdf";
-const C10_SC_CH5 = "https://ncert.nic.in/textbook/pdf/jesc105.pdf";
-const C10_SC_CH6 = "https://ncert.nic.in/textbook/pdf/jesc106.pdf";
-const C10_SC_CH7 = "https://ncert.nic.in/textbook/pdf/jesc107.pdf";
-const C10_SC_CH8 = "https://ncert.nic.in/textbook/pdf/jesc108.pdf";
-const C10_SC_CH9 = "https://ncert.nic.in/textbook/pdf/jesc109.pdf";
-const C10_SC_CH10 = "https://ncert.nic.in/textbook/pdf/jesc110.pdf";
-const C10_SC_CH11 = "https://ncert.nic.in/textbook/pdf/jesc111.pdf";
-const C10_SC_CH12 = "https://ncert.nic.in/textbook/pdf/jesc112.pdf";
-const C10_SC_CH13 = "https://ncert.nic.in/textbook/pdf/jesc113.pdf";
-const C10_SC_CH14 = "https://ncert.nic.in/textbook/pdf/jesc114.pdf";
-const C10_SC_CH15 = "https://ncert.nic.in/textbook/pdf/jesc115.pdf";
+const C10_SC_CH1 = "https://ncert.nic.in/textbook.php?jesc1=1-1";
+const C10_SC_CH2 = "https://ncert.nic.in/textbook.php?jesc1=2-2";
+const C10_SC_CH3 = "https://ncert.nic.in/textbook.php?jesc1=3-3";
+const C10_SC_CH4 = "https://ncert.nic.in/textbook.php?jesc1=4-4";
+const C10_SC_CH5 = "https://ncert.nic.in/textbook.php?jesc1=5-5";
+const C10_SC_CH6 = "https://ncert.nic.in/textbook.php?jesc1=6-6";
+const C10_SC_CH7 = "https://ncert.nic.in/textbook.php?jesc1=7-7";
+const C10_SC_CH8 = "https://ncert.nic.in/textbook.php?jesc1=8-8";
+const C10_SC_CH9 = "https://ncert.nic.in/textbook.php?jesc1=9-9";
+const C10_SC_CH10 = "https://ncert.nic.in/textbook.php?jesc1=10-10";
+const C10_SC_CH11 = "https://ncert.nic.in/textbook.php?jesc1=11-11";
+const C10_SC_CH12 = "https://ncert.nic.in/textbook.php?jesc1=12-12";
+const C10_SC_CH13 = "https://ncert.nic.in/textbook.php?jesc1=13-13";
+const C10_SC_CH14 = "https://ncert.nic.in/textbook.php?jesc1=14-14";
+const C10_SC_CH15 = "https://ncert.nic.in/textbook.php?jesc1=15-15";
 
-// Class 10 English First Flight chapter PDFs (jefr1)
-const C10_EN_CH1 = "https://ncert.nic.in/textbook/pdf/jefr101.pdf";
-const C10_EN_CH2 = "https://ncert.nic.in/textbook/pdf/jefr102.pdf";
-const C10_EN_CH3 = "https://ncert.nic.in/textbook/pdf/jefr103.pdf";
-const C10_EN_CH4 = "https://ncert.nic.in/textbook/pdf/jefr104.pdf";
-const C10_EN_CH5 = "https://ncert.nic.in/textbook/pdf/jefr105.pdf";
-const C10_EN_CH6 = "https://ncert.nic.in/textbook/pdf/jefr106.pdf";
-const C10_EN_CH7 = "https://ncert.nic.in/textbook/pdf/jefr107.pdf";
-const C10_EN_CH8 = "https://ncert.nic.in/textbook/pdf/jefr108.pdf";
+const C10_EN_CH1 = "https://ncert.nic.in/textbook.php?jefr1=1-1";
+const C10_EN_CH2 = "https://ncert.nic.in/textbook.php?jefr1=2-2";
+const C10_EN_CH3 = "https://ncert.nic.in/textbook.php?jefr1=3-3";
+const C10_EN_CH4 = "https://ncert.nic.in/textbook.php?jefr1=4-4";
+const C10_EN_CH5 = "https://ncert.nic.in/textbook.php?jefr1=5-5";
+const C10_EN_CH6 = "https://ncert.nic.in/textbook.php?jefr1=6-6";
+const C10_EN_CH7 = "https://ncert.nic.in/textbook.php?jefr1=7-7";
+const C10_EN_CH8 = "https://ncert.nic.in/textbook.php?jefr1=8-8";
 
-// Class 10 History (jehis1), Geography (jegeo1), Political Science (jepol1), Economics (jeeco1)
-const C10_HIS_CH1 = "https://ncert.nic.in/textbook/pdf/jehis101.pdf";
-const C10_HIS_CH2 = "https://ncert.nic.in/textbook/pdf/jehis102.pdf";
-const C10_HIS_CH3 = "https://ncert.nic.in/textbook/pdf/jehis103.pdf";
-const C10_HIS_CH4 = "https://ncert.nic.in/textbook/pdf/jehis104.pdf";
-const C10_HIS_CH5 = "https://ncert.nic.in/textbook/pdf/jehis105.pdf";
+const C10_HIS_CH1 = "https://ncert.nic.in/textbook.php?jehis1=1-1";
+const C10_HIS_CH2 = "https://ncert.nic.in/textbook.php?jehis1=2-2";
+const C10_HIS_CH3 = "https://ncert.nic.in/textbook.php?jehis1=3-3";
+const C10_HIS_CH4 = "https://ncert.nic.in/textbook.php?jehis1=4-4";
+const C10_HIS_CH5 = "https://ncert.nic.in/textbook.php?jehis1=5-5";
 
-const C10_GEO_CH1 = "https://ncert.nic.in/textbook/pdf/jegeo101.pdf";
-const C10_GEO_CH2 = "https://ncert.nic.in/textbook/pdf/jegeo102.pdf";
-const C10_GEO_CH3 = "https://ncert.nic.in/textbook/pdf/jegeo103.pdf";
-const C10_GEO_CH4 = "https://ncert.nic.in/textbook/pdf/jegeo104.pdf";
-const C10_GEO_CH5 = "https://ncert.nic.in/textbook/pdf/jegeo105.pdf";
-const C10_GEO_CH6 = "https://ncert.nic.in/textbook/pdf/jegeo106.pdf";
-const C10_GEO_CH7 = "https://ncert.nic.in/textbook/pdf/jegeo107.pdf";
+const C10_GEO_CH1 = "https://ncert.nic.in/textbook.php?jegeo1=1-1";
+const C10_GEO_CH2 = "https://ncert.nic.in/textbook.php?jegeo1=2-2";
+const C10_GEO_CH3 = "https://ncert.nic.in/textbook.php?jegeo1=3-3";
+const C10_GEO_CH4 = "https://ncert.nic.in/textbook.php?jegeo1=4-4";
+const C10_GEO_CH5 = "https://ncert.nic.in/textbook.php?jegeo1=5-5";
+const C10_GEO_CH6 = "https://ncert.nic.in/textbook.php?jegeo1=6-6";
+const C10_GEO_CH7 = "https://ncert.nic.in/textbook.php?jegeo1=7-7";
 
-const C10_POL_CH1 = "https://ncert.nic.in/textbook/pdf/jepol101.pdf";
-const C10_POL_CH2 = "https://ncert.nic.in/textbook/pdf/jepol102.pdf";
-const C10_POL_CH3 = "https://ncert.nic.in/textbook/pdf/jepol103.pdf";
-const C10_POL_CH4 = "https://ncert.nic.in/textbook/pdf/jepol104.pdf";
-const C10_POL_CH5 = "https://ncert.nic.in/textbook/pdf/jepol105.pdf";
-const C10_POL_CH6 = "https://ncert.nic.in/textbook/pdf/jepol106.pdf";
-const C10_POL_CH7 = "https://ncert.nic.in/textbook/pdf/jepol107.pdf";
-const C10_POL_CH8 = "https://ncert.nic.in/textbook/pdf/jepol108.pdf";
+const C10_POL_CH1 = "https://ncert.nic.in/textbook.php?jepol1=1-1";
+const C10_POL_CH2 = "https://ncert.nic.in/textbook.php?jepol1=2-2";
+const C10_POL_CH3 = "https://ncert.nic.in/textbook.php?jepol1=3-3";
+const C10_POL_CH4 = "https://ncert.nic.in/textbook.php?jepol1=4-4";
+const C10_POL_CH5 = "https://ncert.nic.in/textbook.php?jepol1=5-5";
+const C10_POL_CH6 = "https://ncert.nic.in/textbook.php?jepol1=6-6";
+const C10_POL_CH7 = "https://ncert.nic.in/textbook.php?jepol1=7-7";
+const C10_POL_CH8 = "https://ncert.nic.in/textbook.php?jepol1=8-8";
 
-const C10_ECO_CH1 = "https://ncert.nic.in/textbook/pdf/jeeco101.pdf";
-const C10_ECO_CH2 = "https://ncert.nic.in/textbook/pdf/jeeco102.pdf";
-const C10_ECO_CH3 = "https://ncert.nic.in/textbook/pdf/jeeco103.pdf";
-const C10_ECO_CH4 = "https://ncert.nic.in/textbook/pdf/jeeco104.pdf";
-const C10_ECO_CH5 = "https://ncert.nic.in/textbook/pdf/jeeco105.pdf";
+const C10_ECO_CH1 = "https://ncert.nic.in/textbook.php?jeeco1=1-1";
+const C10_ECO_CH2 = "https://ncert.nic.in/textbook.php?jeeco1=2-2";
+const C10_ECO_CH3 = "https://ncert.nic.in/textbook.php?jeeco1=3-3";
+const C10_ECO_CH4 = "https://ncert.nic.in/textbook.php?jeeco1=4-4";
+const C10_ECO_CH5 = "https://ncert.nic.in/textbook.php?jeeco1=5-5";
 
 // Class 12 Physics PDFs (leph1 ch1-5, leph2 ch6-13)
 const C12_PHY_CH1 = "https://ncert.nic.in/textbook/pdf/leph101.pdf";

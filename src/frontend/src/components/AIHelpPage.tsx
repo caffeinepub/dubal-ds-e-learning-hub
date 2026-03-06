@@ -27,7 +27,8 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import { QA_BANK } from "../data/qaBank";
 import { type TopicAnswer, searchTopics } from "../data/topicAnswers";
 import {
   Category,
@@ -180,6 +181,20 @@ function getQAKeywords(question: string): string[] {
   return words;
 }
 
+// Searches QA_BANK directly (no hook / no prefetch) to avoid crashing on mount
+function searchQABankDirect(query: string): QASearchResult | null {
+  const queryWords = getQAKeywords(query);
+  if (queryWords.length === 0) return null;
+  const match = QA_BANK.find((entry) => {
+    const entryWords = getQAKeywords(entry.question);
+    const matchCount = queryWords.filter((qw) =>
+      entryWords.some((ew) => ew.includes(qw) || qw.includes(ew)),
+    ).length;
+    return matchCount >= Math.min(2, queryWords.length);
+  });
+  return match ?? null;
+}
+
 function AskAITab() {
   const [askInput, setAskInput] = useState("");
   const [isThinking, setIsThinking] = useState(false);
@@ -189,12 +204,7 @@ function AskAITab() {
   const [hasSearched, setHasSearched] = useState(false);
   const askInputRef = useRef<HTMLInputElement>(null);
 
-  const { data: allQAResults } = useSearchQABank("a"); // prefetch a broad set
-
-  const handleAsk = () => {
-    const q = askInput.trim();
-    if (!q) return;
-
+  const runSearch = (q: string) => {
     setIsThinking(true);
     setTopicResult(null);
     setQAResult(null);
@@ -211,22 +221,13 @@ function AskAITab() {
         return;
       }
 
-      // 2. Try QA bank search (using the preloaded data or direct filter)
-      const queryWords = getQAKeywords(q);
-      if (queryWords.length > 0 && allQAResults && allQAResults.length > 0) {
-        const match = allQAResults.find((entry) => {
-          const entryWords = getQAKeywords(entry.question);
-          const matchCount = queryWords.filter((qw) =>
-            entryWords.some((ew) => ew.includes(qw) || qw.includes(ew)),
-          ).length;
-          return matchCount >= Math.min(2, queryWords.length);
-        });
-        if (match) {
-          setQAResult(match);
-          setIsThinking(false);
-          setHasSearched(true);
-          return;
-        }
+      // 2. Try QA bank direct search (no hook, no prefetch)
+      const match = searchQABankDirect(q);
+      if (match) {
+        setQAResult(match);
+        setIsThinking(false);
+        setHasSearched(true);
+        return;
       }
 
       // 3. Not found
@@ -236,44 +237,15 @@ function AskAITab() {
     }, 400);
   };
 
+  const handleAsk = () => {
+    const q = askInput.trim();
+    if (!q) return;
+    runSearch(q);
+  };
+
   const handleExampleClick = (example: string) => {
     setAskInput(example);
-    setIsThinking(true);
-    setTopicResult(null);
-    setQAResult(null);
-    setNotFound(false);
-    setHasSearched(false);
-
-    setTimeout(() => {
-      const topic = searchTopics(example);
-      if (topic) {
-        setTopicResult(topic);
-        setIsThinking(false);
-        setHasSearched(true);
-        return;
-      }
-
-      const queryWords = getQAKeywords(example);
-      if (queryWords.length > 0 && allQAResults && allQAResults.length > 0) {
-        const match = allQAResults.find((entry) => {
-          const entryWords = getQAKeywords(entry.question);
-          const matchCount = queryWords.filter((qw) =>
-            entryWords.some((ew) => ew.includes(qw) || qw.includes(ew)),
-          ).length;
-          return matchCount >= Math.min(2, queryWords.length);
-        });
-        if (match) {
-          setQAResult(match);
-          setIsThinking(false);
-          setHasSearched(true);
-          return;
-        }
-      }
-
-      setNotFound(true);
-      setIsThinking(false);
-      setHasSearched(true);
-    }, 400);
+    runSearch(example);
   };
 
   const handleClear = () => {
@@ -522,6 +494,58 @@ function AskAITab() {
   );
 }
 
+// ── Tab Error Boundary ─────────────────────────────────────────────────────────
+class TabErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback?: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: {
+    children: React.ReactNode;
+    fallback?: React.ReactNode;
+  }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
+    console.error("TabErrorBoundary caught:", error, info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        this.props.fallback ?? (
+          <div className="flex flex-col items-center gap-4 py-16 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center">
+              <AlertCircle className="w-8 h-8 text-destructive/60" />
+            </div>
+            <div>
+              <p className="font-display font-semibold text-lg text-foreground">
+                Something went wrong
+              </p>
+              <p className="text-muted-foreground text-sm mt-1 max-w-sm">
+                This section encountered an error. Click below to try again.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => this.setState({ hasError: false })}
+              className="text-sm px-4 py-2 rounded-lg border border-border bg-card text-primary hover:bg-primary/5 transition-colors"
+            >
+              Try again
+            </button>
+          </div>
+        )
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export default function AIHelpPage({
   activeCategory,
   onCategoryChange,
@@ -716,75 +740,329 @@ export default function AIHelpPage({
 
         {/* ── Topic Smart Notes Tab ─────────────────────────────── */}
         <TabsContent value="smartnotes">
-          <div className="mb-6 p-4 bg-card rounded-xl border border-border">
-            <p className="text-sm text-muted-foreground mb-3 font-medium">
-              Ask about any chapter or topic — English, SST, Science, Maths,
-              Physics, Chemistry, Biology...
-            </p>
-            <div className="flex gap-2">
-              <div className="relative flex-1">
-                <Sparkles className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-                <Input
-                  ref={topicInputRef}
-                  value={topicInput}
-                  onChange={(e) => setTopicInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleTopicSearch()}
-                  placeholder="e.g. electricity, letter to god, nationalism in india..."
-                  className="pl-10 h-12 text-base"
-                  data-ocid="aihelp.topic.input"
-                  aria-label="Enter topic for smart notes"
-                />
-              </div>
-              <Button
-                size="lg"
-                onClick={handleTopicSearch}
-                data-ocid="aihelp.topic.button"
-                className="h-12 px-6"
-                disabled={!topicInput.trim()}
-              >
-                <Zap className="w-4 h-4 mr-2" />
-                Get Notes
-              </Button>
-            </div>
-          </div>
-
-          {/* Popular topics */}
-          {!topicResult && !topicNotFound && (
-            <div className="mb-8">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                Popular topics
+          <TabErrorBoundary>
+            <div className="mb-6 p-4 bg-card rounded-xl border border-border">
+              <p className="text-sm text-muted-foreground mb-3 font-medium">
+                Ask about any chapter or topic — English, SST, Science, Maths,
+                Physics, Chemistry, Biology...
               </p>
-              <div className="flex flex-wrap gap-2">
-                {popularTopics.map((t) => (
-                  <button
-                    type="button"
-                    key={t}
-                    onClick={() => handlePopularTopicClick(t)}
-                    data-ocid="aihelp.topic.item"
-                    className="text-sm px-3 py-1.5 rounded-full border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all capitalize"
-                  >
-                    {t}
-                  </button>
-                ))}
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Sparkles className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                  <Input
+                    ref={topicInputRef}
+                    value={topicInput}
+                    onChange={(e) => setTopicInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleTopicSearch()}
+                    placeholder="e.g. electricity, letter to god, nationalism in india..."
+                    className="pl-10 h-12 text-base"
+                    data-ocid="aihelp.topic.input"
+                    aria-label="Enter topic for smart notes"
+                  />
+                </div>
+                <Button
+                  size="lg"
+                  onClick={handleTopicSearch}
+                  data-ocid="aihelp.topic.button"
+                  className="h-12 px-6"
+                  disabled={!topicInput.trim()}
+                >
+                  <Zap className="w-4 h-4 mr-2" />
+                  Get Notes
+                </Button>
               </div>
+            </div>
 
-              {/* Feature cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+            {/* Popular topics */}
+            {!topicResult && !topicNotFound && (
+              <div className="mb-8">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                  Popular topics
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {popularTopics.map((t) => (
+                    <button
+                      type="button"
+                      key={t}
+                      onClick={() => handlePopularTopicClick(t)}
+                      data-ocid="aihelp.topic.item"
+                      className="text-sm px-3 py-1.5 rounded-full border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all capitalize"
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Feature cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+                  {[
+                    {
+                      icon: <BookOpen className="w-5 h-5" />,
+                      title: "All Subjects",
+                      desc: "English, SST, Science, Maths, Physics, Chemistry, Biology and more.",
+                    },
+                    {
+                      icon: <Zap className="w-5 h-5" />,
+                      title: "Instant Smart Notes",
+                      desc: "Get concise chapter summaries with key formulas and board exam tips.",
+                    },
+                    {
+                      icon: <Lightbulb className="w-5 h-5" />,
+                      title: "Class 10 & 12 Focus",
+                      desc: "Specially curated for CBSE Class 10, Class 12, JEE and NEET students.",
+                    },
+                  ].map((t) => (
+                    <div
+                      key={t.title}
+                      className="bg-card rounded-xl border border-border p-5 text-center"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-3">
+                        {t.icon}
+                      </div>
+                      <h3 className="font-display font-semibold text-sm mb-1.5">
+                        {t.title}
+                      </h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {t.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Smart note result */}
+            {topicResult && (
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-sm text-muted-foreground">
+                    Smart notes for:{" "}
+                    <span className="font-semibold text-foreground">
+                      {topicInput}
+                    </span>
+                  </p>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setTopicResult(null);
+                      setTopicNotFound(false);
+                      setTopicInput("");
+                    }}
+                    className="text-muted-foreground"
+                    data-ocid="aihelp.topic.clear_button"
+                  >
+                    Clear
+                  </Button>
+                </div>
+                <TopicSmartNoteResult result={topicResult} />
+              </div>
+            )}
+
+            {/* Not found */}
+            {topicNotFound && (
+              <div
+                data-ocid="aihelp.topic.empty_state"
+                className="flex flex-col items-center gap-4 py-16 text-center"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center">
+                  <BrainCircuit className="w-8 h-8 text-muted-foreground" />
+                </div>
+                <div>
+                  <p className="font-display font-semibold text-lg text-foreground">
+                    Topic Not Found
+                  </p>
+                  <p className="text-muted-foreground text-sm mt-1 max-w-sm">
+                    Try a different keyword. Popular topics include:
+                    electricity, photosynthesis, nationalism, polynomials, the
+                    last lesson...
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setTopicNotFound(false);
+                    setTopicInput("");
+                    topicInputRef.current?.focus();
+                  }}
+                  data-ocid="aihelp.topic.retry_button"
+                >
+                  Try Again
+                </Button>
+              </div>
+            )}
+          </TabErrorBoundary>
+        </TabsContent>
+
+        {/* ── Q&A Bank Tab ──────────────────────────────────────── */}
+        <TabsContent value="qabank">
+          <TabErrorBoundary>
+            {/* Category selector */}
+            <div className="flex flex-wrap items-center gap-4 mb-6 p-4 bg-card rounded-xl border border-border">
+              <span className="text-sm font-semibold text-foreground min-w-[90px]">
+                Select Exam:
+              </span>
+              <CategorySelector
+                activeCategory={activeCategory}
+                onCategoryChange={handleCategoryChange}
+              />
+            </div>
+
+            {/* Search bar */}
+            <div className="relative mb-4">
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                  <Input
+                    ref={inputRef}
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                    placeholder="Ask a doubt... e.g. What is Newton's third law?"
+                    className="pl-10 h-12 text-base"
+                    data-ocid="aihelp.search.input"
+                    aria-label="Search doubts"
+                  />
+                </div>
+                <Button
+                  size="lg"
+                  onClick={handleSearch}
+                  data-ocid="aihelp.search.button"
+                  className="h-12 px-6"
+                  disabled={!searchInput.trim()}
+                >
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Ask
+                </Button>
+              </div>
+            </div>
+
+            {/* Popular questions */}
+            {mode === "idle" && (
+              <div className="mb-6">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                  Popular doubts
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {popularQuestions.map((q) => (
+                    <button
+                      type="button"
+                      key={q}
+                      onClick={() => handlePopularClick(q)}
+                      className="text-sm px-3 py-1.5 rounded-full border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all"
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Subject + Chapter filter */}
+            <div className="flex flex-wrap items-center gap-3 mb-8">
+              <span className="text-sm font-semibold text-foreground">
+                Browse by subject:
+              </span>
+              <Select value={filterSubject} onValueChange={handleSubjectFilter}>
+                <SelectTrigger
+                  className="w-52"
+                  aria-label="Filter by subject"
+                  data-ocid="aihelp.subject.select"
+                >
+                  <SelectValue placeholder="Select subject..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {subjects.map((s) => (
+                    <SelectItem key={s.id.toString()} value={s.name}>
+                      {s.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {filterSubject && chapters.length > 0 && (
+                <>
+                  <span className="text-sm font-semibold text-muted-foreground">
+                    Chapter:
+                  </span>
+                  <Select
+                    value={filterChapter}
+                    onValueChange={handleChapterFilter}
+                  >
+                    <SelectTrigger
+                      className="w-64"
+                      aria-label="Filter by chapter"
+                      data-ocid="aihelp.chapter.select"
+                    >
+                      <SelectValue placeholder="All chapters..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="">All chapters</SelectItem>
+                      {chapters.map((ch) => (
+                        <SelectItem key={ch.name} value={ch.name}>
+                          {ch.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </>
+              )}
+              {(filterSubject || activeSearch) && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setFilterSubject("");
+                    setFilterChapter("");
+                    setActiveSearch("");
+                    setSearchInput("");
+                  }}
+                  className="text-muted-foreground"
+                  data-ocid="aihelp.clear.button"
+                >
+                  Clear filter
+                </Button>
+              )}
+            </div>
+
+            {/* Loading */}
+            {isLoading && (
+              <div data-ocid="aihelp.loading_state">
+                <QASkeletons count={4} />
+              </div>
+            )}
+
+            {/* Error */}
+            {isError && (
+              <div
+                data-ocid="aihelp.error_state"
+                className="flex flex-col items-center gap-4 py-16 text-center"
+              >
+                <AlertCircle className="w-12 h-12 text-destructive/50" />
+                <p className="font-semibold text-foreground">
+                  Failed to load Q&amp;A
+                </p>
+              </div>
+            )}
+
+            {/* Idle state */}
+            {mode === "idle" && !isLoading && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-8">
                 {[
                   {
-                    icon: <BookOpen className="w-5 h-5" />,
-                    title: "All Subjects",
-                    desc: "English, SST, Science, Maths, Physics, Chemistry, Biology and more.",
+                    icon: <Search className="w-5 h-5" />,
+                    title: "Search Anything",
+                    desc: "Type any concept, formula, or topic to get an instant answer.",
                   },
                   {
-                    icon: <Zap className="w-5 h-5" />,
-                    title: "Instant Smart Notes",
-                    desc: "Get concise chapter summaries with key formulas and board exam tips.",
+                    icon: <BookOpen className="w-5 h-5" />,
+                    title: "Subject Browse",
+                    desc: "Filter by subject to see all available Q&As for that topic.",
                   },
                   {
                     icon: <Lightbulb className="w-5 h-5" />,
-                    title: "Class 10 & 12 Focus",
-                    desc: "Specially curated for CBSE Class 10, Class 12, JEE and NEET students.",
+                    title: "Curated Answers",
+                    desc: "All answers are reviewed and aligned with NCERT curriculum.",
                   },
                 ].map((t) => (
                   <div
@@ -803,335 +1081,86 @@ export default function AIHelpPage({
                   </div>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* Smart note result */}
-          {topicResult && (
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <p className="text-sm text-muted-foreground">
-                  Smart notes for:{" "}
-                  <span className="font-semibold text-foreground">
-                    {topicInput}
-                  </span>
-                </p>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setTopicResult(null);
-                    setTopicNotFound(false);
-                    setTopicInput("");
-                  }}
-                  className="text-muted-foreground"
-                  data-ocid="aihelp.topic.clear_button"
-                >
-                  Clear
-                </Button>
-              </div>
-              <TopicSmartNoteResult result={topicResult} />
-            </div>
-          )}
-
-          {/* Not found */}
-          {topicNotFound && (
-            <div
-              data-ocid="aihelp.topic.empty_state"
-              className="flex flex-col items-center gap-4 py-16 text-center"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center">
-                <BrainCircuit className="w-8 h-8 text-muted-foreground" />
-              </div>
-              <div>
-                <p className="font-display font-semibold text-lg text-foreground">
-                  Topic Not Found
-                </p>
-                <p className="text-muted-foreground text-sm mt-1 max-w-sm">
-                  Try a different keyword. Popular topics include: electricity,
-                  photosynthesis, nationalism, polynomials, the last lesson...
-                </p>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setTopicNotFound(false);
-                  setTopicInput("");
-                  topicInputRef.current?.focus();
-                }}
-                data-ocid="aihelp.topic.retry_button"
-              >
-                Try Again
-              </Button>
-            </div>
-          )}
-        </TabsContent>
-
-        {/* ── Q&A Bank Tab ──────────────────────────────────────── */}
-        <TabsContent value="qabank">
-          {/* Category selector */}
-          <div className="flex flex-wrap items-center gap-4 mb-6 p-4 bg-card rounded-xl border border-border">
-            <span className="text-sm font-semibold text-foreground min-w-[90px]">
-              Select Exam:
-            </span>
-            <CategorySelector
-              activeCategory={activeCategory}
-              onCategoryChange={handleCategoryChange}
-            />
-          </div>
-
-          {/* Search bar */}
-          <div className="relative mb-4">
-            <div className="flex gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-                <Input
-                  ref={inputRef}
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                  placeholder="Ask a doubt... e.g. What is Newton's third law?"
-                  className="pl-10 h-12 text-base"
-                  data-ocid="aihelp.search.input"
-                  aria-label="Search doubts"
-                />
-              </div>
-              <Button
-                size="lg"
-                onClick={handleSearch}
-                data-ocid="aihelp.search.button"
-                className="h-12 px-6"
-                disabled={!searchInput.trim()}
-              >
-                <Sparkles className="w-4 h-4 mr-2" />
-                Ask
-              </Button>
-            </div>
-          </div>
-
-          {/* Popular questions */}
-          {mode === "idle" && (
-            <div className="mb-6">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                Popular doubts
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {popularQuestions.map((q) => (
-                  <button
-                    type="button"
-                    key={q}
-                    onClick={() => handlePopularClick(q)}
-                    className="text-sm px-3 py-1.5 rounded-full border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all"
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Subject + Chapter filter */}
-          <div className="flex flex-wrap items-center gap-3 mb-8">
-            <span className="text-sm font-semibold text-foreground">
-              Browse by subject:
-            </span>
-            <Select value={filterSubject} onValueChange={handleSubjectFilter}>
-              <SelectTrigger
-                className="w-52"
-                aria-label="Filter by subject"
-                data-ocid="aihelp.subject.select"
-              >
-                <SelectValue placeholder="Select subject..." />
-              </SelectTrigger>
-              <SelectContent>
-                {subjects.map((s) => (
-                  <SelectItem key={s.id.toString()} value={s.name}>
-                    {s.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {filterSubject && chapters.length > 0 && (
-              <>
-                <span className="text-sm font-semibold text-muted-foreground">
-                  Chapter:
-                </span>
-                <Select
-                  value={filterChapter}
-                  onValueChange={handleChapterFilter}
-                >
-                  <SelectTrigger
-                    className="w-64"
-                    aria-label="Filter by chapter"
-                    data-ocid="aihelp.chapter.select"
-                  >
-                    <SelectValue placeholder="All chapters..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">All chapters</SelectItem>
-                    {chapters.map((ch) => (
-                      <SelectItem key={ch.name} value={ch.name}>
-                        {ch.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </>
             )}
-            {(filterSubject || activeSearch) && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  setFilterSubject("");
-                  setFilterChapter("");
-                  setActiveSearch("");
-                  setSearchInput("");
-                }}
-                className="text-muted-foreground"
-                data-ocid="aihelp.clear.button"
-              >
-                Clear filter
-              </Button>
-            )}
-          </div>
 
-          {/* Loading */}
-          {isLoading && (
-            <div data-ocid="aihelp.loading_state">
-              <QASkeletons count={4} />
-            </div>
-          )}
-
-          {/* Error */}
-          {isError && (
-            <div
-              data-ocid="aihelp.error_state"
-              className="flex flex-col items-center gap-4 py-16 text-center"
-            >
-              <AlertCircle className="w-12 h-12 text-destructive/50" />
-              <p className="font-semibold text-foreground">
-                Failed to load Q&amp;A
-              </p>
-            </div>
-          )}
-
-          {/* Idle state */}
-          {mode === "idle" && !isLoading && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-8">
-              {[
-                {
-                  icon: <Search className="w-5 h-5" />,
-                  title: "Search Anything",
-                  desc: "Type any concept, formula, or topic to get an instant answer.",
-                },
-                {
-                  icon: <BookOpen className="w-5 h-5" />,
-                  title: "Subject Browse",
-                  desc: "Filter by subject to see all available Q&As for that topic.",
-                },
-                {
-                  icon: <Lightbulb className="w-5 h-5" />,
-                  title: "Curated Answers",
-                  desc: "All answers are reviewed and aligned with NCERT curriculum.",
-                },
-              ].map((t) => (
+            {/* No results */}
+            {!isLoading &&
+              !isError &&
+              results &&
+              results.length === 0 &&
+              mode !== "idle" && (
                 <div
-                  key={t.title}
-                  className="bg-card rounded-xl border border-border p-5 text-center"
+                  data-ocid="aihelp.empty_state"
+                  className="flex flex-col items-center gap-4 py-20 text-center"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-3">
-                    {t.icon}
+                  <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center">
+                    <BrainCircuit className="w-8 h-8 text-muted-foreground" />
                   </div>
-                  <h3 className="font-display font-semibold text-sm mb-1.5">
-                    {t.title}
-                  </h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    {t.desc}
-                  </p>
+                  <div>
+                    <p className="font-display font-semibold text-lg text-foreground">
+                      No Results Found
+                    </p>
+                    <p className="text-muted-foreground text-sm mt-1">
+                      Try a different keyword or browse by subject.
+                    </p>
+                  </div>
                 </div>
-              ))}
-            </div>
-          )}
+              )}
 
-          {/* No results */}
-          {!isLoading &&
-            !isError &&
-            results &&
-            results.length === 0 &&
-            mode !== "idle" && (
-              <div
-                data-ocid="aihelp.empty_state"
-                className="flex flex-col items-center gap-4 py-20 text-center"
-              >
-                <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center">
-                  <BrainCircuit className="w-8 h-8 text-muted-foreground" />
-                </div>
-                <div>
-                  <p className="font-display font-semibold text-lg text-foreground">
-                    No Results Found
-                  </p>
-                  <p className="text-muted-foreground text-sm mt-1">
-                    Try a different keyword or browse by subject.
-                  </p>
-                </div>
-              </div>
-            )}
-
-          {/* Results */}
-          {!isLoading && !isError && results && results.length > 0 && (
-            <div>
-              <p className="text-sm text-muted-foreground mb-4">
-                {results.length} answer{results.length !== 1 ? "s" : ""} found
-                {mode === "search" && ` for "${activeSearch}"`}
-                {mode === "subject" && ` in ${filterSubject}`}
-              </p>
-              <Accordion type="multiple" className="space-y-3">
-                {results.map((entry, idx) => (
-                  <AccordionItem
-                    key={`${entry.question}-${idx}`}
-                    value={`qa-${idx}`}
-                    className="rounded-xl border border-border bg-card overflow-hidden"
-                    data-ocid={`aihelp.item.${idx + 1}`}
-                  >
-                    <AccordionTrigger className="px-5 py-4 hover:no-underline hover:bg-secondary/40 transition-colors">
-                      <div className="flex items-start gap-3 text-left flex-1 mr-3">
-                        <div className="w-7 h-7 rounded-lg bg-accent/20 text-accent-foreground flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Lightbulb className="w-3.5 h-3.5 text-accent" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-foreground leading-snug">
-                            {entry.question}
-                          </p>
-                          <div className="flex gap-2 mt-1.5">
-                            <Badge
-                              variant="outline"
-                              className={`text-xs ${categoryBadgeClass[entry.category]}`}
-                            >
-                              {entry.category}
-                            </Badge>
-                            <Badge variant="secondary" className="text-xs">
-                              {entry.subject}
-                            </Badge>
+            {/* Results */}
+            {!isLoading && !isError && results && results.length > 0 && (
+              <div>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {results.length} answer{results.length !== 1 ? "s" : ""} found
+                  {mode === "search" && ` for "${activeSearch}"`}
+                  {mode === "subject" && ` in ${filterSubject}`}
+                </p>
+                <Accordion type="multiple" className="space-y-3">
+                  {results.map((entry, idx) => (
+                    <AccordionItem
+                      key={`${entry.question}-${idx}`}
+                      value={`qa-${idx}`}
+                      className="rounded-xl border border-border bg-card overflow-hidden"
+                      data-ocid={`aihelp.item.${idx + 1}`}
+                    >
+                      <AccordionTrigger className="px-5 py-4 hover:no-underline hover:bg-secondary/40 transition-colors">
+                        <div className="flex items-start gap-3 text-left flex-1 mr-3">
+                          <div className="w-7 h-7 rounded-lg bg-accent/20 text-accent-foreground flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <Lightbulb className="w-3.5 h-3.5 text-accent" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-foreground leading-snug">
+                              {entry.question}
+                            </p>
+                            <div className="flex gap-2 mt-1.5">
+                              <Badge
+                                variant="outline"
+                                className={`text-xs ${categoryBadgeClass[entry.category]}`}
+                              >
+                                {entry.category}
+                              </Badge>
+                              <Badge variant="secondary" className="text-xs">
+                                {entry.subject}
+                              </Badge>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-5 pb-4">
-                      <div className="pt-2 pl-10">
-                        <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
-                          <p className="text-sm text-foreground leading-relaxed">
-                            {entry.answer}
-                          </p>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-5 pb-4">
+                        <div className="pt-2 pl-10">
+                          <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
+                            <p className="text-sm text-foreground leading-relaxed">
+                              {entry.answer}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          )}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            )}
+          </TabErrorBoundary>
         </TabsContent>
       </Tabs>
     </section>

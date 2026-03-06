@@ -1,4 +1,4 @@
-import { Category } from "../hooks/useQueries";
+import { Category } from "../types";
 import { QA_BANK_CLASS10 } from "./qaBankClass10";
 import { QA_BANK_CLASS12 } from "./qaBankClass12";
 

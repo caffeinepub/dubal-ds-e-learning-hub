@@ -1,4 +1,4 @@
-import { Category } from "../hooks/useQueries";
+import { Category } from "../types";
 import type { QABankEntry } from "./qaBank";
 
 export const QA_BANK_CLASS10: QABankEntry[] = [

@@ -19,7 +19,7 @@ import {
   BookMarked,
   BookOpen,
   ChevronRight,
-  Download,
+  ExternalLink,
   PlayCircle,
 } from "lucide-react";
 import { useState } from "react";
@@ -76,7 +76,7 @@ export default function SyllabusPage({
 
   const handleChapterDownload = (url: string, chapterName: string) => {
     window.open(url, "_blank", "noopener,noreferrer");
-    toast.success(`Downloading PDF for "${chapterName}"`);
+    toast.success(`Opening NCERT chapter: "${chapterName}"`);
   };
 
   return (
@@ -97,8 +97,8 @@ export default function SyllabusPage({
         <p className="text-muted-foreground text-base">
           Click <span className="font-semibold text-rose-600">Watch</span> to
           open the video lesson on YouTube. Click{" "}
-          <span className="font-semibold text-primary">PDF</span> to download
-          the official NCERT chapter PDF. Use{" "}
+          <span className="font-semibold text-green-700">Read</span> to open the
+          official NCERT chapter on the NCERT website. Use{" "}
           <span className="font-semibold text-foreground">Notes</span> for Smart
           Notes.
         </p>
@@ -257,10 +257,10 @@ export default function SyllabusPage({
                                     )
                                   }
                                   className="h-8 px-2.5 text-green-700 hover:bg-green-50 text-xs"
-                                  aria-label={`Download PDF for ${chapter.name}`}
+                                  aria-label={`Open NCERT chapter for ${chapter.name}`}
                                 >
-                                  <Download className="w-3.5 h-3.5 mr-1" />
-                                  PDF
+                                  <ExternalLink className="w-3.5 h-3.5 mr-1" />
+                                  Read
                                 </Button>
                               </div>
                             ) : (

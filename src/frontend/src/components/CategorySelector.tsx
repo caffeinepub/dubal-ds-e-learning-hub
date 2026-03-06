@@ -1,4 +1,4 @@
-import { Category } from "../hooks/useQueries";
+import { Category } from "../types";
 
 interface CategorySelectorProps {
   activeCategory: Category;

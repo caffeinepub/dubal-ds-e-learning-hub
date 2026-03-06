@@ -1,15 +1,38 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/sonner";
-import { useCallback, useState } from "react";
-import AIHelpPage from "./components/AIHelpPage";
-import DailyNewsPage from "./components/DailyNewsPage";
-import DictionaryPage from "./components/DictionaryPage";
-import HomePage from "./components/HomePage";
-import LanguageTranslatorPage from "./components/LanguageTranslatorPage";
-import MathCalculatorPage from "./components/MathCalculatorPage";
+import { Suspense, lazy, useCallback, useState } from "react";
 import Navbar from "./components/Navbar";
-import QuestionPapersPage from "./components/QuestionPapersPage";
-import SyllabusPage from "./components/SyllabusPage";
-import { Category } from "./hooks/useQueries";
+import { Category } from "./types";
+
+// Lazy load heavy pages so they only load when visited (fixes blank screen on mobile)
+const HomePage = lazy(() => import("./components/HomePage"));
+const SyllabusPage = lazy(() => import("./components/SyllabusPage"));
+const QuestionPapersPage = lazy(
+  () => import("./components/QuestionPapersPage"),
+);
+const AIHelpPage = lazy(() => import("./components/AIHelpPage"));
+const DictionaryPage = lazy(() => import("./components/DictionaryPage"));
+const MathCalculatorPage = lazy(
+  () => import("./components/MathCalculatorPage"),
+);
+const LanguageTranslatorPage = lazy(
+  () => import("./components/LanguageTranslatorPage"),
+);
+const DailyNewsPage = lazy(() => import("./components/DailyNewsPage"));
+
+function PageLoader() {
+  return (
+    <div className="container mx-auto px-4 py-10 space-y-4">
+      <Skeleton className="h-10 w-1/3" />
+      <Skeleton className="h-6 w-1/2" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+          <Skeleton key={i} className="h-40 w-full rounded-xl" />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export type Section =
   | "home"
@@ -43,33 +66,37 @@ export default function App() {
       />
 
       <main className="flex-1">
-        {activeSection === "home" && (
-          <HomePage
-            onCategorySelect={(cat, section) => navigateToSection(section, cat)}
-          />
-        )}
-        {activeSection === "syllabus" && (
-          <SyllabusPage
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
-          />
-        )}
-        {activeSection === "papers" && (
-          <QuestionPapersPage
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
-          />
-        )}
-        {activeSection === "aihelp" && (
-          <AIHelpPage
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
-          />
-        )}
-        {activeSection === "dictionary" && <DictionaryPage />}
-        {activeSection === "calculator" && <MathCalculatorPage />}
-        {activeSection === "translator" && <LanguageTranslatorPage />}
-        {activeSection === "news" && <DailyNewsPage />}
+        <Suspense fallback={<PageLoader />}>
+          {activeSection === "home" && (
+            <HomePage
+              onCategorySelect={(cat, section) =>
+                navigateToSection(section, cat)
+              }
+            />
+          )}
+          {activeSection === "syllabus" && (
+            <SyllabusPage
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+            />
+          )}
+          {activeSection === "papers" && (
+            <QuestionPapersPage
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+            />
+          )}
+          {activeSection === "aihelp" && (
+            <AIHelpPage
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+            />
+          )}
+          {activeSection === "dictionary" && <DictionaryPage />}
+          {activeSection === "calculator" && <MathCalculatorPage />}
+          {activeSection === "translator" && <LanguageTranslatorPage />}
+          {activeSection === "news" && <DailyNewsPage />}
+        </Suspense>
       </main>
 
       <footer className="border-t border-border bg-card mt-auto">
