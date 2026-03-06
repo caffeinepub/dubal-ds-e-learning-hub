@@ -19,11 +19,14 @@ import {
   BookMarked,
   BookOpen,
   ChevronRight,
-  ExternalLink,
+  Download,
+  FlaskConical,
   PlayCircle,
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { CHAPTER_FORMULAS } from "../data/chapterFormulas";
+import type { ChapterFormulaSheet } from "../data/chapterFormulas";
 import { CHAPTER_SUMMARIES } from "../data/chapterSummaries";
 import { Category, useGetSyllabus } from "../hooks/useQueries";
 import CategorySelector from "./CategorySelector";
@@ -73,10 +76,14 @@ export default function SyllabusPage({
     subject: string;
     chapter: string;
   } | null>(null);
+  const [formulaModal, setFormulaModal] = useState<{
+    chapter: string;
+    sheet: ChapterFormulaSheet;
+  } | null>(null);
 
   const handleChapterDownload = (url: string, chapterName: string) => {
     window.open(url, "_blank", "noopener,noreferrer");
-    toast.success(`Opening NCERT chapter: "${chapterName}"`);
+    toast.success(`Opening PDF: "${chapterName}"`);
   };
 
   return (
@@ -97,8 +104,8 @@ export default function SyllabusPage({
         <p className="text-muted-foreground text-base">
           Click <span className="font-semibold text-rose-600">Watch</span> to
           open the video lesson on YouTube. Click{" "}
-          <span className="font-semibold text-green-700">Read</span> to open the
-          official NCERT chapter on the NCERT website. Use{" "}
+          <span className="font-semibold text-green-700">PDF</span> to download
+          the NCERT chapter PDF directly. Use{" "}
           <span className="font-semibold text-foreground">Notes</span> for Smart
           Notes.
         </p>
@@ -199,6 +206,9 @@ export default function SyllabusPage({
                       const hasSummary = !!CHAPTER_SUMMARIES[summaryKey];
                       const hasVideo = !!chapter.videoUrl;
 
+                      const formulaKey = `${subject.name}::${chapter.name}`;
+                      const formulaSheet = CHAPTER_FORMULAS[formulaKey];
+
                       return (
                         <div
                           key={chapter.name}
@@ -244,6 +254,24 @@ export default function SyllabusPage({
                                 Notes
                               </Button>
                             )}
+                            {formulaSheet && (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                data-ocid={`syllabus.formulas.button.${cIdx + 1}`}
+                                onClick={() =>
+                                  setFormulaModal({
+                                    chapter: chapter.name,
+                                    sheet: formulaSheet,
+                                  })
+                                }
+                                className="h-8 px-2.5 text-xs border-amber-400/50 text-amber-700 hover:bg-amber-50"
+                                aria-label={`Formula Sheet for ${chapter.name}`}
+                              >
+                                <FlaskConical className="w-3.5 h-3.5 mr-1" />
+                                Formulas
+                              </Button>
+                            )}
                             {chapter.url ? (
                               <div className="flex flex-col items-end gap-0.5">
                                 <Button
@@ -257,10 +285,10 @@ export default function SyllabusPage({
                                     )
                                   }
                                   className="h-8 px-2.5 text-green-700 hover:bg-green-50 text-xs"
-                                  aria-label={`Open NCERT chapter for ${chapter.name}`}
+                                  aria-label={`Download PDF for ${chapter.name}`}
                                 >
-                                  <ExternalLink className="w-3.5 h-3.5 mr-1" />
-                                  Read
+                                  <Download className="w-3.5 h-3.5 mr-1" />
+                                  PDF
                                 </Button>
                               </div>
                             ) : (
@@ -315,6 +343,55 @@ export default function SyllabusPage({
             className="mt-4"
             onClick={() => setSummaryModal(null)}
             data-ocid="syllabus.notes.close_button"
+          >
+            Close
+          </Button>
+        </DialogContent>
+      </Dialog>
+
+      {/* Formula Sheet Dialog */}
+      <Dialog
+        open={!!formulaModal}
+        onOpenChange={(open) => !open && setFormulaModal(null)}
+      >
+        <DialogContent
+          className="max-w-2xl max-h-[85vh] overflow-y-auto"
+          data-ocid="syllabus.formulas.dialog"
+        >
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <FlaskConical className="w-5 h-5 text-amber-600" />
+              Formula Sheet — {formulaModal?.chapter}
+            </DialogTitle>
+            <DialogDescription>
+              Key formulas for board exams and competitive entrance tests
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 pt-2">
+            {formulaModal?.sheet.formulas.map((f) => (
+              <div
+                key={f.title}
+                className="rounded-xl border border-amber-200 bg-amber-50/60 p-3"
+              >
+                <div className="text-xs font-semibold text-amber-800 mb-1">
+                  {f.title}
+                </div>
+                <div className="font-mono text-sm font-bold text-foreground bg-white/80 rounded-lg px-3 py-2 border border-amber-100">
+                  {f.formula}
+                </div>
+                {f.description && (
+                  <div className="text-xs text-muted-foreground mt-1.5">
+                    {f.description}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <Button
+            variant="outline"
+            className="mt-4"
+            onClick={() => setFormulaModal(null)}
+            data-ocid="syllabus.formulas.close_button"
           >
             Close
           </Button>

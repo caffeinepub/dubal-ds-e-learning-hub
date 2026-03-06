@@ -11,6 +11,7 @@ const QuestionPapersPage = lazy(
   () => import("./components/QuestionPapersPage"),
 );
 const AIHelpPage = lazy(() => import("./components/AIHelpPage"));
+const SmartNotesPage = lazy(() => import("./components/SmartNotesPage"));
 const DictionaryPage = lazy(() => import("./components/DictionaryPage"));
 const MathCalculatorPage = lazy(
   () => import("./components/MathCalculatorPage"),
@@ -39,6 +40,7 @@ export type Section =
   | "syllabus"
   | "papers"
   | "aihelp"
+  | "smartnotes"
   | "dictionary"
   | "calculator"
   | "translator"
@@ -48,6 +50,9 @@ export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("home");
   const [activeCategory, setActiveCategory] = useState<Category>(
     Category.Class10,
+  );
+  const [smartNotesTopic, setSmartNotesTopic] = useState<string | undefined>(
+    undefined,
   );
 
   const navigateToSection = useCallback(
@@ -72,6 +77,11 @@ export default function App() {
               onCategorySelect={(cat, section) =>
                 navigateToSection(section, cat)
               }
+              onSmartNotesSearch={(topic) => {
+                setSmartNotesTopic(topic);
+                setActiveSection("smartnotes");
+              }}
+              onViewSmartNotes={() => navigateToSection("smartnotes")}
             />
           )}
           {activeSection === "syllabus" && (
@@ -90,6 +100,13 @@ export default function App() {
             <AIHelpPage
               activeCategory={activeCategory}
               onCategoryChange={setActiveCategory}
+            />
+          )}
+          {activeSection === "smartnotes" && (
+            <SmartNotesPage
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+              initialTopic={smartNotesTopic}
             />
           )}
           {activeSection === "dictionary" && <DictionaryPage />}

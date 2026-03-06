@@ -5,19 +5,27 @@ import { useCallback, useState } from "react";
 // ── Safe Math Evaluator ────────────────────────────────────────────────────────
 function safeMathEval(expr: string): string {
   try {
-    // Replace math functions and constants
+    // Replace math functions and constants — ORDER MATTERS (sec before sin, csc before cos, cot before cos)
     let e = expr
       .replace(/π/g, String(Math.PI))
       .replace(/e(?![a-zA-Z])/g, String(Math.E))
+      // sec(x) = 1/cos(x)  — must come before sin/cos/tan replacements
+      .replace(/sec\(([^)]+)\)/g, (_m, a) => `(1/Math.cos((${a})*Math.PI/180))`)
+      // csc(x) = 1/sin(x)
+      .replace(/csc\(([^)]+)\)/g, (_m, a) => `(1/Math.sin((${a})*Math.PI/180))`)
+      // cot(x) = 1/tan(x)
+      .replace(/cot\(([^)]+)\)/g, (_m, a) => `(1/Math.tan((${a})*Math.PI/180))`)
+      // standard trig (now sec/csc/cot already handled)
       .replace(/sin\(/g, "Math.sin(")
       .replace(/cos\(/g, "Math.cos(")
       .replace(/tan\(/g, "Math.tan(")
       .replace(/log\(/g, "Math.log10(")
       .replace(/ln\(/g, "Math.log(")
       .replace(/sqrt\(/g, "Math.sqrt(")
+      .replace(/abs\(/g, "Math.abs(")
       .replace(/\^/g, "**");
 
-    // Convert trig deg→rad (wrap in deg2rad)
+    // Convert remaining trig deg→rad
     e = e
       .replace(
         /Math\.sin\(([^)]+)\)/g,
@@ -32,8 +40,8 @@ function safeMathEval(expr: string): string {
         (_, a) => `Math.tan((${a})*Math.PI/180)`,
       );
 
-    // Only allow safe characters
-    if (/[^0-9+\-*/.()%Math.sincotaglqrebd\s]/.test(e)) {
+    // Only allow safe characters (expanded whitelist for all supported functions)
+    if (/[^0-9+\-*/.()%Math.sincotaglqrebdPI\s]/.test(e)) {
       return "Error";
     }
 
@@ -57,45 +65,49 @@ interface CalcButton {
 }
 
 const BUTTONS: CalcButton[] = [
-  // Row 1 - memory + clear
+  // Row 1 - memory + clear (5 buttons)
   { label: "MC", value: "MC", type: "memory" },
   { label: "MR", value: "MR", type: "memory" },
   { label: "M+", value: "M+", type: "memory" },
   { label: "C", value: "C", type: "action" },
   { label: "⌫", value: "⌫", type: "action" },
-  // Row 2 - sci row 1
+  // Row 2 - basic trig + log (5 buttons)
   { label: "sin", value: "sin(", type: "sci" },
   { label: "cos", value: "cos(", type: "sci" },
   { label: "tan", value: "tan(", type: "sci" },
   { label: "log", value: "log(", type: "sci" },
   { label: "ln", value: "ln(", type: "sci" },
-  // Row 3 - sci row 2
+  // Row 3 - reciprocal trig + constants (5 buttons)
+  { label: "sec", value: "sec(", type: "sci" },
+  { label: "csc", value: "csc(", type: "sci" },
+  { label: "cot", value: "cot(", type: "sci" },
+  { label: "π", value: "π", type: "sci" },
+  { label: "e", value: "e", type: "sci" },
+  // Row 4 - powers + brackets (5 buttons)
   { label: "√", value: "sqrt(", type: "sci" },
   { label: "x²", value: "**2", type: "sci" },
   { label: "xʸ", value: "^", type: "sci" },
-  { label: "π", value: "π", type: "sci" },
-  { label: "e", value: "e", type: "sci" },
-  // Row 4 - parens + mod + div
   { label: "(", value: "(", type: "op" },
   { label: ")", value: ")", type: "op" },
-  { label: "%", value: "%", type: "op" },
-  { label: "÷", value: "/", type: "op" },
-  // Row 5 - 7 8 9 *
+  // Row 5 - 7 8 9 % ÷ (5 buttons)
   { label: "7", value: "7", type: "number" },
   { label: "8", value: "8", type: "number" },
   { label: "9", value: "9", type: "number" },
-  { label: "×", value: "*", type: "op" },
-  // Row 6 - 4 5 6 -
+  { label: "%", value: "%", type: "op" },
+  { label: "÷", value: "/", type: "op" },
+  // Row 6 - 4 5 6 |x| × (5 buttons)
   { label: "4", value: "4", type: "number" },
   { label: "5", value: "5", type: "number" },
   { label: "6", value: "6", type: "number" },
-  { label: "−", value: "-", type: "op" },
-  // Row 7 - 1 2 3 +
+  { label: "|x|", value: "abs(", type: "sci" },
+  { label: "×", value: "*", type: "op" },
+  // Row 7 - 1 2 3 − + (5 buttons)
   { label: "1", value: "1", type: "number" },
   { label: "2", value: "2", type: "number" },
   { label: "3", value: "3", type: "number" },
+  { label: "−", value: "-", type: "op" },
   { label: "+", value: "+", type: "op" },
-  // Row 8 - 0 . =
+  // Row 8 - 0 . = (0 is wide = 2 cols, + . = = 3)
   { label: "0", value: "0", type: "number", wide: true },
   { label: ".", value: ".", type: "number" },
   { label: "=", value: "=", type: "equals" },
@@ -229,7 +241,7 @@ export default function MathCalculatorPage() {
           memory functions.
         </p>
         <div className="flex gap-2 mt-4">
-          {["sin cos tan", "log ln", "√ x² xʸ", "π e"].map((tag) => (
+          {["sin cos tan", "sec csc cot", "log ln √", "π e x²"].map((tag) => (
             <span
               key={tag}
               className="text-xs px-2.5 py-1 rounded-full bg-white/10 text-white/80 font-mono border border-white/15"
@@ -272,7 +284,7 @@ export default function MathCalculatorPage() {
         </div>
 
         {/* Buttons */}
-        <div className="p-4 grid grid-cols-5 gap-2.5 bg-[oklch(0.15_0.04_264)]">
+        <div className="p-4 grid grid-cols-5 gap-2 bg-[oklch(0.15_0.04_264)]">
           {BUTTONS.map((btn) => (
             <button
               type="button"
@@ -296,17 +308,17 @@ export default function MathCalculatorPage() {
         {/* Tips */}
         <div className="px-4 pb-4 bg-[oklch(0.15_0.04_264)]">
           <p className="text-xs text-[oklch(0.48_0.05_258)] text-center">
-            Tip: sin/cos/tan use degrees. Type expressions like{" "}
+            All trig in degrees: sin/cos/tan/sec/csc/cot. Try{" "}
             <code className="bg-[oklch(0.22_0.06_264)] px-1.5 py-0.5 rounded text-[oklch(0.78_0.12_264)]">
-              sin(30)
+              sec(60)
             </code>
             ,{" "}
             <code className="bg-[oklch(0.22_0.06_264)] px-1.5 py-0.5 rounded text-[oklch(0.78_0.12_264)]">
-              2^10
+              cot(45)
             </code>
             ,{" "}
             <code className="bg-[oklch(0.22_0.06_264)] px-1.5 py-0.5 rounded text-[oklch(0.78_0.12_264)]">
-              sqrt(144)
+              log(1000)
             </code>
           </p>
         </div>
@@ -333,11 +345,14 @@ export default function MathCalculatorPage() {
             ["sin(30)", "= 0.5"],
             ["cos(60)", "= 0.5"],
             ["tan(45)", "= 1"],
-            ["log(100)", "= 2"],
+            ["sec(60)", "= 2"],
+            ["csc(30)", "= 2"],
+            ["cot(45)", "= 1"],
+            ["log(1000)", "= 3"],
             ["sqrt(144)", "= 12"],
             ["2^8", "= 256"],
             ["ln(e)", "= 1"],
-            ["π × 5²", "≈ 78.54"],
+            ["π**2", "≈ 9.87"],
             ["(3+4)×2", "= 14"],
           ].map(([ex, res]) => (
             <div key={ex} className="flex gap-1 font-mono">

@@ -33,83 +33,107 @@ interface QuestionPaper {
 }
 
 // ── PDF URL helpers ──────────────────────────────────────────────────────────
-// Direct NCERT chapter PDF links.
-// Format: https://ncert.nic.in/textbook/pdf/<bookcode><NN>.pdf
-// Where <NN> is the chapter number zero-padded to 2 digits.
+// NCERT eBook viewer URLs — these open the chapter directly in NCERT's viewer.
+// Format: https://ncert.nic.in/textbook.php?<bookcode>=<ch>-<ch>
+// This is more reliable than direct PDF links which NCERT blocks from external sites.
 
-// Class 10 Mathematics chapter PDFs
-// Using NCERT's official textbook viewer (textbook.php) which always loads.
-// Direct /textbook/pdf/*.pdf links are blocked by NCERT for external sites.
-const C10_M_CH1 = "https://ncert.nic.in/textbook.php?jemh1=1-1";
-const C10_M_CH2 = "https://ncert.nic.in/textbook.php?jemh1=2-2";
-const C10_M_CH3 = "https://ncert.nic.in/textbook.php?jemh1=3-3";
-const C10_M_CH4 = "https://ncert.nic.in/textbook.php?jemh1=4-4";
-const C10_M_CH5 = "https://ncert.nic.in/textbook.php?jemh1=5-5";
-const C10_M_CH6 = "https://ncert.nic.in/textbook.php?jemh1=6-6";
-const C10_M_CH7 = "https://ncert.nic.in/textbook.php?jemh1=7-7";
-const C10_M_CH8 = "https://ncert.nic.in/textbook.php?jemh1=8-8";
-const C10_M_CH9 = "https://ncert.nic.in/textbook.php?jemh1=9-9";
-const C10_M_CH10 = "https://ncert.nic.in/textbook.php?jemh1=10-10";
-const C10_M_CH11 = "https://ncert.nic.in/textbook.php?jemh1=11-11";
-const C10_M_CH12 = "https://ncert.nic.in/textbook.php?jemh1=12-12";
-const C10_M_CH13 = "https://ncert.nic.in/textbook.php?jemh1=13-13";
-const C10_M_CH14 = "https://ncert.nic.in/textbook.php?jemh1=14-14";
+// Class 10 Mathematics — chapter-specific NCERT PDF links (jemh = Math Class X)
+const C10_M_CH1 = "https://ncert.nic.in/textbook/pdf/jemh101.pdf";
+const C10_M_CH2 = "https://ncert.nic.in/textbook/pdf/jemh102.pdf";
+const C10_M_CH3 = "https://ncert.nic.in/textbook/pdf/jemh103.pdf";
+const C10_M_CH4 = "https://ncert.nic.in/textbook/pdf/jemh104.pdf";
+const C10_M_CH5 = "https://ncert.nic.in/textbook/pdf/jemh105.pdf";
+const C10_M_CH6 = "https://ncert.nic.in/textbook/pdf/jemh106.pdf";
+const C10_M_CH7 = "https://ncert.nic.in/textbook/pdf/jemh107.pdf";
+const C10_M_CH8 = "https://ncert.nic.in/textbook/pdf/jemh108.pdf";
+const C10_M_CH9 = "https://ncert.nic.in/textbook/pdf/jemh109.pdf";
+const C10_M_CH10 = "https://ncert.nic.in/textbook/pdf/jemh110.pdf";
+const C10_M_CH11 = "https://ncert.nic.in/textbook/pdf/jemh111.pdf";
+const C10_M_CH12 = "https://ncert.nic.in/textbook/pdf/jemh112.pdf";
+const C10_M_CH13 = "https://ncert.nic.in/textbook/pdf/jemh113.pdf";
+const C10_M_CH14 = "https://ncert.nic.in/textbook/pdf/jemh114.pdf";
 
-const C10_SC_CH1 = "https://ncert.nic.in/textbook.php?jesc1=1-1";
-const C10_SC_CH2 = "https://ncert.nic.in/textbook.php?jesc1=2-2";
-const C10_SC_CH3 = "https://ncert.nic.in/textbook.php?jesc1=3-3";
-const C10_SC_CH4 = "https://ncert.nic.in/textbook.php?jesc1=4-4";
-const C10_SC_CH5 = "https://ncert.nic.in/textbook.php?jesc1=5-5";
-const C10_SC_CH6 = "https://ncert.nic.in/textbook.php?jesc1=6-6";
-const C10_SC_CH7 = "https://ncert.nic.in/textbook.php?jesc1=7-7";
-const C10_SC_CH8 = "https://ncert.nic.in/textbook.php?jesc1=8-8";
-const C10_SC_CH9 = "https://ncert.nic.in/textbook.php?jesc1=9-9";
-const C10_SC_CH10 = "https://ncert.nic.in/textbook.php?jesc1=10-10";
-const C10_SC_CH11 = "https://ncert.nic.in/textbook.php?jesc1=11-11";
-const C10_SC_CH12 = "https://ncert.nic.in/textbook.php?jesc1=12-12";
-const C10_SC_CH13 = "https://ncert.nic.in/textbook.php?jesc1=13-13";
-const C10_SC_CH14 = "https://ncert.nic.in/textbook.php?jesc1=14-14";
-const C10_SC_CH15 = "https://ncert.nic.in/textbook.php?jesc1=15-15";
+// Class 10 Science — chapter-specific (jesc = Science Class X)
+const C10_SC_CH1 = "https://ncert.nic.in/textbook/pdf/jesc101.pdf";
+const C10_SC_CH2 = "https://ncert.nic.in/textbook/pdf/jesc102.pdf";
+const C10_SC_CH3 = "https://ncert.nic.in/textbook/pdf/jesc103.pdf";
+const C10_SC_CH4 = "https://ncert.nic.in/textbook/pdf/jesc104.pdf";
+const C10_SC_CH5 = "https://ncert.nic.in/textbook/pdf/jesc105.pdf";
+const C10_SC_CH6 = "https://ncert.nic.in/textbook/pdf/jesc106.pdf";
+const C10_SC_CH7 = "https://ncert.nic.in/textbook/pdf/jesc107.pdf";
+const C10_SC_CH8 = "https://ncert.nic.in/textbook/pdf/jesc108.pdf";
+const C10_SC_CH9 = "https://ncert.nic.in/textbook/pdf/jesc109.pdf";
+const C10_SC_CH10 = "https://ncert.nic.in/textbook/pdf/jesc110.pdf";
+const C10_SC_CH11 = "https://ncert.nic.in/textbook/pdf/jesc111.pdf";
+const C10_SC_CH12 = "https://ncert.nic.in/textbook/pdf/jesc112.pdf";
+const C10_SC_CH13 = "https://ncert.nic.in/textbook/pdf/jesc113.pdf";
+const C10_SC_CH14 = "https://ncert.nic.in/textbook/pdf/jesc114.pdf";
+const C10_SC_CH15 = "https://ncert.nic.in/textbook/pdf/jesc115.pdf";
 
-const C10_EN_CH1 = "https://ncert.nic.in/textbook.php?jefr1=1-1";
-const C10_EN_CH2 = "https://ncert.nic.in/textbook.php?jefr1=2-2";
-const C10_EN_CH3 = "https://ncert.nic.in/textbook.php?jefr1=3-3";
-const C10_EN_CH4 = "https://ncert.nic.in/textbook.php?jefr1=4-4";
-const C10_EN_CH5 = "https://ncert.nic.in/textbook.php?jefr1=5-5";
-const C10_EN_CH6 = "https://ncert.nic.in/textbook.php?jefr1=6-6";
-const C10_EN_CH7 = "https://ncert.nic.in/textbook.php?jefr1=7-7";
-const C10_EN_CH8 = "https://ncert.nic.in/textbook.php?jefr1=8-8";
+// Class 10 English First Flight — chapter-specific (jeff = First Flight Class X)
+// Correct NCERT code: jeff (not jefr)
+const C10_EN_CH1 = "https://ncert.nic.in/textbook/pdf/jeff101.pdf";
+const C10_EN_CH2 = "https://ncert.nic.in/textbook/pdf/jeff102.pdf";
+const C10_EN_CH3 = "https://ncert.nic.in/textbook/pdf/jeff103.pdf";
+const C10_EN_CH4 = "https://ncert.nic.in/textbook/pdf/jeff104.pdf";
+const C10_EN_CH5 = "https://ncert.nic.in/textbook/pdf/jeff105.pdf";
+const C10_EN_CH6 = "https://ncert.nic.in/textbook/pdf/jeff106.pdf";
+const C10_EN_CH7 = "https://ncert.nic.in/textbook/pdf/jeff107.pdf";
+const C10_EN_CH8 = "https://ncert.nic.in/textbook/pdf/jeff108.pdf";
+const C10_EN_CH9 = "https://ncert.nic.in/textbook/pdf/jeff109.pdf";
+const C10_EN_CH10 = "https://ncert.nic.in/textbook/pdf/jeff110.pdf";
 
-const C10_HIS_CH1 = "https://ncert.nic.in/textbook.php?jehis1=1-1";
-const C10_HIS_CH2 = "https://ncert.nic.in/textbook.php?jehis1=2-2";
-const C10_HIS_CH3 = "https://ncert.nic.in/textbook.php?jehis1=3-3";
-const C10_HIS_CH4 = "https://ncert.nic.in/textbook.php?jehis1=4-4";
-const C10_HIS_CH5 = "https://ncert.nic.in/textbook.php?jehis1=5-5";
+// Class 10 Footprints Without Feet — chapter-specific (jefp = Footprints Without Feet Class X)
+// Correct NCERT code: jefp
+const C10_FP_CH1 = "https://ncert.nic.in/textbook/pdf/jefp101.pdf";
+const C10_FP_CH2 = "https://ncert.nic.in/textbook/pdf/jefp102.pdf";
+const C10_FP_CH3 = "https://ncert.nic.in/textbook/pdf/jefp103.pdf";
+const C10_FP_CH4 = "https://ncert.nic.in/textbook/pdf/jefp104.pdf";
+const C10_FP_CH5 = "https://ncert.nic.in/textbook/pdf/jefp105.pdf";
+const C10_FP_CH6 = "https://ncert.nic.in/textbook/pdf/jefp106.pdf";
+const C10_FP_CH7 = "https://ncert.nic.in/textbook/pdf/jefp107.pdf";
+const C10_FP_CH8 = "https://ncert.nic.in/textbook/pdf/jefp108.pdf";
+const C10_FP_CH9 = "https://ncert.nic.in/textbook/pdf/jefp109.pdf";
+const C10_FP_CH10 = "https://ncert.nic.in/textbook/pdf/jefp110.pdf";
 
-const C10_GEO_CH1 = "https://ncert.nic.in/textbook.php?jegeo1=1-1";
-const C10_GEO_CH2 = "https://ncert.nic.in/textbook.php?jegeo1=2-2";
-const C10_GEO_CH3 = "https://ncert.nic.in/textbook.php?jegeo1=3-3";
-const C10_GEO_CH4 = "https://ncert.nic.in/textbook.php?jegeo1=4-4";
-const C10_GEO_CH5 = "https://ncert.nic.in/textbook.php?jegeo1=5-5";
-const C10_GEO_CH6 = "https://ncert.nic.in/textbook.php?jegeo1=6-6";
-const C10_GEO_CH7 = "https://ncert.nic.in/textbook.php?jegeo1=7-7";
+// Class 10 History — chapter-specific (jess3 = India and the Contemporary World II)
+// Correct NCERT code: jess3 (not jehis)
+const C10_HIS_CH1 = "https://ncert.nic.in/textbook/pdf/jess301.pdf";
+const C10_HIS_CH2 = "https://ncert.nic.in/textbook/pdf/jess302.pdf";
+const C10_HIS_CH3 = "https://ncert.nic.in/textbook/pdf/jess303.pdf";
+const C10_HIS_CH4 = "https://ncert.nic.in/textbook/pdf/jess304.pdf";
+const C10_HIS_CH5 = "https://ncert.nic.in/textbook/pdf/jess305.pdf";
 
-const C10_POL_CH1 = "https://ncert.nic.in/textbook.php?jepol1=1-1";
-const C10_POL_CH2 = "https://ncert.nic.in/textbook.php?jepol1=2-2";
-const C10_POL_CH3 = "https://ncert.nic.in/textbook.php?jepol1=3-3";
-const C10_POL_CH4 = "https://ncert.nic.in/textbook.php?jepol1=4-4";
-const C10_POL_CH5 = "https://ncert.nic.in/textbook.php?jepol1=5-5";
-const C10_POL_CH6 = "https://ncert.nic.in/textbook.php?jepol1=6-6";
-const C10_POL_CH7 = "https://ncert.nic.in/textbook.php?jepol1=7-7";
-const C10_POL_CH8 = "https://ncert.nic.in/textbook.php?jepol1=8-8";
+// Class 10 Geography — chapter-specific (jess1 = Contemporary India II)
+// Correct NCERT code: jess1 (not jegeo)
+const C10_GEO_CH1 = "https://ncert.nic.in/textbook/pdf/jess101.pdf";
+const C10_GEO_CH2 = "https://ncert.nic.in/textbook/pdf/jess102.pdf";
+const C10_GEO_CH3 = "https://ncert.nic.in/textbook/pdf/jess103.pdf";
+const C10_GEO_CH4 = "https://ncert.nic.in/textbook/pdf/jess104.pdf";
+const C10_GEO_CH5 = "https://ncert.nic.in/textbook/pdf/jess105.pdf";
+const C10_GEO_CH6 = "https://ncert.nic.in/textbook/pdf/jess106.pdf";
+const C10_GEO_CH7 = "https://ncert.nic.in/textbook/pdf/jess107.pdf";
 
-const C10_ECO_CH1 = "https://ncert.nic.in/textbook.php?jeeco1=1-1";
-const C10_ECO_CH2 = "https://ncert.nic.in/textbook.php?jeeco1=2-2";
-const C10_ECO_CH3 = "https://ncert.nic.in/textbook.php?jeeco1=3-3";
-const C10_ECO_CH4 = "https://ncert.nic.in/textbook.php?jeeco1=4-4";
-const C10_ECO_CH5 = "https://ncert.nic.in/textbook.php?jeeco1=5-5";
+// Class 10 Political Science / Civics — chapter-specific (jess4 = Democratic Politics II)
+// Correct NCERT code: jess4 (not jepol)
+const C10_POL_CH1 = "https://ncert.nic.in/textbook/pdf/jess401.pdf";
+const C10_POL_CH2 = "https://ncert.nic.in/textbook/pdf/jess402.pdf";
+const C10_POL_CH3 = "https://ncert.nic.in/textbook/pdf/jess403.pdf";
+const C10_POL_CH4 = "https://ncert.nic.in/textbook/pdf/jess404.pdf";
+const C10_POL_CH5 = "https://ncert.nic.in/textbook/pdf/jess405.pdf";
+const C10_POL_CH6 = "https://ncert.nic.in/textbook/pdf/jess406.pdf";
+const C10_POL_CH7 = "https://ncert.nic.in/textbook/pdf/jess407.pdf";
+const C10_POL_CH8 = "https://ncert.nic.in/textbook/pdf/jess408.pdf";
 
-// Class 12 Physics PDFs (leph1 ch1-5, leph2 ch6-13)
+// Class 10 Economics — chapter-specific (jess2 = Understanding Economic Development)
+// Correct NCERT code: jess2 (not jeeco)
+const C10_ECO_CH1 = "https://ncert.nic.in/textbook/pdf/jess201.pdf";
+const C10_ECO_CH2 = "https://ncert.nic.in/textbook/pdf/jess202.pdf";
+const C10_ECO_CH3 = "https://ncert.nic.in/textbook/pdf/jess203.pdf";
+const C10_ECO_CH4 = "https://ncert.nic.in/textbook/pdf/jess204.pdf";
+const C10_ECO_CH5 = "https://ncert.nic.in/textbook/pdf/jess205.pdf";
+
+// Class 12 Physics — chapter-specific (leph = Physics Part 1 & 2)
 const C12_PHY_CH1 = "https://ncert.nic.in/textbook/pdf/leph101.pdf";
 const C12_PHY_CH2 = "https://ncert.nic.in/textbook/pdf/leph102.pdf";
 const C12_PHY_CH3 = "https://ncert.nic.in/textbook/pdf/leph103.pdf";
@@ -124,7 +148,7 @@ const C12_PHY_CH11 = "https://ncert.nic.in/textbook/pdf/leph211.pdf";
 const C12_PHY_CH12 = "https://ncert.nic.in/textbook/pdf/leph212.pdf";
 const C12_PHY_CH13 = "https://ncert.nic.in/textbook/pdf/leph213.pdf";
 
-// Class 12 Chemistry PDFs (lech1 ch1-5, lech2 ch6-12)
+// Class 12 Chemistry — chapter-specific (lech = Chemistry Part 1 & 2)
 const C12_CHE_CH1 = "https://ncert.nic.in/textbook/pdf/lech101.pdf";
 const C12_CHE_CH2 = "https://ncert.nic.in/textbook/pdf/lech102.pdf";
 const C12_CHE_CH3 = "https://ncert.nic.in/textbook/pdf/lech103.pdf";
@@ -138,13 +162,13 @@ const C12_CHE_CH10 = "https://ncert.nic.in/textbook/pdf/lech210.pdf";
 const C12_CHE_CH11 = "https://ncert.nic.in/textbook/pdf/lech211.pdf";
 const C12_CHE_CH12 = "https://ncert.nic.in/textbook/pdf/lech212.pdf";
 
-// Class 12 Mathematics PDFs (lemh1 ch1-5, lemh2 ch6-12)
+// Class 12 Mathematics — chapter-specific (lemh = Mathematics Part 1 & 2)
 const C12_MA_CH1 = "https://ncert.nic.in/textbook/pdf/lemh101.pdf";
 const C12_MA_CH2 = "https://ncert.nic.in/textbook/pdf/lemh102.pdf";
 const C12_MA_CH3 = "https://ncert.nic.in/textbook/pdf/lemh103.pdf";
 const C12_MA_CH4 = "https://ncert.nic.in/textbook/pdf/lemh104.pdf";
 const C12_MA_CH5 = "https://ncert.nic.in/textbook/pdf/lemh105.pdf";
-const C12_MA_CH6 = "https://ncert.nic.in/textbook/pdf/lemh206.pdf";
+const C12_MA_CH6 = "https://ncert.nic.in/textbook/pdf/lemh106.pdf";
 const C12_MA_CH7 = "https://ncert.nic.in/textbook/pdf/lemh207.pdf";
 const C12_MA_CH8 = "https://ncert.nic.in/textbook/pdf/lemh208.pdf";
 const C12_MA_CH9 = "https://ncert.nic.in/textbook/pdf/lemh209.pdf";
@@ -152,7 +176,7 @@ const C12_MA_CH10 = "https://ncert.nic.in/textbook/pdf/lemh210.pdf";
 const C12_MA_CH11 = "https://ncert.nic.in/textbook/pdf/lemh211.pdf";
 const C12_MA_CH12 = "https://ncert.nic.in/textbook/pdf/lemh212.pdf";
 
-// Class 12 Biology PDFs (lebo1 ch1-7, lebo2 ch8-14)
+// Class 12 Biology — chapter-specific (lebo = Biology Part 1 & 2)
 const C12_BI_CH1 = "https://ncert.nic.in/textbook/pdf/lebo101.pdf";
 const C12_BI_CH2 = "https://ncert.nic.in/textbook/pdf/lebo102.pdf";
 const C12_BI_CH3 = "https://ncert.nic.in/textbook/pdf/lebo103.pdf";
@@ -168,7 +192,7 @@ const C12_BI_CH12 = "https://ncert.nic.in/textbook/pdf/lebo212.pdf";
 const C12_BI_CH13 = "https://ncert.nic.in/textbook/pdf/lebo213.pdf";
 const C12_BI_CH14 = "https://ncert.nic.in/textbook/pdf/lebo214.pdf";
 
-// Class 12 English Flamingo PDFs (lefl1)
+// Class 12 English Flamingo — chapter-specific (lefl = Flamingo)
 const C12_EN_CH1 = "https://ncert.nic.in/textbook/pdf/lefl101.pdf";
 const C12_EN_CH2 = "https://ncert.nic.in/textbook/pdf/lefl102.pdf";
 const C12_EN_CH3 = "https://ncert.nic.in/textbook/pdf/lefl103.pdf";
@@ -178,23 +202,23 @@ const C12_EN_CH6 = "https://ncert.nic.in/textbook/pdf/lefl106.pdf";
 const C12_EN_CH7 = "https://ncert.nic.in/textbook/pdf/lefl107.pdf";
 const C12_EN_CH8 = "https://ncert.nic.in/textbook/pdf/lefl108.pdf";
 
-// Class 12 History PDFs (lehs1 ch1-3, lehs2 ch4-8, lehs3 ch9-14)
+// Class 12 History — chapter-specific (lehs = Themes in Indian History Part 1, 2 & 3)
 const C12_HIS_CH1 = "https://ncert.nic.in/textbook/pdf/lehs101.pdf";
 const C12_HIS_CH2 = "https://ncert.nic.in/textbook/pdf/lehs102.pdf";
 const C12_HIS_CH3 = "https://ncert.nic.in/textbook/pdf/lehs103.pdf";
-const C12_HIS_CH4 = "https://ncert.nic.in/textbook/pdf/lehs204.pdf";
+const C12_HIS_CH4 = "https://ncert.nic.in/textbook/pdf/lehs104.pdf";
 const C12_HIS_CH5 = "https://ncert.nic.in/textbook/pdf/lehs205.pdf";
 const C12_HIS_CH6 = "https://ncert.nic.in/textbook/pdf/lehs206.pdf";
 const C12_HIS_CH7 = "https://ncert.nic.in/textbook/pdf/lehs207.pdf";
 const C12_HIS_CH8 = "https://ncert.nic.in/textbook/pdf/lehs208.pdf";
-const C12_HIS_CH9 = "https://ncert.nic.in/textbook/pdf/lehs309.pdf";
+const C12_HIS_CH9 = "https://ncert.nic.in/textbook/pdf/lehs209.pdf";
 const C12_HIS_CH10 = "https://ncert.nic.in/textbook/pdf/lehs310.pdf";
 const C12_HIS_CH11 = "https://ncert.nic.in/textbook/pdf/lehs311.pdf";
 const C12_HIS_CH12 = "https://ncert.nic.in/textbook/pdf/lehs312.pdf";
 const C12_HIS_CH13 = "https://ncert.nic.in/textbook/pdf/lehs313.pdf";
 const C12_HIS_CH14 = "https://ncert.nic.in/textbook/pdf/lehs314.pdf";
 
-// Class 12 Geography PDFs (legy1 ch1-6, legy2 ch7-10)
+// Class 12 Geography — chapter-specific (legy = Fundamentals of Human Geography & India People and Economy)
 const C12_GEO_CH1 = "https://ncert.nic.in/textbook/pdf/legy101.pdf";
 const C12_GEO_CH2 = "https://ncert.nic.in/textbook/pdf/legy102.pdf";
 const C12_GEO_CH3 = "https://ncert.nic.in/textbook/pdf/legy103.pdf";
@@ -206,7 +230,7 @@ const C12_GEO_CH8 = "https://ncert.nic.in/textbook/pdf/legy208.pdf";
 const C12_GEO_CH9 = "https://ncert.nic.in/textbook/pdf/legy209.pdf";
 const C12_GEO_CH10 = "https://ncert.nic.in/textbook/pdf/legy210.pdf";
 
-// Class 12 Political Science PDFs (leps1 ch1-5, leps2 ch6-8)
+// Class 12 Political Science — chapter-specific (leps = Politics in India since Independence)
 const C12_POL_CH1 = "https://ncert.nic.in/textbook/pdf/leps101.pdf";
 const C12_POL_CH2 = "https://ncert.nic.in/textbook/pdf/leps102.pdf";
 const C12_POL_CH3 = "https://ncert.nic.in/textbook/pdf/leps103.pdf";
@@ -216,7 +240,7 @@ const C12_POL_CH6 = "https://ncert.nic.in/textbook/pdf/leps206.pdf";
 const C12_POL_CH7 = "https://ncert.nic.in/textbook/pdf/leps207.pdf";
 const C12_POL_CH8 = "https://ncert.nic.in/textbook/pdf/leps208.pdf";
 
-// JEE Physics PDFs (keph1 ch1-5, keph2 ch6-8)
+// JEE Physics — chapter-specific (keph = Physics Part 1 & 2 Class 11)
 const JEE_PH_CH1 = "https://ncert.nic.in/textbook/pdf/keph101.pdf";
 const JEE_PH_CH2 = "https://ncert.nic.in/textbook/pdf/keph102.pdf";
 const JEE_PH_CH3 = "https://ncert.nic.in/textbook/pdf/keph103.pdf";
@@ -226,7 +250,7 @@ const JEE_PH_CH6 = "https://ncert.nic.in/textbook/pdf/keph206.pdf";
 const JEE_PH_CH7 = "https://ncert.nic.in/textbook/pdf/keph207.pdf";
 const JEE_PH_CH8 = "https://ncert.nic.in/textbook/pdf/keph208.pdf";
 
-// JEE Chemistry PDFs (kech1 ch1-5, kech2 ch6-7)
+// JEE Chemistry — chapter-specific (kech = Chemistry Part 1 & 2 Class 11)
 const JEE_CH_CH1 = "https://ncert.nic.in/textbook/pdf/kech101.pdf";
 const JEE_CH_CH2 = "https://ncert.nic.in/textbook/pdf/kech102.pdf";
 const JEE_CH_CH3 = "https://ncert.nic.in/textbook/pdf/kech103.pdf";
@@ -235,7 +259,7 @@ const JEE_CH_CH5 = "https://ncert.nic.in/textbook/pdf/kech105.pdf";
 const JEE_CH_CH6 = "https://ncert.nic.in/textbook/pdf/kech206.pdf";
 const JEE_CH_CH7 = "https://ncert.nic.in/textbook/pdf/kech207.pdf";
 
-// JEE Mathematics PDFs (kemh1 ch1-7, kemh2 ch8-10)
+// JEE Mathematics — chapter-specific (kemh = Mathematics Class 11)
 const JEE_MA_CH1 = "https://ncert.nic.in/textbook/pdf/kemh101.pdf";
 const JEE_MA_CH2 = "https://ncert.nic.in/textbook/pdf/kemh102.pdf";
 const JEE_MA_CH3 = "https://ncert.nic.in/textbook/pdf/kemh103.pdf";
@@ -243,11 +267,11 @@ const JEE_MA_CH4 = "https://ncert.nic.in/textbook/pdf/kemh104.pdf";
 const JEE_MA_CH5 = "https://ncert.nic.in/textbook/pdf/kemh105.pdf";
 const JEE_MA_CH6 = "https://ncert.nic.in/textbook/pdf/kemh106.pdf";
 const JEE_MA_CH7 = "https://ncert.nic.in/textbook/pdf/kemh107.pdf";
-const JEE_MA_CH8 = "https://ncert.nic.in/textbook/pdf/kemh208.pdf";
+const JEE_MA_CH8 = "https://ncert.nic.in/textbook/pdf/kemh108.pdf";
 const JEE_MA_CH9 = "https://ncert.nic.in/textbook/pdf/kemh209.pdf";
 const JEE_MA_CH10 = "https://ncert.nic.in/textbook/pdf/kemh210.pdf";
 
-// NEET Biology PDFs (kebo1 ch1-9, kebo2 ch10-16)
+// NEET Biology — chapter-specific (kebo = Biology Part 1 & 2 Class 11)
 const NEET_BI_CH1 = "https://ncert.nic.in/textbook/pdf/kebo101.pdf";
 const NEET_BI_CH2 = "https://ncert.nic.in/textbook/pdf/kebo102.pdf";
 const NEET_BI_CH3 = "https://ncert.nic.in/textbook/pdf/kebo103.pdf";
@@ -257,7 +281,7 @@ const NEET_BI_CH6 = "https://ncert.nic.in/textbook/pdf/kebo106.pdf";
 const NEET_BI_CH7 = "https://ncert.nic.in/textbook/pdf/kebo107.pdf";
 const NEET_BI_CH8 = "https://ncert.nic.in/textbook/pdf/kebo108.pdf";
 const NEET_BI_CH9 = "https://ncert.nic.in/textbook/pdf/kebo109.pdf";
-const NEET_BI_CH10 = "https://ncert.nic.in/textbook/pdf/kebo210.pdf";
+const NEET_BI_CH10 = "https://ncert.nic.in/textbook/pdf/kebo110.pdf";
 const NEET_BI_CH11 = "https://ncert.nic.in/textbook/pdf/kebo211.pdf";
 const NEET_BI_CH12 = "https://ncert.nic.in/textbook/pdf/kebo212.pdf";
 const NEET_BI_CH13 = "https://ncert.nic.in/textbook/pdf/kebo213.pdf";
@@ -459,7 +483,7 @@ const SYLLABUS_DATA: SyllabusEntry[] = [
       },
       {
         id: 3n,
-        name: "English",
+        name: "English - First Flight (Class X)",
         chapters: [
           {
             name: "A Letter to God",
@@ -468,7 +492,7 @@ const SYLLABUS_DATA: SyllabusEntry[] = [
               "https://www.youtube.com/results?search_query=a+letter+to+god+class+10+english+dear+sir",
           },
           {
-            name: "Nelson Mandela Long Walk to Freedom",
+            name: "Nelson Mandela: Long Walk to Freedom",
             url: C10_EN_CH2,
             videoUrl:
               "https://www.youtube.com/results?search_query=nelson+mandela+long+walk+to+freedom+class+10+english+dear+sir",
@@ -508,6 +532,84 @@ const SYLLABUS_DATA: SyllabusEntry[] = [
             url: C10_EN_CH8,
             videoUrl:
               "https://www.youtube.com/results?search_query=the+sermon+at+benares+class+10+english+dear+sir",
+          },
+          {
+            name: "The Proposal",
+            url: C10_EN_CH9,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=the+proposal+class+10+english+dear+sir",
+          },
+          {
+            name: "Dust of Snow (Poem)",
+            url: C10_EN_CH10,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=dust+of+snow+poem+class+10+english+dear+sir",
+          },
+        ],
+      },
+      {
+        id: 10n,
+        name: "English - Footprints Without Feet (Class X)",
+        chapters: [
+          {
+            name: "A Triumph of Surgery",
+            url: C10_FP_CH1,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=a+triumph+of+surgery+class+10+english+dear+sir",
+          },
+          {
+            name: "The Thief's Story",
+            url: C10_FP_CH2,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=the+thief+story+class+10+english+dear+sir",
+          },
+          {
+            name: "The Midnight Visitor",
+            url: C10_FP_CH3,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=the+midnight+visitor+class+10+english+dear+sir",
+          },
+          {
+            name: "A Question of Trust",
+            url: C10_FP_CH4,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=a+question+of+trust+class+10+english+dear+sir",
+          },
+          {
+            name: "Footprints Without Feet",
+            url: C10_FP_CH5,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=footprints+without+feet+class+10+english+dear+sir",
+          },
+          {
+            name: "The Making of a Scientist",
+            url: C10_FP_CH6,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=the+making+of+a+scientist+class+10+english+dear+sir",
+          },
+          {
+            name: "The Necklace",
+            url: C10_FP_CH7,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=the+necklace+class+10+english+dear+sir",
+          },
+          {
+            name: "The Hack Driver",
+            url: C10_FP_CH8,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=the+hack+driver+class+10+english+dear+sir",
+          },
+          {
+            name: "Bholi",
+            url: C10_FP_CH9,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=bholi+class+10+english+dear+sir",
+          },
+          {
+            name: "The Book That Saved the Earth",
+            url: C10_FP_CH10,
+            videoUrl:
+              "https://www.youtube.com/results?search_query=the+book+that+saved+the+earth+class+10+english+dear+sir",
           },
         ],
       },
@@ -682,6 +784,144 @@ const SYLLABUS_DATA: SyllabusEntry[] = [
             url: C10_ECO_CH5,
             videoUrl:
               "https://www.youtube.com/results?search_query=consumer+rights+class+10+dear+sir",
+          },
+        ],
+      },
+      {
+        id: 8n,
+        name: "Hindi - Kshitij-2",
+        chapters: [
+          {
+            name: "Surdas ke Pad",
+            url: "https://ncert.nic.in/textbook/pdf/jehin101.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=surdas+ke+pad+class+10+hindi+kshitij+dear+sir",
+          },
+          {
+            name: "Tulsidas ke Pad",
+            url: "https://ncert.nic.in/textbook/pdf/jehin102.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=tulsidas+ramvriksha+benipuri+class+10+hindi+dear+sir",
+          },
+          {
+            name: "Dev ki Kavitayen",
+            url: "https://ncert.nic.in/textbook/pdf/jehin103.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=dev+ki+kavitayen+class+10+hindi+dear+sir",
+          },
+          {
+            name: "Jayashankar Prasad - Atmakadya",
+            url: "https://ncert.nic.in/textbook/pdf/jehin104.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=jayashankar+prasad+class+10+hindi+kshitij+dear+sir",
+          },
+          {
+            name: "Suryakant Tripathi Nirala - Uttsaah aur Yah Duniya",
+            url: "https://ncert.nic.in/textbook/pdf/jehin105.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=nirala+uttsaah+class+10+hindi+dear+sir",
+          },
+          {
+            name: "Nagarjun - Yah Danturit Muskan",
+            url: "https://ncert.nic.in/textbook/pdf/jehin106.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=nagarjun+class+10+hindi+kshitij+dear+sir",
+          },
+          {
+            name: "Girija Kumar Mathur - Chaya Mat Chhuna",
+            url: "https://ncert.nic.in/textbook/pdf/jehin107.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=girija+kumar+mathur+class+10+hindi+dear+sir",
+          },
+          {
+            name: "Rituraj - Kanavein Bhi Kuchh Keh Sakti Hain",
+            url: "https://ncert.nic.in/textbook/pdf/jehin108.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=rituraj+class+10+hindi+kshitij+dear+sir",
+          },
+          {
+            name: "Manglesh Dabral - Sangatkar",
+            url: "https://ncert.nic.in/textbook/pdf/jehin109.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=manglesh+dabral+sangatkaar+class+10+hindi+dear+sir",
+          },
+          {
+            name: "Sarveshwar Dayal Saxena - Bade Bhai Sahab",
+            url: "https://ncert.nic.in/textbook/pdf/jehin110.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=bade+bhai+sahab+class+10+hindi+dear+sir",
+          },
+          {
+            name: "Mannu Bhandari - Mithai Wala",
+            url: "https://ncert.nic.in/textbook/pdf/jehin111.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=mithai+wala+class+10+hindi+dear+sir",
+          },
+          {
+            name: "Manohar Shyam Joshi - Neta Ji Ka Chashma",
+            url: "https://ncert.nic.in/textbook/pdf/jehin112.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=neta+ji+ka+chashma+class+10+hindi+dear+sir",
+          },
+          {
+            name: "Mridula Garg - Balgobin Bhagat",
+            url: "https://ncert.nic.in/textbook/pdf/jehin113.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=balgobin+bhagat+class+10+hindi+dear+sir",
+          },
+        ],
+      },
+      {
+        id: 9n,
+        name: "Health and Physical Education",
+        chapters: [
+          {
+            name: "Unit 1: Physical Fitness and Wellness",
+            url: "https://ncert.nic.in/textbook/pdf/jhpe101.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=physical+fitness+wellness+class+10+health+education",
+          },
+          {
+            name: "Unit 2: Growing up - Adolescent Health",
+            url: "https://ncert.nic.in/textbook/pdf/jhpe102.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=adolescent+health+class+10+physical+education",
+          },
+          {
+            name: "Unit 3: Diet for Healthy Living",
+            url: "https://ncert.nic.in/textbook/pdf/jhpe103.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=diet+healthy+living+class+10+health+education",
+          },
+          {
+            name: "Unit 4: Yoga for Health",
+            url: "https://ncert.nic.in/textbook/pdf/jhpe104.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=yoga+for+health+class+10+physical+education",
+          },
+          {
+            name: "Unit 5: First Aid and Safety",
+            url: "https://ncert.nic.in/textbook/pdf/jhpe105.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=first+aid+safety+class+10+health+education",
+          },
+          {
+            name: "Unit 6: Games and Sports",
+            url: "https://ncert.nic.in/textbook/pdf/jhpe106.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=games+sports+class+10+physical+education",
+          },
+          {
+            name: "Unit 7: Environmental Health",
+            url: "https://ncert.nic.in/textbook/pdf/jhpe107.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=environmental+health+class+10+health+education",
+          },
+          {
+            name: "Unit 8: Community Health",
+            url: "https://ncert.nic.in/textbook/pdf/jhpe108.pdf",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=community+health+class+10+physical+education",
           },
         ],
       },
@@ -1780,32 +2020,32 @@ const PAPERS_DATA: Array<{
       {
         title: "CBSE Class 10 Mathematics 2024",
         year: 2024n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 10 Mathematics 2023",
         year: 2023n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 10 Mathematics 2022",
         year: 2022n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 10 Mathematics 2020",
         year: 2020n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 10 Mathematics 2019",
         year: 2019n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
     ],
   },
@@ -1816,26 +2056,26 @@ const PAPERS_DATA: Array<{
       {
         title: "CBSE Class 10 Science 2024",
         year: 2024n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 10 Science 2023",
         year: 2023n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 10 Science 2022",
         year: 2022n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
-        title: "CBSE Class 10 Science 2020",
-        year: 2020n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        title: "CBSE Class 10 Science 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
     ],
   },
@@ -1846,20 +2086,20 @@ const PAPERS_DATA: Array<{
       {
         title: "CBSE Class 10 Social Science 2024",
         year: 2024n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 10 Social Science 2023",
         year: 2023n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 10 Social Science 2022",
         year: 2022n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
     ],
   },
@@ -1870,20 +2110,232 @@ const PAPERS_DATA: Array<{
       {
         title: "CBSE Class 10 English 2024",
         year: 2024n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 10 English 2023",
         year: 2023n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 10 English 2022",
         year: 2022n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classx.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+    ],
+  },
+  // Aliases to match exact syllabus subject names shown in the dropdown
+  {
+    category: Category.Class10,
+    subject: "English - First Flight (Class X)",
+    papers: [
+      {
+        title: "CBSE Class 10 English 2024",
+        year: 2024n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 English 2023",
+        year: 2023n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 English 2022",
+        year: 2022n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 English 2020",
+        year: 2020n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 English 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+    ],
+  },
+  {
+    category: Category.Class10,
+    subject: "English - Footprints Without Feet (Class X)",
+    papers: [
+      {
+        title: "CBSE Class 10 English 2024",
+        year: 2024n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 English 2023",
+        year: 2023n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 English 2022",
+        year: 2022n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 English 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+    ],
+  },
+  // Social Science subject name aliases matching the syllabus dropdown names
+  {
+    category: Category.Class10,
+    subject: "History",
+    papers: [
+      {
+        title: "CBSE Class 10 Social Science 2024",
+        year: 2024n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2023",
+        year: 2023n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2022",
+        year: 2022n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+    ],
+  },
+  {
+    category: Category.Class10,
+    subject: "Geography",
+    papers: [
+      {
+        title: "CBSE Class 10 Social Science 2024",
+        year: 2024n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2023",
+        year: 2023n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2022",
+        year: 2022n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+    ],
+  },
+  {
+    category: Category.Class10,
+    subject: "Political Science",
+    papers: [
+      {
+        title: "CBSE Class 10 Social Science 2024",
+        year: 2024n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2023",
+        year: 2023n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2022",
+        year: 2022n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+    ],
+  },
+  {
+    category: Category.Class10,
+    subject: "Economics",
+    papers: [
+      {
+        title: "CBSE Class 10 Social Science 2024",
+        year: 2024n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2023",
+        year: 2023n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2022",
+        year: 2022n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Social Science 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+    ],
+  },
+  {
+    category: Category.Class10,
+    subject: "Hindi - Kshitij-2",
+    papers: [
+      {
+        title: "CBSE Class 10 Hindi 2024",
+        year: 2024n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Hindi 2023",
+        year: 2023n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 10 Hindi 2022",
+        year: 2022n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
     ],
   },
@@ -1894,26 +2346,26 @@ const PAPERS_DATA: Array<{
       {
         title: "CBSE Class 12 Physics 2024",
         year: 2024n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 12 Physics 2023",
         year: 2023n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 12 Physics 2022",
         year: 2022n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
-        title: "CBSE Class 12 Physics 2020",
-        year: 2020n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        title: "CBSE Class 12 Physics 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
     ],
   },
@@ -1924,26 +2376,26 @@ const PAPERS_DATA: Array<{
       {
         title: "CBSE Class 12 Chemistry 2024",
         year: 2024n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 12 Chemistry 2023",
         year: 2023n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 12 Chemistry 2022",
         year: 2022n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
-        title: "CBSE Class 12 Chemistry 2020",
-        year: 2020n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        title: "CBSE Class 12 Chemistry 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
     ],
   },
@@ -1954,26 +2406,26 @@ const PAPERS_DATA: Array<{
       {
         title: "CBSE Class 12 Mathematics 2024",
         year: 2024n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 12 Mathematics 2023",
         year: 2023n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 12 Mathematics 2022",
         year: 2022n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
-        title: "CBSE Class 12 Mathematics 2020",
-        year: 2020n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        title: "CBSE Class 12 Mathematics 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
     ],
   },
@@ -1984,20 +2436,141 @@ const PAPERS_DATA: Array<{
       {
         title: "CBSE Class 12 Biology 2024",
         year: 2024n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 12 Biology 2023",
         year: 2023n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
       {
         title: "CBSE Class 12 Biology 2022",
         year: 2022n,
-        url: "https://cbse.gov.in/cbsenew/question-paper.html",
-        solutionUrl: "https://cbseacademic.nic.in/sqp_classxii.html",
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+    ],
+  },
+  {
+    category: Category.Class12,
+    subject: "English",
+    papers: [
+      {
+        title: "CBSE Class 12 English 2024",
+        year: 2024n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 English 2023",
+        year: 2023n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 English 2022",
+        year: 2022n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 English 2020",
+        year: 2020n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 English 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+    ],
+  },
+  // Class 12 History, Geography, Political Science subject name aliases
+  {
+    category: Category.Class12,
+    subject: "History",
+    papers: [
+      {
+        title: "CBSE Class 12 History 2024",
+        year: 2024n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 History 2023",
+        year: 2023n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 History 2022",
+        year: 2022n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 History 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+    ],
+  },
+  {
+    category: Category.Class12,
+    subject: "Geography",
+    papers: [
+      {
+        title: "CBSE Class 12 Geography 2024",
+        year: 2024n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 Geography 2023",
+        year: 2023n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 Geography 2022",
+        year: 2022n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 Geography 2019",
+        year: 2019n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+    ],
+  },
+  {
+    category: Category.Class12,
+    subject: "Political Science",
+    papers: [
+      {
+        title: "CBSE Class 12 Political Science 2024",
+        year: 2024n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 Political Science 2023",
+        year: 2023n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+      },
+      {
+        title: "CBSE Class 12 Political Science 2022",
+        year: 2022n,
+        url: "https://www.cbse.gov.in/cbsenew/question-paper.html",
+        solutionUrl: "https://www.cbse.gov.in/cbsenew/question-paper.html",
       },
     ],
   },
@@ -2242,7 +2815,7 @@ export function useGetQAByChapter(
         (e) =>
           e.category === category &&
           e.subject === subject &&
-          e.chapter === chapter,
+          (e.chapter ?? "") === chapter,
       );
     },
     enabled: !!chapter,

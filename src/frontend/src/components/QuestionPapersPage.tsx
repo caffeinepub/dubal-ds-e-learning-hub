@@ -13,6 +13,7 @@ import {
   BookCheck,
   Calendar,
   ChevronRight,
+  Download,
   ExternalLink,
   FileText,
 } from "lucide-react";
@@ -242,10 +243,10 @@ export default function QuestionPapersPage({
                       onClick={() =>
                         window.open(paper.url, "_blank", "noopener,noreferrer")
                       }
-                      aria-label={`View paper for ${paper.title}`}
+                      aria-label={`Open CBSE question paper portal for ${paper.title}`}
                     >
                       <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
-                      View Paper
+                      Open CBSE Portal
                     </Button>
                     <Button
                       size="sm"
@@ -263,12 +264,12 @@ export default function QuestionPapersPage({
                       }
                       aria-label={
                         paper.solutionUrl
-                          ? `Visit official website for ${paper.title}`
+                          ? `View solutions for ${paper.title}`
                           : "No solution available"
                       }
                     >
-                      <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
-                      {paper.solutionUrl ? "Official Website" : "No Solution"}
+                      <Download className="w-3.5 h-3.5 mr-1.5" />
+                      {paper.solutionUrl ? "Solutions" : "No Solution"}
                     </Button>
                   </div>
                 </div>

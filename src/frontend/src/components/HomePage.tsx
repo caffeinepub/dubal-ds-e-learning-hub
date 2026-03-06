@@ -6,12 +6,17 @@ import {
   Calculator,
   FileText,
   PlayCircle,
+  Search,
+  Zap,
 } from "lucide-react";
+import { useState } from "react";
 import type { Section } from "../App";
 import { Category } from "../types";
 
 interface HomePageProps {
   onCategorySelect: (cat: Category, section: Section) => void;
+  onSmartNotesSearch?: (topic: string) => void;
+  onViewSmartNotes?: () => void;
 }
 
 const categoryCards = [
@@ -112,7 +117,31 @@ const features = [
   },
 ];
 
-export default function HomePage({ onCategorySelect }: HomePageProps) {
+const smartNoteTopics = [
+  "Electricity",
+  "Photosynthesis",
+  "Nationalism in India",
+  "The Last Lesson",
+  "Polynomials",
+  "Electrochemistry",
+  "Cell Division",
+  "Wave Optics",
+];
+
+export default function HomePage({
+  onCategorySelect,
+  onSmartNotesSearch,
+  onViewSmartNotes,
+}: HomePageProps) {
+  const [smartSearchInput, setSmartSearchInput] = useState("");
+
+  const handleSmartSearch = () => {
+    const q = smartSearchInput.trim();
+    if (!q) return;
+    onSmartNotesSearch?.(q);
+    setSmartSearchInput("");
+  };
+
   return (
     <div>
       {/* Hero Section */}
@@ -251,6 +280,124 @@ export default function HomePage({ onCategorySelect }: HomePageProps) {
               </div>
             </button>
           ))}
+        </div>
+      </section>
+
+      {/* Smart Notes Spotlight */}
+      <section className="container mx-auto px-4 py-10">
+        <div
+          className="relative overflow-hidden rounded-3xl p-8 md:p-12"
+          style={{
+            background:
+              "linear-gradient(135deg, oklch(0.20 0.10 264) 0%, oklch(0.28 0.14 280) 50%, oklch(0.22 0.08 300) 100%)",
+          }}
+        >
+          {/* Decorative blobs */}
+          <div
+            className="absolute top-0 right-0 w-72 h-72 rounded-full opacity-20 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(circle, oklch(0.75 0.18 52) 0%, transparent 70%)",
+              transform: "translate(30%, -30%)",
+            }}
+          />
+          <div
+            className="absolute bottom-0 left-0 w-56 h-56 rounded-full opacity-15 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(circle, oklch(0.65 0.16 264) 0%, transparent 70%)",
+              transform: "translate(-20%, 30%)",
+            }}
+          />
+
+          <div className="relative z-10 max-w-2xl">
+            {/* Label */}
+            <div className="flex items-center gap-2 mb-4">
+              <div
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 text-white/80 text-xs font-semibold"
+                style={{ background: "oklch(1 0 0 / 0.08)" }}
+              >
+                <Zap className="w-3.5 h-3.5 text-[oklch(0.85_0.18_52)]" />
+                AI Smart Notes
+              </div>
+            </div>
+
+            <h2 className="font-display font-bold text-2xl md:text-4xl text-white mb-3 leading-tight">
+              Get 600+ Word Smart Notes{" "}
+              <span
+                className="text-transparent bg-clip-text"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(90deg, oklch(0.85 0.18 52), oklch(0.78 0.22 65))",
+                }}
+              >
+                on Any Topic
+              </span>
+            </h2>
+            <p className="text-white/70 text-sm md:text-base mb-6 leading-relaxed max-w-xl">
+              Type any chapter name or topic and get instantly detailed smart
+              notes with theory, formulas, examples, and board exam tips — all
+              NCERT aligned.
+            </p>
+
+            {/* Search */}
+            <div className="flex gap-2 mb-5 max-w-lg">
+              <div className="relative flex-1">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50 pointer-events-none" />
+                <input
+                  type="text"
+                  value={smartSearchInput}
+                  onChange={(e) => setSmartSearchInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSmartSearch()}
+                  placeholder="Get Smart Notes for any topic..."
+                  className="w-full pl-10 pr-4 h-12 rounded-xl border border-white/20 text-white placeholder-white/40 text-sm focus:outline-none focus:ring-2 focus:ring-white/30"
+                  style={{ background: "oklch(1 0 0 / 0.10)" }}
+                  data-ocid="home.smartnotes.input"
+                  aria-label="Search smart notes topic"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={handleSmartSearch}
+                disabled={!smartSearchInput.trim()}
+                className="h-12 px-5 rounded-xl font-semibold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  background: "oklch(0.75 0.18 52)",
+                  color: "oklch(0.15 0.04 52)",
+                }}
+                data-ocid="home.smartnotes.button"
+              >
+                <Zap className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Topic chips */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {smartNoteTopics.map((topic) => (
+                <button
+                  key={topic}
+                  type="button"
+                  onClick={() => onSmartNotesSearch?.(topic.toLowerCase())}
+                  className="text-xs px-3 py-1.5 rounded-full border border-white/20 text-white/75 hover:text-white hover:border-white/40 transition-all"
+                  style={{ background: "oklch(1 0 0 / 0.07)" }}
+                  data-ocid="home.smartnotes.item"
+                >
+                  {topic}
+                </button>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <button
+              type="button"
+              onClick={onViewSmartNotes}
+              className="flex items-center gap-2 text-sm font-semibold text-white/90 hover:text-white transition-colors group"
+              data-ocid="home.smartnotes.primary_button"
+            >
+              View All Smart Notes
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
         </div>
       </section>
 
