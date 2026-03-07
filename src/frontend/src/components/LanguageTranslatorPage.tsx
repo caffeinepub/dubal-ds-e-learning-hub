@@ -1685,7 +1685,7 @@ export default function LanguageTranslatorPage() {
                 className={`px-3 py-2 rounded-xl text-center ${
                   item.translation.startsWith("[")
                     ? "bg-secondary border border-border"
-                    : "bg-[oklch(0.94_0.04_264)] border border-[oklch(0.78_0.1_264)]"
+                    : "bg-[oklch(0.86_0.07_264)] border border-[oklch(0.68_0.12_264)]"
                 }`}
               >
                 <div className="text-xs text-muted-foreground mb-0.5">
@@ -1695,7 +1695,7 @@ export default function LanguageTranslatorPage() {
                   className={`font-semibold text-sm leading-tight ${
                     item.translation.startsWith("[")
                       ? "text-muted-foreground italic"
-                      : "text-foreground"
+                      : "text-[oklch(0.18_0.14_264)]"
                   }`}
                 >
                   {item.translation}

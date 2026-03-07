@@ -18,9 +18,9 @@ const categories: {
     label: "CBSE Class 10",
     short: "Class 10",
     colorClass:
-      "hover:bg-[oklch(0.9_0.06_142)] hover:text-[oklch(0.25_0.12_142)] hover:border-[oklch(0.7_0.12_142)]",
+      "hover:bg-[oklch(0.86_0.08_142)] hover:text-[oklch(0.20_0.14_142)] hover:border-[oklch(0.68_0.12_142)]",
     activeClass:
-      "bg-[oklch(0.55_0.16_142)] text-white border-[oklch(0.55_0.16_142)] shadow-sm",
+      "bg-[oklch(0.44_0.18_142)] text-white border-[oklch(0.44_0.18_142)] shadow-sm",
     ocid: "category.class10.toggle",
   },
   {
@@ -28,9 +28,9 @@ const categories: {
     label: "CBSE Class 12",
     short: "Class 12",
     colorClass:
-      "hover:bg-[oklch(0.88_0.07_264)] hover:text-[oklch(0.25_0.12_264)] hover:border-[oklch(0.7_0.12_264)]",
+      "hover:bg-[oklch(0.84_0.09_264)] hover:text-[oklch(0.20_0.14_264)] hover:border-[oklch(0.65_0.12_264)]",
     activeClass:
-      "bg-[oklch(0.48_0.18_264)] text-white border-[oklch(0.48_0.18_264)] shadow-sm",
+      "bg-[oklch(0.38_0.20_264)] text-white border-[oklch(0.38_0.20_264)] shadow-sm",
     ocid: "category.class12.toggle",
   },
   {
@@ -38,9 +38,9 @@ const categories: {
     label: "JEE",
     short: "JEE",
     colorClass:
-      "hover:bg-[oklch(0.92_0.07_30)] hover:text-[oklch(0.3_0.14_30)] hover:border-[oklch(0.7_0.12_30)]",
+      "hover:bg-[oklch(0.88_0.09_30)] hover:text-[oklch(0.20_0.16_30)] hover:border-[oklch(0.68_0.14_30)]",
     activeClass:
-      "bg-[oklch(0.58_0.19_30)] text-white border-[oklch(0.58_0.19_30)] shadow-sm",
+      "bg-[oklch(0.46_0.22_30)] text-white border-[oklch(0.46_0.22_30)] shadow-sm",
     ocid: "category.jee.toggle",
   },
   {
@@ -48,9 +48,9 @@ const categories: {
     label: "NEET",
     short: "NEET",
     colorClass:
-      "hover:bg-[oklch(0.9_0.07_335)] hover:text-[oklch(0.3_0.13_335)] hover:border-[oklch(0.7_0.12_335)]",
+      "hover:bg-[oklch(0.85_0.09_335)] hover:text-[oklch(0.20_0.15_335)] hover:border-[oklch(0.66_0.12_335)]",
     activeClass:
-      "bg-[oklch(0.52_0.17_335)] text-white border-[oklch(0.52_0.17_335)] shadow-sm",
+      "bg-[oklch(0.40_0.20_335)] text-white border-[oklch(0.40_0.20_335)] shadow-sm",
     ocid: "category.neet.toggle",
   },
 ];
@@ -75,7 +75,7 @@ export default function CategorySelector({
           className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition-all duration-200 ${
             activeCategory === cat.id
               ? cat.activeClass
-              : `bg-card text-muted-foreground border-border ${cat.colorClass}`
+              : `bg-secondary text-foreground border-border ${cat.colorClass}`
           }`}
           aria-pressed={activeCategory === cat.id}
         >

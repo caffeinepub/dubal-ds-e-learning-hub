@@ -31,58 +31,58 @@
   :root {
     --radius: 0.75rem;
 
-    /* ─── EduPrep India: Deep Indigo + Saffron accent ─── */
-    --background: 0.97 0.006 256;
-    --foreground: 0.18 0.03 258;
+    /* ─── Dubal DS E-learning Hub: Rich Deep Indigo + Saffron — high-contrast ─── */
+    --background: 0.97 0.008 255;
+    --foreground: 0.12 0.04 258;
 
-    --card: 1 0 0;
-    --card-foreground: 0.18 0.03 258;
+    --card: 0.99 0.004 255;
+    --card-foreground: 0.12 0.04 258;
 
     --popover: 1 0 0;
-    --popover-foreground: 0.18 0.03 258;
+    --popover-foreground: 0.12 0.04 258;
 
     /* Deep indigo primary */
-    --primary: 0.38 0.14 264;
+    --primary: 0.35 0.16 264;
     --primary-foreground: 0.98 0 0;
 
     /* Lighter indigo secondary */
-    --secondary: 0.92 0.04 258;
-    --secondary-foreground: 0.3 0.1 264;
+    --secondary: 0.90 0.05 258;
+    --secondary-foreground: 0.22 0.12 264;
 
-    --muted: 0.94 0.015 258;
-    --muted-foreground: 0.52 0.04 258;
+    --muted: 0.92 0.02 258;
+    --muted-foreground: 0.42 0.06 258;
 
     /* Saffron accent */
-    --accent: 0.75 0.18 52;
-    --accent-foreground: 0.15 0.04 52;
+    --accent: 0.72 0.19 52;
+    --accent-foreground: 0.12 0.04 52;
 
     --destructive: 0.577 0.245 27.325;
     --destructive-foreground: 0.985 0 0;
 
-    --border: 0.88 0.02 258;
-    --input: 0.88 0.02 258;
-    --ring: 0.38 0.14 264;
+    --border: 0.84 0.03 258;
+    --input: 0.84 0.03 258;
+    --ring: 0.35 0.16 264;
 
     /* Category colors */
-    --class10: 0.55 0.16 142;
-    --class12: 0.48 0.18 264;
-    --jee: 0.58 0.19 30;
-    --neet: 0.52 0.17 335;
+    --class10: 0.50 0.18 142;
+    --class12: 0.42 0.20 264;
+    --jee: 0.52 0.22 30;
+    --neet: 0.46 0.20 335;
 
-    --chart-1: 0.55 0.16 142;
-    --chart-2: 0.48 0.18 264;
-    --chart-3: 0.58 0.19 30;
-    --chart-4: 0.52 0.17 335;
-    --chart-5: 0.72 0.18 52;
+    --chart-1: 0.50 0.18 142;
+    --chart-2: 0.42 0.20 264;
+    --chart-3: 0.52 0.22 30;
+    --chart-4: 0.46 0.20 335;
+    --chart-5: 0.68 0.20 52;
 
-    --sidebar: 0.18 0.07 264;
-    --sidebar-foreground: 0.92 0.02 258;
-    --sidebar-primary: 0.72 0.18 52;
-    --sidebar-primary-foreground: 0.18 0.04 52;
-    --sidebar-accent: 0.28 0.09 264;
-    --sidebar-accent-foreground: 0.92 0.02 258;
-    --sidebar-border: 0.3 0.07 264;
-    --sidebar-ring: 0.55 0.14 264;
+    --sidebar: 0.16 0.08 264;
+    --sidebar-foreground: 0.94 0.02 258;
+    --sidebar-primary: 0.70 0.20 52;
+    --sidebar-primary-foreground: 0.12 0.04 52;
+    --sidebar-accent: 0.25 0.10 264;
+    --sidebar-accent-foreground: 0.94 0.02 258;
+    --sidebar-border: 0.28 0.08 264;
+    --sidebar-ring: 0.50 0.16 264;
   }
 
   .dark {
@@ -156,24 +156,24 @@
 
 /* ─── Category badge colors ─────────────────────────────── */
 .badge-class10 {
-  background-color: oklch(0.9 0.06 142);
-  color: oklch(0.3 0.12 142);
-  border-color: oklch(0.8 0.1 142);
+  background-color: oklch(0.86 0.08 142);
+  color: oklch(0.22 0.14 142);
+  border-color: oklch(0.72 0.12 142);
 }
 .badge-class12 {
-  background-color: oklch(0.88 0.07 264);
-  color: oklch(0.3 0.12 264);
-  border-color: oklch(0.78 0.1 264);
+  background-color: oklch(0.84 0.09 264);
+  color: oklch(0.22 0.14 264);
+  border-color: oklch(0.70 0.12 264);
 }
 .badge-jee {
-  background-color: oklch(0.92 0.07 30);
-  color: oklch(0.35 0.14 30);
-  border-color: oklch(0.82 0.1 30);
+  background-color: oklch(0.88 0.09 30);
+  color: oklch(0.25 0.16 30);
+  border-color: oklch(0.74 0.13 30);
 }
 .badge-neet {
-  background-color: oklch(0.9 0.07 335);
-  color: oklch(0.35 0.13 335);
-  border-color: oklch(0.8 0.1 335);
+  background-color: oklch(0.86 0.09 335);
+  color: oklch(0.25 0.15 335);
+  border-color: oklch(0.72 0.12 335);
 }
 
 /* ─── Hero gradient overlay ─────────────────────────────── */

@@ -6,4 +6,6 @@ export enum Category {
   Class12 = "Class12",
   JEE = "JEE",
   NEET = "NEET",
+  CompetitiveExams = "CompetitiveExams",
+  SSB = "SSB",
 }

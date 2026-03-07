@@ -25,6 +25,8 @@ const categoryBadgeClass: Record<Category, string> = {
   [Category.Class12]: "badge-class12",
   [Category.JEE]: "badge-jee",
   [Category.NEET]: "badge-neet",
+  [Category.CompetitiveExams]: "badge-class10",
+  [Category.SSB]: "badge-class12",
 };
 
 const askAIExamples = [
@@ -377,7 +379,7 @@ export default function AIHelpPage({
                   key={t}
                   type="button"
                   onClick={() => handleExampleClick(t)}
-                  className="text-sm px-3 py-1.5 rounded-full border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all capitalize"
+                  className="text-sm px-3 py-1.5 rounded-full border border-border bg-secondary text-foreground hover:border-primary/50 hover:text-primary hover:bg-primary/10 transition-all capitalize font-medium"
                 >
                   {t}
                 </button>
@@ -406,9 +408,9 @@ export default function AIHelpPage({
                   key={example}
                   type="button"
                   onClick={() => handleExampleClick(example)}
-                  className="text-sm text-left px-4 py-3 rounded-xl border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all group"
+                  className="text-sm text-left px-4 py-3 rounded-xl border border-border bg-secondary text-foreground hover:border-primary/50 hover:text-primary hover:bg-primary/10 transition-all group font-medium"
                 >
-                  <span className="mr-1.5 text-primary/50 group-hover:text-primary">
+                  <span className="mr-1.5 text-primary/70 group-hover:text-primary">
                     →
                   </span>
                   {example}
@@ -435,7 +437,8 @@ export default function AIHelpPage({
                   icon: <Lightbulb className="w-5 h-5" />,
                   title: "NCERT Aligned",
                   desc: "All answers are based on NCERT curriculum and board exam patterns.",
-                  color: "bg-[oklch(0.9_0.07_142)] text-[oklch(0.3_0.12_142)]",
+                  color:
+                    "bg-[oklch(0.82_0.10_142)] text-[oklch(0.18_0.14_142)]",
                 },
               ].map((t) => (
                 <div

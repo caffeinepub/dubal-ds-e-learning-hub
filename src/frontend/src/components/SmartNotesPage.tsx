@@ -142,6 +142,8 @@ const categoryBadgeClass: Record<Category, string> = {
   [Category.Class12]: "badge-class12",
   [Category.JEE]: "badge-jee",
   [Category.NEET]: "badge-neet",
+  [Category.CompetitiveExams]: "badge-class10",
+  [Category.SSB]: "badge-class12",
 };
 
 const popularTopics = [
@@ -270,7 +272,7 @@ function SmartNotesTab({ initialTopic }: { initialTopic?: string }) {
                 key={t}
                 onClick={() => handlePopularTopicClick(t)}
                 data-ocid="smartnotes.topic.item"
-                className="text-sm px-3 py-1.5 rounded-full border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all capitalize"
+                className="text-sm px-3 py-1.5 rounded-full border border-border bg-secondary text-foreground hover:border-primary/50 hover:text-primary hover:bg-primary/10 transition-all capitalize font-medium"
               >
                 {t}
               </button>
@@ -296,7 +298,7 @@ function SmartNotesTab({ initialTopic }: { initialTopic?: string }) {
                 icon: <Lightbulb className="w-5 h-5" />,
                 title: "Class 10 & 12 Focus",
                 desc: "Specially curated for CBSE Class 10, 12, JEE and NEET students. All major subjects covered.",
-                color: "bg-[oklch(0.9_0.07_142)] text-[oklch(0.3_0.12_142)]",
+                color: "bg-[oklch(0.82_0.10_142)] text-[oklch(0.18_0.14_142)]",
               },
             ].map((t) => (
               <div
@@ -429,6 +431,20 @@ function QABankTab({
     ],
     [Category.JEE]: ["Physics", "Chemistry", "Mathematics"],
     [Category.NEET]: ["Biology", "Physics", "Chemistry"],
+    [Category.CompetitiveExams]: [
+      "GK",
+      "GS",
+      "Reasoning",
+      "Current Affairs",
+      "Banking",
+    ],
+    [Category.SSB]: [
+      "OIR",
+      "Psychology",
+      "GTO",
+      "Personal Interview",
+      "Conference",
+    ],
   };
 
   const subjects = QA_SUBJECTS[activeCategory].map((name) => ({
@@ -534,6 +550,8 @@ function QABankTab({
               Category.Class12,
               Category.JEE,
               Category.NEET,
+              Category.CompetitiveExams,
+              Category.SSB,
             ] as Category[]
           ).map((cat) => (
             <button
@@ -838,10 +856,10 @@ function ChapterQATab() {
               key={cat}
               type="button"
               onClick={() => handleCategoryChange(cat)}
-              className={`text-sm px-4 py-1.5 rounded-full border transition-all font-medium ${
+              className={`text-sm px-4 py-1.5 rounded-full border transition-all font-semibold ${
                 selectedCategory === cat
                   ? "bg-primary text-primary-foreground border-primary"
-                  : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5"
+                  : "border-border bg-secondary text-foreground hover:border-primary/50 hover:text-primary hover:bg-primary/10"
               }`}
               data-ocid="smartnotes.chapterqa.toggle"
             >
@@ -1004,7 +1022,7 @@ function ChapterQATab() {
                   key={subj}
                   type="button"
                   onClick={() => handleSubjectChange(subj)}
-                  className="text-sm px-3 py-2 rounded-xl border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all text-center font-medium"
+                  className="text-sm px-3 py-2 rounded-xl border border-border bg-secondary text-foreground hover:border-primary/50 hover:text-primary hover:bg-primary/10 transition-all text-center font-semibold"
                   data-ocid="smartnotes.chapterqa.button"
                 >
                   {subj}

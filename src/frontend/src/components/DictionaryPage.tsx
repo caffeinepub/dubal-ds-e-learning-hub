@@ -209,17 +209,17 @@ export default function DictionaryPage() {
                 </h3>
 
                 {/* Definition */}
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-foreground/70 leading-relaxed">
                   {term.definition}
                 </p>
 
                 {/* Hindi meaning */}
                 {term.hindiMeaning && (
                   <div className="mt-3 flex items-start gap-2 pt-2.5 border-t border-border/60">
-                    <span className="flex-shrink-0 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-[oklch(0.92_0.06_50)] text-[oklch(0.3_0.14_30)] border border-[oklch(0.8_0.1_30)] tracking-wide">
+                    <span className="flex-shrink-0 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-[oklch(0.82_0.10_50)] text-[oklch(0.15_0.14_30)] border border-[oklch(0.68_0.14_30)] tracking-wide">
                       हिंदी
                     </span>
-                    <p className="text-sm text-muted-foreground/90 leading-relaxed font-medium">
+                    <p className="text-sm text-foreground/80 leading-relaxed font-medium">
                       {term.hindiMeaning}
                     </p>
                   </div>

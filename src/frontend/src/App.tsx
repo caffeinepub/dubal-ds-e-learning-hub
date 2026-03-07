@@ -20,6 +20,10 @@ const LanguageTranslatorPage = lazy(
   () => import("./components/LanguageTranslatorPage"),
 );
 const DailyNewsPage = lazy(() => import("./components/DailyNewsPage"));
+const CompetitiveExamsPage = lazy(
+  () => import("./components/CompetitiveExamsPage"),
+);
+const SSBPage = lazy(() => import("./components/SSBPage"));
 
 function PageLoader() {
   return (
@@ -44,7 +48,9 @@ export type Section =
   | "dictionary"
   | "calculator"
   | "translator"
-  | "news";
+  | "news"
+  | "competitive"
+  | "ssb";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("home");
@@ -113,6 +119,8 @@ export default function App() {
           {activeSection === "calculator" && <MathCalculatorPage />}
           {activeSection === "translator" && <LanguageTranslatorPage />}
           {activeSection === "news" && <DailyNewsPage />}
+          {activeSection === "competitive" && <CompetitiveExamsPage />}
+          {activeSection === "ssb" && <SSBPage />}
         </Suspense>
       </main>
 

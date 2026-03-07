@@ -41,6 +41,8 @@ const categoryLabels: Record<Category, string> = {
   [Category.Class12]: "CBSE Class 12",
   [Category.JEE]: "JEE",
   [Category.NEET]: "NEET",
+  [Category.CompetitiveExams]: "Competitive Exams",
+  [Category.SSB]: "SSB",
 };
 
 const categoryBadgeClass: Record<Category, string> = {
@@ -48,6 +50,8 @@ const categoryBadgeClass: Record<Category, string> = {
   [Category.Class12]: "badge-class12",
   [Category.JEE]: "badge-jee",
   [Category.NEET]: "badge-neet",
+  [Category.CompetitiveExams]: "badge-class10",
+  [Category.SSB]: "badge-class12",
 };
 
 function SyllabusLoadingSkeleton() {

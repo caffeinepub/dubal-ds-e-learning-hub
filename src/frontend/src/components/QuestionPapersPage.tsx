@@ -35,6 +35,8 @@ const categoryLabels: Record<Category, string> = {
   [Category.Class12]: "CBSE Class 12",
   [Category.JEE]: "JEE",
   [Category.NEET]: "NEET",
+  [Category.CompetitiveExams]: "Competitive Exams",
+  [Category.SSB]: "SSB",
 };
 
 function PaperCardSkeleton() {
@@ -243,10 +245,14 @@ export default function QuestionPapersPage({
                       onClick={() =>
                         window.open(paper.url, "_blank", "noopener,noreferrer")
                       }
-                      aria-label={`Open CBSE question paper portal for ${paper.title}`}
+                      aria-label={`Open question paper for ${paper.title}`}
                     >
                       <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
-                      Open CBSE Portal
+                      {activeCategory === Category.JEE
+                        ? "Open JEE Portal"
+                        : activeCategory === Category.NEET
+                          ? "Open NEET Portal"
+                          : "Download PDF"}
                     </Button>
                     <Button
                       size="sm"

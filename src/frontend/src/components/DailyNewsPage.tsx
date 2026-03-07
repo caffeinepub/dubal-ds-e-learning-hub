@@ -247,15 +247,15 @@ const CATEGORIES = [
 
 const categoryColors: Record<string, string> = {
   "CBSE Updates":
-    "bg-[oklch(0.88_0.07_142)] text-[oklch(0.25_0.12_142)] border-[oklch(0.78_0.1_142)]",
+    "bg-[oklch(0.82_0.09_142)] text-[oklch(0.18_0.14_142)] border-[oklch(0.68_0.12_142)]",
   "JEE/NEET Exams":
-    "bg-[oklch(0.88_0.07_264)] text-[oklch(0.25_0.12_264)] border-[oklch(0.78_0.1_264)]",
+    "bg-[oklch(0.82_0.09_264)] text-[oklch(0.18_0.14_264)] border-[oklch(0.68_0.12_264)]",
   "Science & Technology":
-    "bg-[oklch(0.88_0.07_200)] text-[oklch(0.25_0.12_200)] border-[oklch(0.78_0.1_200)]",
+    "bg-[oklch(0.82_0.09_200)] text-[oklch(0.18_0.14_200)] border-[oklch(0.68_0.12_200)]",
   "General Knowledge":
-    "bg-[oklch(0.92_0.07_30)] text-[oklch(0.28_0.14_30)] border-[oklch(0.8_0.1_30)]",
+    "bg-[oklch(0.86_0.10_30)] text-[oklch(0.18_0.16_30)] border-[oklch(0.70_0.14_30)]",
   "Career & Opportunities":
-    "bg-[oklch(0.9_0.07_335)] text-[oklch(0.28_0.13_335)] border-[oklch(0.8_0.1_335)]",
+    "bg-[oklch(0.83_0.10_335)] text-[oklch(0.18_0.15_335)] border-[oklch(0.68_0.12_335)]",
 };
 
 export default function DailyNewsPage() {
