@@ -22,84 +22,108 @@ interface NavbarProps {
 const navItems: {
   id: Section;
   label: string;
+  mobileLabel: string;
   icon: React.ReactNode;
+  mobileIcon: React.ReactNode;
   ocid: string;
   color: string;
 }[] = [
   {
     id: "home",
     label: "Home",
+    mobileLabel: "Home",
     icon: <Home className="w-3.5 h-3.5" />,
+    mobileIcon: <Home className="w-5 h-5" />,
     ocid: "nav.home.link",
     color: "oklch(0.55 0.16 142)",
   },
   {
     id: "syllabus",
     label: "Syllabus",
+    mobileLabel: "Syllabus",
     icon: <BookOpen className="w-3.5 h-3.5" />,
+    mobileIcon: <BookOpen className="w-5 h-5" />,
     ocid: "nav.syllabus.link",
     color: "oklch(0.48 0.18 264)",
   },
   {
     id: "papers",
     label: "Papers",
+    mobileLabel: "Papers",
     icon: <FileText className="w-3.5 h-3.5" />,
+    mobileIcon: <FileText className="w-5 h-5" />,
     ocid: "nav.papers.link",
     color: "oklch(0.58 0.19 30)",
   },
   {
     id: "aihelp",
     label: "AI Help",
+    mobileLabel: "AI Help",
     icon: <BrainCircuit className="w-3.5 h-3.5" />,
+    mobileIcon: <BrainCircuit className="w-5 h-5" />,
     ocid: "nav.aihelp.link",
     color: "oklch(0.52 0.17 335)",
   },
   {
     id: "smartnotes",
     label: "Notes",
+    mobileLabel: "Notes",
     icon: <Zap className="w-3.5 h-3.5" />,
+    mobileIcon: <Zap className="w-5 h-5" />,
     ocid: "nav.smartnotes.link",
     color: "oklch(0.75 0.18 52)",
   },
   {
     id: "dictionary",
     label: "Dict",
+    mobileLabel: "Dictionary",
     icon: <BookMarked className="w-3.5 h-3.5" />,
+    mobileIcon: <BookMarked className="w-5 h-5" />,
     ocid: "nav.dictionary.link",
     color: "oklch(0.55 0.18 200)",
   },
   {
     id: "calculator",
     label: "Calc",
+    mobileLabel: "Calculator",
     icon: <Calculator className="w-3.5 h-3.5" />,
+    mobileIcon: <Calculator className="w-5 h-5" />,
     ocid: "nav.calculator.link",
     color: "oklch(0.50 0.17 290)",
   },
   {
     id: "translator",
     label: "Translate",
+    mobileLabel: "Translator",
     icon: <Languages className="w-3.5 h-3.5" />,
+    mobileIcon: <Languages className="w-5 h-5" />,
     ocid: "nav.translator.link",
     color: "oklch(0.52 0.18 165)",
   },
   {
     id: "news",
     label: "News",
+    mobileLabel: "Daily News",
     icon: <Newspaper className="w-3.5 h-3.5" />,
+    mobileIcon: <Newspaper className="w-5 h-5" />,
     ocid: "nav.news.link",
     color: "oklch(0.56 0.19 15)",
   },
   {
     id: "competitive" as Section,
     label: "Govt",
+    mobileLabel: "Govt Exams",
     icon: <Trophy className="w-3.5 h-3.5" />,
+    mobileIcon: <Trophy className="w-5 h-5" />,
     ocid: "nav.competitive.link",
     color: "oklch(0.58 0.19 52)",
   },
   {
     id: "ssb" as Section,
     label: "SSB",
+    mobileLabel: "SSB Prep",
     icon: <Shield className="w-3.5 h-3.5" />,
+    mobileIcon: <Shield className="w-5 h-5" />,
     ocid: "nav.ssb.link",
     color: "oklch(0.45 0.18 264)",
   },
@@ -141,9 +165,9 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
               style={{ transitionProperty: "transform, box-shadow, ring" }}
             >
               <img
-                src="/assets/uploads/Screenshot_2026-02-22-23-49-52-28_6012fa4d4ddec268fc5c7112cbb265e7-2.jpg"
+                src="/assets/generated/dubal-ds-logo-transparent.dim_200x200.png"
                 alt="Dubal DS"
-                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
               />
             </div>
             {/* Decorative spark dot */}
@@ -265,9 +289,9 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
         </nav>
       </div>
 
-      {/* Mobile tab bar — grid so ALL items fit in one screen, no scroll */}
+      {/* Mobile tab bar — 3 rows of 4 items, big icons + full labels */}
       <nav
-        className="lg:hidden w-full grid grid-cols-12 px-1 pt-1 pb-1.5"
+        className="lg:hidden w-full grid grid-cols-4 gap-1.5 px-2 pt-2 pb-3"
         aria-label="Navigation tabs"
         style={{
           borderTop: "1px solid oklch(0.88 0.02 258 / 0.6)",
@@ -284,29 +308,30 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
               data-ocid={item.ocid}
               onClick={() => onNavigate(item.id)}
               className={[
-                "flex flex-col items-center justify-center gap-0.5 py-1 rounded-lg text-[8px] font-semibold transition-all duration-200 w-full",
-                isActive
-                  ? "text-white shadow-sm"
-                  : "text-muted-foreground active:scale-95",
+                "flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold transition-all duration-200 w-full active:scale-95",
+                isActive ? "text-white shadow-md" : "text-foreground",
               ].join(" ")}
               style={
                 isActive
                   ? {
                       background:
                         "linear-gradient(135deg, oklch(0.38 0.14 264) 0%, oklch(0.48 0.18 264) 100%)",
-                      boxShadow: "0 2px 8px oklch(0.38 0.14 264 / 0.4)",
+                      boxShadow: "0 3px 12px oklch(0.38 0.14 264 / 0.45)",
                     }
-                  : {}
+                  : {
+                      background: `linear-gradient(135deg, ${item.color}18 0%, ${item.color}0a 100%)`,
+                      border: `1.5px solid ${item.color}30`,
+                    }
               }
             >
               <span
-                className="flex items-center justify-center transition-transform duration-200"
+                className="flex items-center justify-center"
                 style={!isActive ? { color: item.color } : {}}
               >
-                {item.icon}
+                {item.mobileIcon}
               </span>
-              <span className="leading-none truncate w-full text-center px-0.5">
-                {item.label}
+              <span className="leading-none text-center w-full truncate px-0.5">
+                {item.mobileLabel}
               </span>
             </button>
           );
@@ -318,17 +343,17 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
           target="_blank"
           rel="noopener noreferrer"
           data-ocid="nav.english.link"
-          className="flex flex-col items-center justify-center gap-0.5 py-1 rounded-lg text-[8px] font-semibold transition-all duration-200 w-full active:scale-95"
+          className="flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold transition-all duration-200 w-full active:scale-95"
           style={{
-            color: "oklch(0.58 0.19 52)",
-            border: "1px solid oklch(0.75 0.18 52 / 0.35)",
+            color: "oklch(0.52 0.18 52)",
+            background:
+              "linear-gradient(135deg, oklch(0.75 0.18 52 / 0.15) 0%, oklch(0.58 0.19 30 / 0.08) 100%)",
+            border: "1.5px solid oklch(0.75 0.18 52 / 0.40)",
           }}
         >
-          <span className="flex items-center justify-center">
-            <ExternalLink className="w-3.5 h-3.5" />
-          </span>
-          <span className="leading-none truncate w-full text-center px-0.5">
-            Eng
+          <ExternalLink className="w-5 h-5" />
+          <span className="leading-none text-center w-full truncate px-0.5">
+            English
           </span>
         </a>
       </nav>
