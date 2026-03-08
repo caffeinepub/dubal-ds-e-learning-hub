@@ -27,6 +27,8 @@ const navItems: {
   mobileIcon: React.ReactNode;
   ocid: string;
   color: string;
+  colorLight: string;
+  shadowColor: string;
 }[] = [
   {
     id: "home",
@@ -35,7 +37,9 @@ const navItems: {
     icon: <Home className="w-3.5 h-3.5" />,
     mobileIcon: <Home className="w-5 h-5" />,
     ocid: "nav.home.link",
-    color: "oklch(0.55 0.16 142)",
+    color: "oklch(0.45 0.16 142)",
+    colorLight: "oklch(0.58 0.14 142)",
+    shadowColor: "oklch(0.45 0.16 142 / 0.40)",
   },
   {
     id: "syllabus",
@@ -44,7 +48,9 @@ const navItems: {
     icon: <BookOpen className="w-3.5 h-3.5" />,
     mobileIcon: <BookOpen className="w-5 h-5" />,
     ocid: "nav.syllabus.link",
-    color: "oklch(0.48 0.18 264)",
+    color: "oklch(0.38 0.18 264)",
+    colorLight: "oklch(0.52 0.16 264)",
+    shadowColor: "oklch(0.38 0.18 264 / 0.40)",
   },
   {
     id: "papers",
@@ -53,7 +59,9 @@ const navItems: {
     icon: <FileText className="w-3.5 h-3.5" />,
     mobileIcon: <FileText className="w-5 h-5" />,
     ocid: "nav.papers.link",
-    color: "oklch(0.58 0.19 30)",
+    color: "oklch(0.50 0.19 30)",
+    colorLight: "oklch(0.64 0.17 30)",
+    shadowColor: "oklch(0.50 0.19 30 / 0.40)",
   },
   {
     id: "aihelp",
@@ -62,7 +70,9 @@ const navItems: {
     icon: <BrainCircuit className="w-3.5 h-3.5" />,
     mobileIcon: <BrainCircuit className="w-5 h-5" />,
     ocid: "nav.aihelp.link",
-    color: "oklch(0.52 0.17 335)",
+    color: "oklch(0.44 0.17 335)",
+    colorLight: "oklch(0.58 0.15 335)",
+    shadowColor: "oklch(0.44 0.17 335 / 0.40)",
   },
   {
     id: "smartnotes",
@@ -71,7 +81,9 @@ const navItems: {
     icon: <Zap className="w-3.5 h-3.5" />,
     mobileIcon: <Zap className="w-5 h-5" />,
     ocid: "nav.smartnotes.link",
-    color: "oklch(0.75 0.18 52)",
+    color: "oklch(0.62 0.18 52)",
+    colorLight: "oklch(0.76 0.16 52)",
+    shadowColor: "oklch(0.62 0.18 52 / 0.40)",
   },
   {
     id: "dictionary",
@@ -80,7 +92,9 @@ const navItems: {
     icon: <BookMarked className="w-3.5 h-3.5" />,
     mobileIcon: <BookMarked className="w-5 h-5" />,
     ocid: "nav.dictionary.link",
-    color: "oklch(0.55 0.18 200)",
+    color: "oklch(0.46 0.18 200)",
+    colorLight: "oklch(0.60 0.16 200)",
+    shadowColor: "oklch(0.46 0.18 200 / 0.40)",
   },
   {
     id: "calculator",
@@ -89,7 +103,9 @@ const navItems: {
     icon: <Calculator className="w-3.5 h-3.5" />,
     mobileIcon: <Calculator className="w-5 h-5" />,
     ocid: "nav.calculator.link",
-    color: "oklch(0.50 0.17 290)",
+    color: "oklch(0.42 0.17 290)",
+    colorLight: "oklch(0.56 0.15 290)",
+    shadowColor: "oklch(0.42 0.17 290 / 0.40)",
   },
   {
     id: "translator",
@@ -98,7 +114,9 @@ const navItems: {
     icon: <Languages className="w-3.5 h-3.5" />,
     mobileIcon: <Languages className="w-5 h-5" />,
     ocid: "nav.translator.link",
-    color: "oklch(0.52 0.18 165)",
+    color: "oklch(0.44 0.18 165)",
+    colorLight: "oklch(0.58 0.16 165)",
+    shadowColor: "oklch(0.44 0.18 165 / 0.40)",
   },
   {
     id: "news",
@@ -107,7 +125,9 @@ const navItems: {
     icon: <Newspaper className="w-3.5 h-3.5" />,
     mobileIcon: <Newspaper className="w-5 h-5" />,
     ocid: "nav.news.link",
-    color: "oklch(0.56 0.19 15)",
+    color: "oklch(0.48 0.19 15)",
+    colorLight: "oklch(0.62 0.17 15)",
+    shadowColor: "oklch(0.48 0.19 15 / 0.40)",
   },
   {
     id: "competitive" as Section,
@@ -116,7 +136,9 @@ const navItems: {
     icon: <Trophy className="w-3.5 h-3.5" />,
     mobileIcon: <Trophy className="w-5 h-5" />,
     ocid: "nav.competitive.link",
-    color: "oklch(0.58 0.19 52)",
+    color: "oklch(0.50 0.19 52)",
+    colorLight: "oklch(0.64 0.17 52)",
+    shadowColor: "oklch(0.50 0.19 52 / 0.40)",
   },
   {
     id: "ssb" as Section,
@@ -125,9 +147,61 @@ const navItems: {
     icon: <Shield className="w-3.5 h-3.5" />,
     mobileIcon: <Shield className="w-5 h-5" />,
     ocid: "nav.ssb.link",
-    color: "oklch(0.45 0.18 264)",
+    color: "oklch(0.38 0.18 264)",
+    colorLight: "oklch(0.52 0.16 264)",
+    shadowColor: "oklch(0.38 0.18 264 / 0.40)",
   },
 ];
+
+function SparkAvatar({ size = "desktop" }: { size?: "desktop" | "mobile" }) {
+  const wh = size === "desktop" ? "w-12 h-12" : "w-10 h-10";
+  return (
+    <div
+      className={`relative flex-shrink-0 ${size === "mobile" ? "" : ""}`}
+      aria-hidden="true"
+    >
+      {/* Rotating gradient ring */}
+      <div
+        className="absolute avatar-ring rounded-full"
+        style={{
+          inset: "-3px",
+          background:
+            "conic-gradient(oklch(0.82 0.22 52), oklch(0.70 0.24 335), oklch(0.72 0.20 142), oklch(0.68 0.22 264), oklch(0.78 0.20 200), oklch(0.82 0.22 52))",
+          borderRadius: "50%",
+          zIndex: 0,
+        }}
+      />
+      {/* White border mask */}
+      <div
+        className="absolute rounded-full bg-white"
+        style={{ inset: "-1px", borderRadius: "50%", zIndex: 1 }}
+      />
+      {/* Avatar image with zoom */}
+      <div
+        className={`relative ${wh} rounded-full overflow-hidden avatar-zoom`}
+        style={{ zIndex: 2 }}
+      >
+        <img
+          src="/assets/uploads/Screenshot_2026-02-22-23-49-52-28_6012fa4d4ddec268fc5c7112cbb265e7-1-1.jpg"
+          alt="Profile"
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
+
+      {/* Spark dot particles */}
+      <span className="spark-particle" />
+      <span className="spark-particle" />
+      <span className="spark-particle" />
+      <span className="spark-particle" />
+      <span className="spark-particle" />
+
+      {/* Star/cross sparks */}
+      <span className="spark-star" />
+      <span className="spark-star" />
+      <span className="spark-star" />
+    </div>
+  );
+}
 
 export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
   return (
@@ -143,7 +217,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
       }}
     >
       {/* Top bar — logo + desktop nav */}
-      <div className="container mx-auto px-4 h-[72px] flex items-center gap-4">
+      <div className="container mx-auto px-4 h-[72px] flex items-center gap-4 relative">
         {/* Logo */}
         <button
           type="button"
@@ -210,16 +284,16 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                 className={[
                   "nav-item-enter relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold transition-all duration-200 group/btn whitespace-nowrap",
                   isActive
-                    ? "text-white shadow-md active-nav-glow"
+                    ? "text-white shadow-md"
                     : "text-muted-foreground hover:text-foreground hover:-translate-y-0.5 hover:shadow-sm",
                 ].join(" ")}
                 style={
                   isActive
                     ? {
-                        background:
-                          "linear-gradient(135deg, oklch(0.38 0.14 264) 0%, oklch(0.48 0.18 264) 100%)",
+                        background: `linear-gradient(135deg, ${item.color} 0%, ${item.colorLight} 100%)`,
                         animationDelay: `${index * 0.05}s`,
-                        boxShadow: "0 4px 16px oklch(0.38 0.14 264 / 0.35)",
+                        boxShadow: `0 4px 16px ${item.shadowColor}`,
+                        transform: "scale(1.05)",
                       }
                     : {
                         animationDelay: `${index * 0.05}s`,
@@ -287,6 +361,19 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
             <span className="relative z-10">English</span>
           </a>
         </nav>
+
+        {/* Desktop profile avatar — top-right with sparks (hidden on mobile) */}
+        <div className="hidden lg:flex items-center ml-3 flex-shrink-0">
+          <SparkAvatar size="desktop" />
+        </div>
+
+        {/* Mobile profile avatar — absolute top-right of the header bar */}
+        <div
+          className="lg:hidden absolute top-3 right-4"
+          style={{ zIndex: 10 }}
+        >
+          <SparkAvatar size="mobile" />
+        </div>
       </div>
 
       {/* Mobile tab bar — 3 rows of 4 items, big icons + full labels */}
@@ -314,9 +401,9 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
               style={
                 isActive
                   ? {
-                      background:
-                        "linear-gradient(135deg, oklch(0.38 0.14 264) 0%, oklch(0.48 0.18 264) 100%)",
-                      boxShadow: "0 3px 12px oklch(0.38 0.14 264 / 0.45)",
+                      background: `linear-gradient(135deg, ${item.color} 0%, ${item.colorLight} 100%)`,
+                      boxShadow: `0 3px 12px ${item.shadowColor}`,
+                      transform: "scale(1.03)",
                     }
                   : {
                       background: `linear-gradient(135deg, ${item.color}18 0%, ${item.color}0a 100%)`,
