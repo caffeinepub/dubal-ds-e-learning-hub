@@ -5,6 +5,9 @@ import {
   Calculator,
   ExternalLink,
   FileText,
+  FlaskConical,
+  GraduationCap,
+  HeartPulse,
   Home,
   Languages,
   Newspaper,
@@ -40,6 +43,50 @@ const navItems: {
     color: "oklch(0.45 0.16 142)",
     colorLight: "oklch(0.58 0.14 142)",
     shadowColor: "oklch(0.45 0.16 142 / 0.40)",
+  },
+  {
+    id: "class10" as Section,
+    label: "Class 10",
+    mobileLabel: "Class 10",
+    icon: <GraduationCap className="w-3.5 h-3.5" />,
+    mobileIcon: <GraduationCap className="w-5 h-5" />,
+    ocid: "nav.class10.link",
+    color: "oklch(0.45 0.16 142)",
+    colorLight: "oklch(0.58 0.14 142)",
+    shadowColor: "oklch(0.45 0.16 142 / 0.40)",
+  },
+  {
+    id: "class12" as Section,
+    label: "Class 12",
+    mobileLabel: "Class 12",
+    icon: <GraduationCap className="w-3.5 h-3.5" />,
+    mobileIcon: <GraduationCap className="w-5 h-5" />,
+    ocid: "nav.class12.link",
+    color: "oklch(0.38 0.18 264)",
+    colorLight: "oklch(0.52 0.16 264)",
+    shadowColor: "oklch(0.38 0.18 264 / 0.40)",
+  },
+  {
+    id: "jee" as Section,
+    label: "JEE",
+    mobileLabel: "JEE",
+    icon: <FlaskConical className="w-3.5 h-3.5" />,
+    mobileIcon: <FlaskConical className="w-5 h-5" />,
+    ocid: "nav.jee.link",
+    color: "oklch(0.50 0.19 30)",
+    colorLight: "oklch(0.64 0.17 30)",
+    shadowColor: "oklch(0.50 0.19 30 / 0.40)",
+  },
+  {
+    id: "neet" as Section,
+    label: "NEET",
+    mobileLabel: "NEET",
+    icon: <HeartPulse className="w-3.5 h-3.5" />,
+    mobileIcon: <HeartPulse className="w-5 h-5" />,
+    ocid: "nav.neet.link",
+    color: "oklch(0.44 0.17 335)",
+    colorLight: "oklch(0.58 0.15 335)",
+    shadowColor: "oklch(0.44 0.17 335 / 0.40)",
   },
   {
     id: "syllabus",
@@ -182,7 +229,7 @@ function SparkAvatar({ size = "desktop" }: { size?: "desktop" | "mobile" }) {
         style={{ zIndex: 2 }}
       >
         <img
-          src="/assets/uploads/Screenshot_2026-02-22-23-49-52-28_6012fa4d4ddec268fc5c7112cbb265e7-1-1.jpg"
+          src="/assets/uploads/Screenshot_2026-02-22-23-49-52-28_6012fa4d4ddec268fc5c7112cbb265e7-2-1.jpg"
           alt="Profile"
           className="w-full h-full object-cover object-center"
         />

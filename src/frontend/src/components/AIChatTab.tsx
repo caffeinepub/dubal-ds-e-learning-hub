@@ -1,18 +1,88 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Bot,
   Check,
   Copy,
+  Mic,
+  MicOff,
   RefreshCw,
   Send,
   Sparkles,
   Trash2,
   User,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+
+// ── Web Speech API types ──────────────────────────────────────────────────────
+interface ISpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  start(): void;
+  stop(): void;
+  onresult: ((event: ISpeechRecognitionEvent) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+}
+interface ISpeechRecognitionEvent {
+  results: { [index: number]: { [index: number]: { transcript: string } } };
+}
+type SpeechRecognitionConstructor = new () => ISpeechRecognition;
+
+function getSpeechRecognition(): SpeechRecognitionConstructor | null {
+  const w = window as unknown as {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  };
+  return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
+}
+
+// ── Voice Search Hook ─────────────────────────────────────────────────────────
+function useVoiceInput(onResult: (text: string) => void) {
+  const [isListening, setIsListening] = useState(false);
+  const [isSupported, setIsSupported] = useState(false);
+  const recognitionRef = useRef<ISpeechRecognition | null>(null);
+
+  useEffect(() => {
+    const SpeechRecognitionAPI = getSpeechRecognition();
+    if (SpeechRecognitionAPI) {
+      setIsSupported(true);
+      const rec = new SpeechRecognitionAPI();
+      rec.continuous = false;
+      rec.interimResults = false;
+      rec.lang = "en-IN";
+      rec.onresult = (event: ISpeechRecognitionEvent) => {
+        const transcript = event.results[0][0].transcript;
+        onResult(transcript);
+        setIsListening(false);
+      };
+      rec.onerror = () => setIsListening(false);
+      rec.onend = () => setIsListening(false);
+      recognitionRef.current = rec;
+    }
+  }, [onResult]);
+
+  const startListening = useCallback(() => {
+    if (!recognitionRef.current || isListening) return;
+    try {
+      recognitionRef.current.start();
+      setIsListening(true);
+    } catch {
+      setIsListening(false);
+    }
+  }, [isListening]);
+
+  const stopListening = useCallback(() => {
+    recognitionRef.current?.stop();
+    setIsListening(false);
+  }, []);
+
+  return { isListening, isSupported, startListening, stopListening };
+}
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface ChatMessage {
@@ -61,6 +131,9 @@ async function fetchAIResponse(userMessage: string): Promise<string> {
   return text.trim();
 }
 
+const AI_AVATAR_SRC =
+  "/assets/uploads/Screenshot_2026-02-22-23-49-52-28_6012fa4d4ddec268fc5c7112cbb265e7-2-1.jpg";
+
 // ── Typing Indicator ──────────────────────────────────────────────────────────
 function TypingIndicator() {
   return (
@@ -68,8 +141,12 @@ function TypingIndicator() {
       className="flex items-end gap-3 mb-4"
       data-ocid="aihelp.chat.loading_state"
     >
-      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center flex-shrink-0 shadow-md">
-        <Bot className="w-4 h-4 text-white" />
+      <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 shadow-md ring-2 ring-indigo-400/50">
+        <img
+          src={AI_AVATAR_SRC}
+          alt="डुबल डी एस सेवा केंद्र"
+          className="w-full h-full object-cover object-center"
+        />
       </div>
       <div className="bg-card border border-border rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
         <div className="flex items-center gap-1.5 h-5">
@@ -122,19 +199,19 @@ function MessageBubble({
       data-ocid={`aihelp.chat.message.${index + 1}`}
     >
       {/* Avatar */}
-      <div
-        className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 shadow-md ${
-          isUser
-            ? "bg-gradient-to-br from-violet-500 to-indigo-600"
-            : "bg-gradient-to-br from-indigo-500 to-violet-600"
-        }`}
-      >
-        {isUser ? (
+      {isUser ? (
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md">
           <User className="w-4 h-4 text-white" />
-        ) : (
-          <Bot className="w-4 h-4 text-white" />
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 shadow-md ring-2 ring-indigo-400/50">
+          <img
+            src={AI_AVATAR_SRC}
+            alt="डुबल डी एस सेवा केंद्र"
+            className="w-full h-full object-cover object-center"
+          />
+        </div>
+      )}
 
       {/* Bubble */}
       <div
@@ -194,7 +271,7 @@ function EmptyState({
       data-ocid="aihelp.chat.empty_state"
     >
       <motion.div
-        className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 border border-indigo-500/20 flex items-center justify-center mb-4"
+        className="w-20 h-20 rounded-full overflow-hidden mb-4 shadow-xl ring-4 ring-indigo-400/40"
         animate={{ scale: [1, 1.05, 1] }}
         transition={{
           duration: 3,
@@ -202,16 +279,29 @@ function EmptyState({
           ease: "easeInOut",
         }}
       >
-        <Sparkles className="w-8 h-8 text-indigo-500" />
+        <img
+          src={AI_AVATAR_SRC}
+          alt="डुबल डी एस सेवा केंद्र"
+          className="w-full h-full object-cover object-center"
+        />
       </motion.div>
 
-      <h3 className="font-display font-bold text-lg text-foreground mb-1">
-        Ask me anything!
+      <h3 className="font-display font-bold text-xl text-foreground mb-1">
+        डुबल डी एस सेवा केंद्र मे आपका स्वागत है
       </h3>
       <p className="text-sm text-muted-foreground mb-6 max-w-xs leading-relaxed">
-        I'm your AI study assistant powered by advanced AI. Ask about any
-        subject, exam, or topic.
+        कोई भी सवाल पूछें — पढ़ाई, परीक्षा, सामान्य ज्ञान, या कुछ भी।
+        <br />
+        <span className="text-xs opacity-70">
+          Ask anything in English or Hindi
+        </span>
       </p>
+      <div className="flex items-center gap-1.5 mb-4">
+        <Sparkles className="w-4 h-4 text-indigo-500" />
+        <span className="text-xs font-semibold text-indigo-600">
+          Powered by Advanced AI
+        </span>
+      </div>
 
       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
         Try these questions
@@ -237,9 +327,18 @@ export default function AIChatTab() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [voiceReplyEnabled, setVoiceReplyEnabled] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  const handleVoiceResult = useCallback((text: string) => {
+    setInputValue((prev) => (prev ? `${prev} ${text}` : text));
+    setTimeout(() => textareaRef.current?.focus(), 100);
+  }, []);
+
+  const { isListening, isSupported, startListening, stopListening } =
+    useVoiceInput(handleVoiceResult);
 
   // Auto-scroll to bottom
   const scrollToBottom = useCallback(() => {
@@ -262,6 +361,19 @@ export default function AIChatTab() {
     ta.style.height = "auto";
     ta.style.height = `${Math.min(ta.scrollHeight, 120)}px`;
   };
+
+  const speakText = useCallback(
+    (text: string) => {
+      if (!voiceReplyEnabled || !window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-IN";
+      utterance.rate = 0.9;
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+    },
+    [voiceReplyEnabled],
+  );
 
   const sendMessage = useCallback(
     async (text: string) => {
@@ -293,6 +405,7 @@ export default function AIChatTab() {
           timestamp: new Date(),
         };
         setMessages((prev) => [...prev, aiMsg]);
+        speakText(responseText);
       } catch {
         const errMsg: ChatMessage = {
           id: `err-${Date.now()}`,
@@ -307,7 +420,7 @@ export default function AIChatTab() {
         setTimeout(() => textareaRef.current?.focus(), 100);
       }
     },
-    [isLoading],
+    [isLoading, speakText],
   );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -336,12 +449,16 @@ export default function AIChatTab() {
       {/* Chat header bar */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-card/50 backdrop-blur-sm flex-shrink-0">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
-            <Bot className="w-3.5 h-3.5 text-white" />
+          <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 shadow-md ring-2 ring-indigo-400/60">
+            <img
+              src={AI_AVATAR_SRC}
+              alt="डुबल डी एस सेवा केंद्र"
+              className="w-full h-full object-cover object-center"
+            />
           </div>
           <div>
             <p className="text-sm font-semibold text-foreground leading-tight">
-              AI Study Assistant
+              डुबल डी एस सेवा केंद्र
             </p>
             <p className="text-xs text-green-500 font-medium leading-tight flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
@@ -349,18 +466,54 @@ export default function AIChatTab() {
             </p>
           </div>
         </div>
-        {messages.length > 0 && (
+        <div className="flex items-center gap-1">
+          {/* Voice reply toggle (TTS) */}
           <Button
             variant="ghost"
             size="sm"
-            onClick={handleClear}
-            className="text-muted-foreground hover:text-destructive gap-1.5 h-8"
-            data-ocid="aihelp.chat.clear_button"
+            onClick={() => {
+              const next = !voiceReplyEnabled;
+              setVoiceReplyEnabled(next);
+              if (!next) window.speechSynthesis?.cancel();
+            }}
+            className={`gap-1.5 h-8 px-2 transition-colors ${
+              voiceReplyEnabled
+                ? "text-indigo-600 bg-indigo-50 hover:bg-indigo-100"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+            data-ocid="aihelp.voice.toggle"
+            aria-label={
+              voiceReplyEnabled ? "Disable voice reply" : "Enable voice reply"
+            }
+            title={
+              voiceReplyEnabled
+                ? "Voice reply ON — click to mute"
+                : "Enable AI voice reply"
+            }
           >
-            <Trash2 className="w-3.5 h-3.5" />
-            Clear
+            {voiceReplyEnabled ? (
+              <Volume2 className="w-3.5 h-3.5" />
+            ) : (
+              <VolumeX className="w-3.5 h-3.5" />
+            )}
+            <span className="text-xs hidden sm:inline">
+              {voiceReplyEnabled ? "Voice ON" : "Voice OFF"}
+            </span>
           </Button>
-        )}
+
+          {messages.length > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleClear}
+              className="text-muted-foreground hover:text-destructive gap-1.5 h-8"
+              data-ocid="aihelp.chat.clear_button"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              Clear
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Messages area */}
@@ -389,7 +542,11 @@ export default function AIChatTab() {
               value={inputValue}
               onChange={handleTextareaChange}
               onKeyDown={handleKeyDown}
-              placeholder="Ask any question… (Enter to send, Shift+Enter for new line)"
+              placeholder={
+                isListening
+                  ? "Listening… speak now"
+                  : "Ask any question… (Enter to send, Shift+Enter for new line)"
+              }
               className="resize-none min-h-[44px] max-h-[120px] py-3 pr-4 text-sm leading-relaxed rounded-xl border-border focus:border-indigo-500/50 focus:ring-indigo-500/20"
               disabled={isLoading}
               data-ocid="aihelp.chat.input"
@@ -405,6 +562,29 @@ export default function AIChatTab() {
               </span>
             )}
           </div>
+
+          {/* Voice input button */}
+          {isSupported && (
+            <Button
+              type="button"
+              onClick={isListening ? stopListening : startListening}
+              disabled={isLoading}
+              className={`h-11 w-11 p-0 rounded-xl border-0 flex-shrink-0 shadow-md transition-all duration-200 ${
+                isListening
+                  ? "bg-red-500 hover:bg-red-400 animate-pulse"
+                  : "bg-gradient-to-br from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500"
+              }`}
+              data-ocid="aihelp.chat.voice_button"
+              aria-label={isListening ? "Stop listening" : "Voice input"}
+              title={isListening ? "Stop voice input" : "Speak your question"}
+            >
+              {isListening ? (
+                <MicOff className="w-4 h-4 text-white" />
+              ) : (
+                <Mic className="w-4 h-4 text-white" />
+              )}
+            </Button>
+          )}
 
           <Button
             onClick={() => sendMessage(inputValue)}
@@ -422,7 +602,14 @@ export default function AIChatTab() {
         </div>
 
         <p className="text-xs text-muted-foreground mt-2 text-center">
-          AI can make mistakes. Verify important answers from textbooks.
+          {isSupported ? (
+            <>
+              Tap <Mic className="w-3 h-3 inline" /> to speak your question · AI
+              can make mistakes
+            </>
+          ) : (
+            "AI can make mistakes. Verify important answers from textbooks."
+          )}
         </p>
       </div>
     </div>

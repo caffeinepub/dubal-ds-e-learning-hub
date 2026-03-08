@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/sonner";
-import { Suspense, lazy, useCallback, useState } from "react";
+import { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import { Category } from "./types";
 
@@ -24,6 +24,7 @@ const CompetitiveExamsPage = lazy(
   () => import("./components/CompetitiveExamsPage"),
 );
 const SSBPage = lazy(() => import("./components/SSBPage"));
+const ClassPage = lazy(() => import("./components/ClassPage"));
 
 function PageLoader() {
   return (
@@ -50,7 +51,11 @@ export type Section =
   | "translator"
   | "news"
   | "competitive"
-  | "ssb";
+  | "ssb"
+  | "class10"
+  | "class12"
+  | "jee"
+  | "neet";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("home");
@@ -60,6 +65,28 @@ export default function App() {
   const [smartNotesTopic, setSmartNotesTopic] = useState<string | undefined>(
     undefined,
   );
+
+  // AI voice welcome greeting — plays once per browser session on first load
+  useEffect(() => {
+    if (sessionStorage.getItem("welcomed")) return;
+    const speak = () => {
+      const synth = window.speechSynthesis;
+      if (!synth) return;
+      // Small delay so voices are loaded
+      setTimeout(() => {
+        const utterance = new SpeechSynthesisUtterance(
+          "Welcome to Dubal DS E-learning Hub",
+        );
+        utterance.lang = "en-IN";
+        utterance.rate = 0.9;
+        utterance.pitch = 1.05;
+        synth.cancel();
+        synth.speak(utterance);
+        sessionStorage.setItem("welcomed", "1");
+      }, 1200);
+    };
+    speak();
+  }, []);
 
   const navigateToSection = useCallback(
     (section: Section, category?: Category) => {
@@ -121,6 +148,27 @@ export default function App() {
           {activeSection === "news" && <DailyNewsPage />}
           {activeSection === "competitive" && <CompetitiveExamsPage />}
           {activeSection === "ssb" && <SSBPage />}
+          {activeSection === "class10" && (
+            <ClassPage
+              category={Category.Class10}
+              onNavigate={navigateToSection}
+            />
+          )}
+          {activeSection === "class12" && (
+            <ClassPage
+              category={Category.Class12}
+              onNavigate={navigateToSection}
+            />
+          )}
+          {activeSection === "jee" && (
+            <ClassPage category={Category.JEE} onNavigate={navigateToSection} />
+          )}
+          {activeSection === "neet" && (
+            <ClassPage
+              category={Category.NEET}
+              onNavigate={navigateToSection}
+            />
+          )}
         </Suspense>
       </main>
 

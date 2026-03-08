@@ -6,13 +6,85 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   BrainCircuit,
   ChevronRight,
+  FileText,
   Lightbulb,
   MessageSquare,
+  Mic,
+  MicOff,
   Search,
   Sparkles,
+  Upload,
+  X,
   Zap,
 } from "lucide-react";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
+// ── Web Speech API types ──────────────────────────────────────────────────────
+interface ISpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  start(): void;
+  stop(): void;
+  onresult: ((event: ISpeechRecognitionEvent) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+}
+interface ISpeechRecognitionEvent {
+  results: { [index: number]: { [index: number]: { transcript: string } } };
+}
+type SpeechRecognitionConstructor = new () => ISpeechRecognition;
+
+function getSpeechRecognition(): SpeechRecognitionConstructor | null {
+  const w = window as unknown as {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  };
+  return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
+}
+
+// ── Voice Search Hook ─────────────────────────────────────────────────────────
+function useVoiceSearch(onResult: (text: string) => void) {
+  const [isListening, setIsListening] = useState(false);
+  const [isSupported, setIsSupported] = useState(false);
+  const recognitionRef = useRef<ISpeechRecognition | null>(null);
+
+  useEffect(() => {
+    const SpeechRecognitionAPI = getSpeechRecognition();
+    if (SpeechRecognitionAPI) {
+      setIsSupported(true);
+      const rec = new SpeechRecognitionAPI();
+      rec.continuous = false;
+      rec.interimResults = false;
+      rec.lang = "en-IN";
+      rec.onresult = (event: ISpeechRecognitionEvent) => {
+        const transcript = event.results[0][0].transcript;
+        onResult(transcript);
+        setIsListening(false);
+      };
+      rec.onerror = () => setIsListening(false);
+      rec.onend = () => setIsListening(false);
+      recognitionRef.current = rec;
+    }
+  }, [onResult]);
+
+  const startListening = useCallback(() => {
+    if (!recognitionRef.current || isListening) return;
+    try {
+      recognitionRef.current.start();
+      setIsListening(true);
+    } catch {
+      setIsListening(false);
+    }
+  }, [isListening]);
+
+  const stopListening = useCallback(() => {
+    recognitionRef.current?.stop();
+    setIsListening(false);
+  }, []);
+
+  return { isListening, isSupported, startListening, stopListening };
+}
 import { QA_BANK } from "../data/qaBank";
 import { type TopicAnswer, searchTopics } from "../data/topicAnswers";
 import { Category } from "../hooks/useQueries";
@@ -138,6 +210,18 @@ function QuickSearchTab({
   const [hasSearched, setHasSearched] = useState(false);
   const askInputRef = useRef<HTMLInputElement>(null);
 
+  const handleVoiceResult = useCallback((text: string) => {
+    setAskInput(text);
+    // Auto-search after voice input
+    setTimeout(() => {
+      runSearch(text);
+    }, 200);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const { isListening, isSupported, startListening, stopListening } =
+    useVoiceSearch(handleVoiceResult);
+
   const runSearch = (q: string) => {
     setIsThinking(true);
     setTopicResult(null);
@@ -206,12 +290,38 @@ function QuickSearchTab({
               value={askInput}
               onChange={(e) => setAskInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleAsk()}
-              placeholder="e.g. What is Newton's second law? Explain photosynthesis..."
+              placeholder={
+                isListening
+                  ? "Listening… speak now"
+                  : "e.g. What is Newton's second law? Explain photosynthesis..."
+              }
               className="pl-10 h-12 text-base"
               data-ocid="aihelp.askai.input"
               aria-label="Search topics"
             />
           </div>
+          {/* Voice search button */}
+          {isSupported && (
+            <Button
+              type="button"
+              size="lg"
+              onClick={isListening ? stopListening : startListening}
+              className={`h-12 w-12 p-0 flex-shrink-0 transition-all duration-200 ${
+                isListening
+                  ? "bg-red-500 hover:bg-red-400 animate-pulse border-0"
+                  : "bg-gradient-to-br from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 border-0"
+              }`}
+              data-ocid="aihelp.askai.voice_button"
+              aria-label={isListening ? "Stop voice search" : "Voice search"}
+              title={isListening ? "Stop listening" : "Speak your question"}
+            >
+              {isListening ? (
+                <MicOff className="w-5 h-5 text-white" />
+              ) : (
+                <Mic className="w-5 h-5 text-white" />
+              )}
+            </Button>
+          )}
           <Button
             size="lg"
             onClick={handleAsk}
@@ -433,6 +543,332 @@ function QuickSearchTab({
   );
 }
 
+// ── Document Upload Tab ───────────────────────────────────────────────────────
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+
+function extractTextFromArrayBuffer(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  let text = "";
+  let run = "";
+  for (let i = 0; i < bytes.length; i++) {
+    const c = bytes[i];
+    // Printable ASCII (space to ~)
+    if (c >= 32 && c <= 126) {
+      run += String.fromCharCode(c);
+    } else {
+      if (run.length > 4) text += `${run} `;
+      run = "";
+    }
+  }
+  if (run.length > 4) text += run;
+  return text.replace(/\s{3,}/g, "  ").trim();
+}
+
+function highlightMatches(text: string, query: string): React.ReactNode[] {
+  if (!query.trim()) return [text];
+  const parts = text.split(
+    new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi"),
+  );
+  return parts.map((part, i) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      // biome-ignore lint/suspicious/noArrayIndexKey: split parts have no stable identity
+      <mark key={i} className="bg-yellow-200 text-yellow-900 rounded px-0.5">
+        {part}
+      </mark>
+    ) : (
+      part
+    ),
+  );
+}
+
+function DocumentUploadTab() {
+  const [file, setFile] = useState<File | null>(null);
+  const [docText, setDocText] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const processFile = (selectedFile: File) => {
+    setError("");
+    setDocText("");
+    setSearchQuery("");
+
+    if (selectedFile.size > MAX_FILE_SIZE) {
+      setError("File is too large. Maximum size is 5 MB.");
+      return;
+    }
+
+    const ext = selectedFile.name.split(".").pop()?.toLowerCase();
+    if (ext !== "txt" && ext !== "pdf") {
+      setError("Only .txt and .pdf files are supported.");
+      return;
+    }
+
+    setFile(selectedFile);
+    setIsLoading(true);
+
+    const reader = new FileReader();
+
+    if (ext === "txt") {
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setDocText(result || "(Empty file)");
+        setIsLoading(false);
+      };
+      reader.onerror = () => {
+        setError("Failed to read file.");
+        setIsLoading(false);
+      };
+      reader.readAsText(selectedFile);
+    } else {
+      reader.onload = (e) => {
+        const buffer = e.target?.result as ArrayBuffer;
+        const extracted = extractTextFromArrayBuffer(buffer);
+        setDocText(
+          extracted.length > 50
+            ? extracted
+            : "(Could not extract readable text from this PDF. The file may be scanned or image-based.)",
+        );
+        setIsLoading(false);
+      };
+      reader.onerror = () => {
+        setError("Failed to read PDF file.");
+        setIsLoading(false);
+      };
+      reader.readAsArrayBuffer(selectedFile);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0];
+    if (selected) processFile(selected);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const dropped = e.dataTransfer.files?.[0];
+    if (dropped) processFile(dropped);
+  };
+
+  const handleClear = () => {
+    setFile(null);
+    setDocText("");
+    setSearchQuery("");
+    setError("");
+    setIsLoading(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const formatSize = (bytes: number) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
+  const matchCount = searchQuery.trim()
+    ? (
+        docText.match(
+          new RegExp(searchQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"),
+        ) || []
+      ).length
+    : 0;
+
+  return (
+    <div className="py-6">
+      {/* Drop zone / file picker */}
+      {!file && !isLoading && (
+        <div
+          onDragOver={(e) => {
+            e.preventDefault();
+            setIsDragging(true);
+          }}
+          onDragLeave={() => setIsDragging(false)}
+          onDrop={handleDrop}
+          className={`relative rounded-2xl border-2 border-dashed transition-all duration-200 ${
+            isDragging
+              ? "border-primary bg-primary/10 scale-[1.01]"
+              : "border-border bg-card hover:border-primary/50 hover:bg-primary/5"
+          }`}
+          style={{ minHeight: 220 }}
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".txt,.pdf"
+            onChange={handleFileChange}
+            className="sr-only"
+            data-ocid="aihelp.uploaddoc.upload_button"
+            aria-label="Upload document file"
+            id="doc-upload-input"
+          />
+          <label
+            htmlFor="doc-upload-input"
+            className="flex flex-col items-center justify-center py-14 px-6 text-center cursor-pointer w-full h-full"
+          >
+            <div
+              className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-colors ${
+                isDragging
+                  ? "bg-primary/20 text-primary"
+                  : "bg-secondary text-muted-foreground"
+              }`}
+            >
+              <Upload className="w-7 h-7" />
+            </div>
+            <p className="font-display font-bold text-lg text-foreground mb-1">
+              {isDragging
+                ? "Drop your file here"
+                : "Drag & drop or click to upload"}
+            </p>
+            <p className="text-sm text-muted-foreground mb-4">
+              Supports <strong>.txt</strong> and <strong>.pdf</strong> files up
+              to 5 MB
+            </p>
+            <div className="flex gap-2 justify-center flex-wrap">
+              <span className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-secondary border border-border text-muted-foreground font-medium">
+                <FileText className="w-3.5 h-3.5" /> .txt — Text files
+              </span>
+              <span className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-secondary border border-border text-muted-foreground font-medium">
+                <FileText className="w-3.5 h-3.5" /> .pdf — PDF documents
+              </span>
+            </div>
+          </label>
+        </div>
+      )}
+
+      {/* Error state */}
+      {error && (
+        <div
+          className="mt-4 flex items-start gap-3 rounded-xl bg-destructive/10 border border-destructive/30 p-4"
+          data-ocid="aihelp.uploaddoc.error_state"
+        >
+          <X className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="text-sm font-semibold text-destructive">{error}</p>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleClear}
+            className="text-destructive h-7 px-2"
+          >
+            Dismiss
+          </Button>
+        </div>
+      )}
+
+      {/* Loading state */}
+      {isLoading && (
+        <div
+          className="flex flex-col items-center justify-center py-14 gap-4"
+          data-ocid="aihelp.uploaddoc.loading_state"
+        >
+          <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+            <Sparkles className="w-6 h-6 text-primary animate-spin" />
+          </div>
+          <div className="text-center">
+            <p className="font-semibold text-foreground">Reading document…</p>
+            <p className="text-sm text-muted-foreground mt-1">
+              Extracting text content
+            </p>
+          </div>
+          <div className="w-full max-w-xs space-y-2">
+            <Skeleton className="h-3 w-full rounded-full" />
+            <Skeleton className="h-3 w-4/5 rounded-full" />
+            <Skeleton className="h-3 w-3/5 rounded-full" />
+          </div>
+        </div>
+      )}
+
+      {/* Document viewer */}
+      {file && docText && !isLoading && (
+        <div className="space-y-4">
+          {/* File info bar */}
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border">
+            <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+              <FileText className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-sm text-foreground truncate">
+                {file.name}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {formatSize(file.size)} ·{" "}
+                {docText.split(/\s+/).length.toLocaleString()} words extracted
+              </p>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleClear}
+              className="flex-shrink-0 text-muted-foreground hover:text-destructive"
+              data-ocid="aihelp.uploaddoc.close_button"
+              aria-label="Clear document"
+            >
+              <X className="w-4 h-4 mr-1" />
+              Clear
+            </Button>
+          </div>
+
+          {/* Search within doc */}
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+              <Input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search within document…"
+                className="pl-10 h-11"
+                data-ocid="aihelp.uploaddoc.search_input"
+                aria-label="Search within document"
+              />
+            </div>
+            {searchQuery && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSearchQuery("")}
+                className="h-11 px-3 text-muted-foreground"
+              >
+                <X className="w-3.5 h-3.5" />
+              </Button>
+            )}
+          </div>
+
+          {/* Match count */}
+          {searchQuery.trim() && (
+            <p className="text-xs text-muted-foreground">
+              {matchCount > 0 ? (
+                <span className="text-primary font-semibold">
+                  {matchCount} match{matchCount !== 1 ? "es" : ""}
+                </span>
+              ) : (
+                <span className="text-destructive font-semibold">
+                  No matches found
+                </span>
+              )}{" "}
+              for &quot;{searchQuery}&quot;
+            </p>
+          )}
+
+          {/* Extracted text panel */}
+          <div
+            className="overflow-auto rounded-2xl border border-border bg-card p-5 text-sm text-foreground leading-relaxed font-mono whitespace-pre-wrap break-words"
+            style={{ maxHeight: "50vh" }}
+            data-ocid="aihelp.uploaddoc.panel"
+          >
+            {searchQuery.trim()
+              ? highlightMatches(docText, searchQuery)
+              : docText}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Main Page Component ───────────────────────────────────────────────────────
 export default function AIHelpPage({
   activeCategory,
@@ -478,7 +914,7 @@ export default function AIHelpPage({
       {/* Tabbed content */}
       <div className="flex-1 flex flex-col container mx-auto px-4 py-6">
         <Tabs defaultValue="aichat" className="flex flex-col flex-1">
-          <TabsList className="grid grid-cols-2 w-full max-w-md mb-6 bg-secondary/60 p-1 rounded-xl">
+          <TabsList className="grid grid-cols-3 w-full max-w-lg mb-6 bg-secondary/60 p-1 rounded-xl">
             <TabsTrigger
               value="aichat"
               className="rounded-lg font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-violet-600 data-[state=active]:text-white gap-2"
@@ -494,6 +930,14 @@ export default function AIHelpPage({
             >
               <Search className="w-4 h-4" />
               Quick Search
+            </TabsTrigger>
+            <TabsTrigger
+              value="uploaddoc"
+              className="rounded-lg font-semibold gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-teal-600 data-[state=active]:text-white"
+              data-ocid="aihelp.uploaddoc.tab"
+            >
+              <Upload className="w-4 h-4" />
+              Upload Doc
             </TabsTrigger>
           </TabsList>
 
@@ -516,6 +960,11 @@ export default function AIHelpPage({
               activeCategory={activeCategory}
               onCategoryChange={onCategoryChange}
             />
+          </TabsContent>
+
+          {/* Upload Doc Tab */}
+          <TabsContent value="uploaddoc" className="mt-0">
+            <DocumentUploadTab />
           </TabsContent>
         </Tabs>
       </div>

@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowRight,
   BookMarked,
@@ -598,9 +600,9 @@ export default function HomePage({
         </div>
       </div>
 
-      {/* ── Category Cards ───────────────────────────────── */}
+      {/* ── Category Tabs ───────────────────────────────── */}
       <section className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
+        <div className="text-center mb-10">
           <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground mb-3">
             Choose Your Exam
           </h2>
@@ -610,16 +612,218 @@ export default function HomePage({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <Tabs defaultValue="aihelp" className="w-full">
+          {/* Tab bar */}
+          <TabsList className="flex w-full flex-wrap gap-1 h-auto bg-secondary/40 p-2 rounded-2xl mb-8 border border-border">
+            <TabsTrigger
+              value="aihelp"
+              data-ocid="home.tab.aihelp"
+              className="flex-1 min-w-[90px] flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-bold text-sm transition-all data-[state=active]:shadow-md data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-600 data-[state=active]:to-indigo-600 data-[state=active]:text-white"
+            >
+              <Sparkles className="w-4 h-4" />
+              AI Help
+            </TabsTrigger>
+            {categoryCards.map((card) => (
+              <TabsTrigger
+                key={card.id}
+                value={card.id}
+                data-ocid={`home.tab.${card.id.toLowerCase()}`}
+                className="flex-1 min-w-[90px] flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-bold text-sm transition-all data-[state=active]:shadow-md data-[state=active]:text-white"
+                style={
+                  {
+                    // CSS custom properties to be applied via data-state in JS
+                  } as React.CSSProperties
+                }
+                onFocus={(e) => {
+                  if (e.currentTarget.dataset.state === "active") return;
+                }}
+              >
+                <BookOpen className="w-4 h-4" />
+                {card.id === Category.Class10
+                  ? "Class 10"
+                  : card.id === Category.Class12
+                    ? "Class 12"
+                    : card.title}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
+          {/* AI Help Tab */}
+          <TabsContent value="aihelp" className="mt-0">
+            <div className="rounded-2xl border border-border overflow-hidden">
+              {/* Header */}
+              <div
+                className="px-6 py-8 md:px-10"
+                style={{
+                  background:
+                    "linear-gradient(135deg, oklch(0.18 0.08 264) 0%, oklch(0.25 0.12 276) 60%, oklch(0.20 0.07 290) 100%)",
+                }}
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-white text-lg leading-tight">
+                      AI Study Assistant
+                    </p>
+                    <p className="text-white/60 text-xs">
+                      Powered by AI · Any subject, any question
+                    </p>
+                  </div>
+                </div>
+                <p className="text-white/80 text-sm max-w-lg leading-relaxed mb-5">
+                  Ask any question — get instant Smart Notes, Q&A answers, and
+                  chapter summaries powered by AI
+                </p>
+
+                {/* Quick topic chips */}
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {smartNoteTopics.map((topic) => (
+                    <button
+                      key={topic}
+                      type="button"
+                      onClick={() => onSmartNotesSearch?.(topic.toLowerCase())}
+                      className="text-xs px-3 py-1.5 rounded-full border border-white/20 text-white/80 hover:text-white hover:border-white/40 transition-all font-medium"
+                      style={{ background: "oklch(1 0 0 / 0.08)" }}
+                    >
+                      {topic}
+                    </button>
+                  ))}
+                </div>
+
+                <Button
+                  onClick={() => onCategorySelect(Category.Class10, "aihelp")}
+                  data-ocid="home.aihelp.primary_button"
+                  className="flex items-center gap-2 font-bold px-6 py-2.5 rounded-xl border-0"
+                  style={{
+                    background: "oklch(0.75 0.18 52)",
+                    color: "oklch(0.15 0.04 52)",
+                  }}
+                >
+                  Go to AI Help <ArrowRight className="w-4 h-4" />
+                </Button>
+              </div>
+
+              {/* Feature highlights */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border bg-card">
+                {[
+                  {
+                    icon: <Zap className="w-5 h-5" />,
+                    title: "Smart Notes",
+                    desc: "600+ word detailed notes for every chapter",
+                    color: "oklch(0.62 0.18 52)",
+                    bg: "oklch(0.95 0.05 52)",
+                  },
+                  {
+                    icon: <FileText className="w-5 h-5" />,
+                    title: "Chapter Q&A",
+                    desc: "20+ exam-style questions per chapter",
+                    color: "oklch(0.38 0.18 264)",
+                    bg: "oklch(0.93 0.04 264)",
+                  },
+                  {
+                    icon: <BrainCircuit className="w-5 h-5" />,
+                    title: "AI Chat",
+                    desc: "Ask anything — real AI answers instantly",
+                    color: "oklch(0.44 0.17 335)",
+                    bg: "oklch(0.94 0.04 335)",
+                  },
+                ].map((feat) => (
+                  <div key={feat.title} className="flex items-start gap-3 p-5">
+                    <div
+                      className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                      style={{ background: feat.bg, color: feat.color }}
+                    >
+                      {feat.icon}
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm text-foreground">
+                        {feat.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                        {feat.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+
+          {/* Category tabs (Class 10, 12, JEE, NEET) */}
           {categoryCards.map((card, idx) => (
-            <CategoryCard
-              key={card.id}
-              card={card}
-              idx={idx}
-              onClick={() => onCategorySelect(card.id, "syllabus")}
-            />
+            <TabsContent key={card.id} value={card.id} className="mt-0">
+              <div className="space-y-6">
+                <CategoryCard
+                  card={card}
+                  idx={idx}
+                  onClick={() => onCategorySelect(card.id, "syllabus")}
+                />
+
+                {/* Quick-access action buttons */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {[
+                    {
+                      label: "Syllabus",
+                      icon: <BookOpen className="w-4 h-4" />,
+                      action: () => onCategorySelect(card.id, "syllabus"),
+                      ocid: `home.${card.id.toLowerCase()}.syllabus.button`,
+                    },
+                    {
+                      label: "Question Papers",
+                      icon: <FileText className="w-4 h-4" />,
+                      action: () => onCategorySelect(card.id, "papers"),
+                      ocid: `home.${card.id.toLowerCase()}.papers.button`,
+                    },
+                    {
+                      label: "AI Help",
+                      icon: <BrainCircuit className="w-4 h-4" />,
+                      action: () => onCategorySelect(card.id, "aihelp"),
+                      ocid: `home.${card.id.toLowerCase()}.aihelp.button`,
+                    },
+                    {
+                      label: "Smart Notes",
+                      icon: <Zap className="w-4 h-4" />,
+                      action: () => {
+                        onSmartNotesSearch?.(
+                          card.id.toLowerCase().replace("class", "class "),
+                        );
+                      },
+                      ocid: `home.${card.id.toLowerCase()}.smartnotes.button`,
+                    },
+                  ].map((btn) => (
+                    <button
+                      key={btn.label}
+                      type="button"
+                      onClick={btn.action}
+                      data-ocid={btn.ocid}
+                      className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card font-semibold text-sm text-foreground hover:border-transparent hover:shadow-md transition-all group justify-center"
+                      style={
+                        {
+                          // subtle hover accent matching card color
+                          // applied via CSS class hover
+                        }
+                      }
+                    >
+                      <span
+                        className="transition-transform group-hover:scale-110"
+                        style={{ color: card.color }}
+                      >
+                        {btn.icon}
+                      </span>
+                      {btn.label}
+                      <ArrowRight
+                        className="w-3 h-3 ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all"
+                        style={{ color: card.color }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </TabsContent>
           ))}
-        </div>
+        </Tabs>
       </section>
 
       {/* ── Marquee "Why Choose Us" strip ───────────────── */}
