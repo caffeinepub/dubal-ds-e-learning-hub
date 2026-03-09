@@ -3,9 +3,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dubal DS E-learning Hub | CBSE Class 10 &amp; 12, JEE, NEET</title>
+    <meta name="description" content="CBSE Class 10, 12, JEE & NEET study app with syllabus, smart notes, Q&A, AI help, dictionary and more." />
+    <meta name="theme-color" content="#3b2fa8" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Dubal DS" />
+    <link rel="apple-touch-icon" href="/assets/generated/dubal-ds-logo-transparent.dim_200x200.png" />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

@@ -3,6 +3,7 @@ import {
   BookOpen,
   BrainCircuit,
   Calculator,
+  Download,
   ExternalLink,
   FileText,
   FlaskConical,
@@ -12,9 +13,11 @@ import {
   Languages,
   Newspaper,
   Shield,
+  Smartphone,
   Trophy,
   Zap,
 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import type { Section } from "../App";
 
 interface NavbarProps {
@@ -251,6 +254,44 @@ function SparkAvatar({ size = "desktop" }: { size?: "desktop" | "mobile" }) {
 }
 
 export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
+  // PWA install prompt
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const deferredPrompt = useRef<any>(null);
+  const [canInstall, setCanInstall] = useState(false);
+  const [installed, setInstalled] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handler = (e: any) => {
+      e.preventDefault();
+      deferredPrompt.current = e;
+      setCanInstall(true);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+    window.addEventListener("appinstalled", () => {
+      setInstalled(true);
+      setCanInstall(false);
+    });
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt.current) {
+      // Fallback: show instructions
+      alert(
+        "To install this app:\n\n📱 Android (Chrome): Tap the 3-dot menu → 'Add to Home screen'\n🍎 iPhone (Safari): Tap Share → 'Add to Home Screen'\n💻 Desktop (Chrome): Click the install icon in the address bar",
+      );
+      return;
+    }
+    deferredPrompt.current.prompt();
+    const { outcome } = await deferredPrompt.current.userChoice;
+    if (outcome === "accepted") {
+      setInstalled(true);
+      setCanInstall(false);
+    }
+    deferredPrompt.current = null;
+  };
+
   return (
     <header
       className="navbar-entrance sticky top-0 z-50"
@@ -271,7 +312,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
           onClick={() => onNavigate("home")}
           className="flex items-center gap-3 flex-shrink-0 group"
           aria-label="Dubal DS E-learning Hub Home"
-          data-ocid="nav.home.link"
+          data-ocid="nav.logo.button"
         >
           {/* Avatar with pulse ring */}
           <div className="relative flex-shrink-0">
@@ -329,10 +370,10 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                 data-ocid={item.ocid}
                 onClick={() => onNavigate(item.id)}
                 className={[
-                  "nav-item-enter relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold transition-all duration-200 group/btn whitespace-nowrap",
+                  "nav-item-enter relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors duration-200 group/btn whitespace-nowrap",
                   isActive
                     ? "text-white shadow-md"
-                    : "text-muted-foreground hover:text-foreground hover:-translate-y-0.5 hover:shadow-sm",
+                    : "text-muted-foreground hover:text-foreground",
                 ].join(" ")}
                 style={
                   isActive
@@ -340,7 +381,6 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                         background: `linear-gradient(135deg, ${item.color} 0%, ${item.colorLight} 100%)`,
                         animationDelay: `${index * 0.05}s`,
                         boxShadow: `0 4px 16px ${item.shadowColor}`,
-                        transform: "scale(1.05)",
                       }
                     : {
                         animationDelay: `${index * 0.05}s`,
@@ -360,10 +400,8 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                 {/* Icon */}
                 <span
                   className={[
-                    "relative z-10 transition-transform duration-200",
-                    isActive
-                      ? "text-white"
-                      : "group-hover/btn:scale-110 group-hover/btn:-translate-y-0.5",
+                    "relative z-10",
+                    isActive ? "text-white" : "",
                   ].join(" ")}
                   style={!isActive ? { color: item.color } : {}}
                 >
@@ -390,7 +428,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
             target="_blank"
             rel="noopener noreferrer"
             data-ocid="nav.english.link"
-            className="nav-item-enter relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm group/eng ml-0.5 whitespace-nowrap"
+            className="nav-item-enter relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors duration-200 group/eng ml-0.5 whitespace-nowrap"
             style={{
               animationDelay: `${navItems.length * 0.05}s`,
               color: "oklch(0.58 0.19 52)",
@@ -407,6 +445,39 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
             <ExternalLink className="w-3.5 h-3.5 relative z-10 group-hover/eng:rotate-[15deg] transition-transform duration-200" />
             <span className="relative z-10">English</span>
           </a>
+
+          {/* Install App button */}
+          {!installed && (
+            <button
+              type="button"
+              data-ocid="nav.install.button"
+              onClick={handleInstall}
+              className="nav-item-enter relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-bold transition-colors duration-200 group/install ml-0.5 whitespace-nowrap"
+              style={{
+                animationDelay: `${(navItems.length + 1) * 0.05}s`,
+                color: "white",
+                background:
+                  "linear-gradient(135deg, oklch(0.42 0.22 142) 0%, oklch(0.56 0.20 165) 100%)",
+                boxShadow: "0 2px 12px oklch(0.42 0.22 142 / 0.35)",
+              }}
+              title={
+                canInstall ? "Install as mobile app" : "Add to Home Screen"
+              }
+            >
+              <Smartphone className="w-3.5 h-3.5 relative z-10" />
+              <Download className="w-3 h-3 relative z-10 -ml-0.5" />
+              <span className="relative z-10">Install</span>
+            </button>
+          )}
+          {installed && (
+            <span
+              className="nav-item-enter flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold ml-0.5 whitespace-nowrap"
+              style={{ color: "oklch(0.42 0.22 142)" }}
+            >
+              <Smartphone className="w-3.5 h-3.5" />
+              <span>Installed!</span>
+            </span>
+          )}
         </nav>
 
         {/* Desktop profile avatar — top-right with sparks (hidden on mobile) */}
@@ -442,7 +513,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
               data-ocid={item.ocid}
               onClick={() => onNavigate(item.id)}
               className={[
-                "flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold transition-all duration-200 w-full active:scale-95",
+                "flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold transition-colors duration-200 w-full active:scale-95",
                 isActive ? "text-white shadow-md" : "text-foreground",
               ].join(" ")}
               style={
@@ -450,7 +521,6 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                   ? {
                       background: `linear-gradient(135deg, ${item.color} 0%, ${item.colorLight} 100%)`,
                       boxShadow: `0 3px 12px ${item.shadowColor}`,
-                      transform: "scale(1.03)",
                     }
                   : {
                       background: `linear-gradient(135deg, ${item.color}18 0%, ${item.color}0a 100%)`,
@@ -490,6 +560,44 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
             English
           </span>
         </a>
+
+        {/* Install App - mobile */}
+        {!installed ? (
+          <button
+            type="button"
+            data-ocid="nav.install.button"
+            onClick={handleInstall}
+            className="flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold transition-all duration-200 w-full active:scale-95"
+            style={{
+              color: "white",
+              background:
+                "linear-gradient(135deg, oklch(0.42 0.22 142) 0%, oklch(0.56 0.20 165) 100%)",
+              boxShadow: "0 2px 8px oklch(0.42 0.22 142 / 0.40)",
+            }}
+          >
+            <div className="flex items-center gap-0.5">
+              <Smartphone className="w-4 h-4" />
+              <Download className="w-3.5 h-3.5" />
+            </div>
+            <span className="leading-none text-center w-full truncate px-0.5">
+              Install
+            </span>
+          </button>
+        ) : (
+          <div
+            className="flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold w-full"
+            style={{
+              color: "oklch(0.42 0.22 142)",
+              background: "oklch(0.42 0.22 142 / 0.12)",
+              border: "1.5px solid oklch(0.42 0.22 142 / 0.30)",
+            }}
+          >
+            <Smartphone className="w-5 h-5" />
+            <span className="leading-none text-center w-full truncate px-0.5">
+              Installed
+            </span>
+          </div>
+        )}
       </nav>
 
       {/* Shimmer accent bar at the very bottom */}
