@@ -3,6 +3,8 @@ import {
   BookOpen,
   BrainCircuit,
   Calculator,
+  ChevronDown,
+  ChevronUp,
   Download,
   ExternalLink,
   FileText,
@@ -210,7 +212,6 @@ function SparkAvatar({ size = "desktop" }: { size?: "desktop" | "mobile" }) {
       className={`relative flex-shrink-0 ${size === "mobile" ? "" : ""}`}
       aria-hidden="true"
     >
-      {/* Rotating gradient ring */}
       <div
         className="absolute avatar-ring rounded-full"
         style={{
@@ -221,12 +222,10 @@ function SparkAvatar({ size = "desktop" }: { size?: "desktop" | "mobile" }) {
           zIndex: 0,
         }}
       />
-      {/* White border mask */}
       <div
         className="absolute rounded-full bg-white"
         style={{ inset: "-1px", borderRadius: "50%", zIndex: 1 }}
       />
-      {/* Avatar image with zoom */}
       <div
         className={`relative ${wh} rounded-full overflow-hidden avatar-zoom`}
         style={{ zIndex: 2 }}
@@ -237,15 +236,11 @@ function SparkAvatar({ size = "desktop" }: { size?: "desktop" | "mobile" }) {
           className="w-full h-full object-cover object-center"
         />
       </div>
-
-      {/* Spark dot particles */}
       <span className="spark-particle" />
       <span className="spark-particle" />
       <span className="spark-particle" />
       <span className="spark-particle" />
       <span className="spark-particle" />
-
-      {/* Star/cross sparks */}
       <span className="spark-star" />
       <span className="spark-star" />
       <span className="spark-star" />
@@ -254,11 +249,11 @@ function SparkAvatar({ size = "desktop" }: { size?: "desktop" | "mobile" }) {
 }
 
 export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
-  // PWA install prompt
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const deferredPrompt = useRef<any>(null);
+  const deferredPrompt = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [canInstall, setCanInstall] = useState(false);
   const [installed, setInstalled] = useState(false);
+  // Mobile nav collapsed state — collapses after selecting a menu item
+  const [mobileNavCollapsed, setMobileNavCollapsed] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -277,7 +272,6 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
 
   const handleInstall = async () => {
     if (!deferredPrompt.current) {
-      // Fallback: show instructions
       alert(
         "To install this app:\n\n📱 Android (Chrome): Tap the 3-dot menu → 'Add to Home screen'\n🍎 iPhone (Safari): Tap Share → 'Add to Home Screen'\n💻 Desktop (Chrome): Click the install icon in the address bar",
       );
@@ -292,6 +286,15 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
     deferredPrompt.current = null;
   };
 
+  // Handle mobile nav item tap: navigate then auto-collapse
+  const handleMobileNavTap = (section: Section) => {
+    onNavigate(section);
+    setMobileNavCollapsed(true);
+  };
+
+  // Active item for collapsed indicator
+  const activeItem = navItems.find((item) => item.id === activeSection);
+
   return (
     <header
       className="navbar-entrance sticky top-0 z-50"
@@ -304,24 +307,24 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
           "0 1px 0 oklch(0.88 0.02 258), 0 4px 24px oklch(0.38 0.14 264 / 0.08)",
       }}
     >
-      {/* Top bar — logo + desktop nav */}
+      {/* Top bar */}
       <div className="container mx-auto px-4 h-[72px] flex items-center gap-4 relative">
         {/* Logo */}
         <button
           type="button"
-          onClick={() => onNavigate("home")}
+          onClick={() => {
+            onNavigate("home");
+            setMobileNavCollapsed(true);
+          }}
           className="flex items-center gap-3 flex-shrink-0 group"
           aria-label="Dubal DS E-learning Hub Home"
           data-ocid="nav.logo.button"
         >
-          {/* Avatar with pulse ring */}
           <div className="relative flex-shrink-0">
-            {/* Outer glow ring */}
             <div
               className="absolute inset-0 rounded-full logo-pulse"
               style={{ borderRadius: "50%" }}
             />
-            {/* Inner ring */}
             <div
               className="w-12 h-12 rounded-full overflow-hidden ring-2 ring-primary/50 group-hover:ring-primary/80 transition-all duration-300 flex-shrink-0 shadow-md group-hover:scale-110 group-hover:shadow-primary/30 group-hover:shadow-lg"
               style={{ transitionProperty: "transform, box-shadow, ring" }}
@@ -332,14 +335,11 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
               />
             </div>
-            {/* Decorative spark dot */}
             <span
               className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white"
               style={{ background: "oklch(0.75 0.18 52)" }}
             />
           </div>
-
-          {/* Text */}
           <div className="flex flex-col leading-none gap-0.5">
             <span
               className="font-display font-bold text-base tracking-tight text-foreground group-hover:text-primary transition-colors duration-200"
@@ -361,7 +361,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
           className="hidden lg:flex items-center gap-0.5 ml-auto flex-1 justify-end"
           aria-label="Main navigation"
         >
-          {navItems.map((item, index) => {
+          {navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
               <button
@@ -370,7 +370,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                 data-ocid={item.ocid}
                 onClick={() => onNavigate(item.id)}
                 className={[
-                  "nav-item-enter relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors duration-200 group/btn whitespace-nowrap",
+                  "relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors duration-200 group/btn whitespace-nowrap",
                   isActive
                     ? "text-white shadow-md"
                     : "text-muted-foreground hover:text-foreground",
@@ -379,15 +379,11 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                   isActive
                     ? {
                         background: `linear-gradient(135deg, ${item.color} 0%, ${item.colorLight} 100%)`,
-                        animationDelay: `${index * 0.05}s`,
                         boxShadow: `0 4px 16px ${item.shadowColor}`,
                       }
-                    : {
-                        animationDelay: `${index * 0.05}s`,
-                      }
+                    : {}
                 }
               >
-                {/* Hover bg for inactive */}
                 {!isActive && (
                   <span
                     className="absolute inset-0 rounded-lg opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200"
@@ -396,8 +392,6 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                     }}
                   />
                 )}
-
-                {/* Icon */}
                 <span
                   className={[
                     "relative z-10",
@@ -407,11 +401,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                 >
                   {item.icon}
                 </span>
-
-                {/* Label */}
                 <span className="relative z-10">{item.label}</span>
-
-                {/* Active underline dot */}
                 {isActive && (
                   <span
                     className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full"
@@ -422,15 +412,13 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
             );
           })}
 
-          {/* English Hub external link */}
           <a
             href="https://dubal-ds-english-speaking-hub-lcc.caffeine.xyz"
             target="_blank"
             rel="noopener noreferrer"
             data-ocid="nav.english.link"
-            className="nav-item-enter relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors duration-200 group/eng ml-0.5 whitespace-nowrap"
+            className="relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors duration-200 group/eng ml-0.5 whitespace-nowrap"
             style={{
-              animationDelay: `${navItems.length * 0.05}s`,
               color: "oklch(0.58 0.19 52)",
               border: "1.5px solid oklch(0.75 0.18 52 / 0.4)",
             }}
@@ -446,15 +434,13 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
             <span className="relative z-10">English</span>
           </a>
 
-          {/* Install App button */}
           {!installed && (
             <button
               type="button"
               data-ocid="nav.install.button"
               onClick={handleInstall}
-              className="nav-item-enter relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-bold transition-colors duration-200 group/install ml-0.5 whitespace-nowrap"
+              className="relative flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-bold transition-colors duration-200 group/install ml-0.5 whitespace-nowrap"
               style={{
-                animationDelay: `${(navItems.length + 1) * 0.05}s`,
                 color: "white",
                 background:
                   "linear-gradient(135deg, oklch(0.42 0.22 142) 0%, oklch(0.56 0.20 165) 100%)",
@@ -471,7 +457,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
           )}
           {installed && (
             <span
-              className="nav-item-enter flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold ml-0.5 whitespace-nowrap"
+              className="flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-semibold ml-0.5 whitespace-nowrap"
               style={{ color: "oklch(0.42 0.22 142)" }}
             >
               <Smartphone className="w-3.5 h-3.5" />
@@ -480,127 +466,178 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
           )}
         </nav>
 
-        {/* Desktop profile avatar — top-right with sparks (hidden on mobile) */}
+        {/* Desktop profile avatar */}
         <div className="hidden lg:flex items-center ml-3 flex-shrink-0">
           <SparkAvatar size="desktop" />
         </div>
 
-        {/* Mobile profile avatar — absolute top-right of the header bar */}
+        {/* Mobile: profile avatar + expand toggle when collapsed */}
         <div
-          className="lg:hidden absolute top-3 right-4"
+          className="lg:hidden absolute top-3 right-4 flex items-center gap-2"
           style={{ zIndex: 10 }}
         >
+          {/* Expand nav toggle — only visible when collapsed */}
+          {mobileNavCollapsed && (
+            <button
+              type="button"
+              data-ocid="nav.expand.toggle"
+              onClick={() => setMobileNavCollapsed(false)}
+              aria-label="Open navigation menu"
+              className="flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full text-xs font-bold shadow-md active:scale-95 transition-all duration-200"
+              style={{
+                background: activeItem
+                  ? `linear-gradient(135deg, ${activeItem.color} 0%, ${activeItem.colorLight} 100%)`
+                  : "linear-gradient(135deg, oklch(0.45 0.16 142) 0%, oklch(0.58 0.14 142) 100%)",
+                color: "white",
+                boxShadow: activeItem
+                  ? `0 2px 10px ${activeItem.shadowColor}`
+                  : undefined,
+              }}
+            >
+              {activeItem && (
+                <span className="flex items-center">
+                  {activeItem.mobileIcon}
+                </span>
+              )}
+              <ChevronDown className="w-4 h-4" />
+            </button>
+          )}
           <SparkAvatar size="mobile" />
         </div>
       </div>
 
-      {/* Mobile tab bar — 3 rows of 4 items, big icons + full labels */}
-      <nav
-        className="lg:hidden w-full grid grid-cols-4 gap-1.5 px-2 pt-2 pb-3"
-        aria-label="Navigation tabs"
+      {/* Mobile tab bar — collapses/expands */}
+      <div
+        className="lg:hidden overflow-hidden transition-all duration-300 ease-in-out"
         style={{
-          borderTop: "1px solid oklch(0.88 0.02 258 / 0.6)",
-          background:
-            "linear-gradient(180deg, oklch(0.99 0.003 258 / 0.95) 0%, oklch(0.97 0.006 256 / 0.98) 100%)",
+          maxHeight: mobileNavCollapsed ? "0px" : "600px",
+          opacity: mobileNavCollapsed ? 0 : 1,
         }}
       >
-        {navItems.map((item) => {
-          const isActive = activeSection === item.id;
-          return (
-            <button
-              type="button"
-              key={item.id}
-              data-ocid={item.ocid}
-              onClick={() => onNavigate(item.id)}
-              className={[
-                "flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold transition-colors duration-200 w-full active:scale-95",
-                isActive ? "text-white shadow-md" : "text-foreground",
-              ].join(" ")}
-              style={
-                isActive
-                  ? {
-                      background: `linear-gradient(135deg, ${item.color} 0%, ${item.colorLight} 100%)`,
-                      boxShadow: `0 3px 12px ${item.shadowColor}`,
-                    }
-                  : {
-                      background: `linear-gradient(135deg, ${item.color}18 0%, ${item.color}0a 100%)`,
-                      border: `1.5px solid ${item.color}30`,
-                    }
-              }
-            >
-              <span
-                className="flex items-center justify-center"
-                style={!isActive ? { color: item.color } : {}}
-              >
-                {item.mobileIcon}
-              </span>
-              <span className="leading-none text-center w-full truncate px-0.5">
-                {item.mobileLabel}
-              </span>
-            </button>
-          );
-        })}
-
-        {/* English Hub - mobile */}
-        <a
-          href="https://dubal-ds-english-speaking-hub-lcc.caffeine.xyz"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-ocid="nav.english.link"
-          className="flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold transition-all duration-200 w-full active:scale-95"
+        <nav
+          className="w-full grid grid-cols-4 gap-1.5 px-2 pt-2 pb-3"
+          aria-label="Navigation tabs"
           style={{
-            color: "oklch(0.52 0.18 52)",
+            borderTop: "1px solid oklch(0.88 0.02 258 / 0.6)",
             background:
-              "linear-gradient(135deg, oklch(0.75 0.18 52 / 0.15) 0%, oklch(0.58 0.19 30 / 0.08) 100%)",
-            border: "1.5px solid oklch(0.75 0.18 52 / 0.40)",
+              "linear-gradient(180deg, oklch(0.99 0.003 258 / 0.95) 0%, oklch(0.97 0.006 256 / 0.98) 100%)",
           }}
         >
-          <ExternalLink className="w-5 h-5" />
-          <span className="leading-none text-center w-full truncate px-0.5">
-            English
-          </span>
-        </a>
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
+              <button
+                type="button"
+                key={item.id}
+                data-ocid={item.ocid}
+                onClick={() => handleMobileNavTap(item.id)}
+                className={[
+                  "flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold transition-colors duration-200 w-full active:scale-95",
+                  isActive ? "text-white shadow-md" : "text-foreground",
+                ].join(" ")}
+                style={
+                  isActive
+                    ? {
+                        background: `linear-gradient(135deg, ${item.color} 0%, ${item.colorLight} 100%)`,
+                        boxShadow: `0 3px 12px ${item.shadowColor}`,
+                      }
+                    : {
+                        background: `linear-gradient(135deg, ${item.color}18 0%, ${item.color}0a 100%)`,
+                        border: `1.5px solid ${item.color}30`,
+                      }
+                }
+              >
+                <span
+                  className="flex items-center justify-center"
+                  style={!isActive ? { color: item.color } : {}}
+                >
+                  {item.mobileIcon}
+                </span>
+                <span className="leading-none text-center w-full truncate px-0.5">
+                  {item.mobileLabel}
+                </span>
+              </button>
+            );
+          })}
 
-        {/* Install App - mobile */}
-        {!installed ? (
-          <button
-            type="button"
-            data-ocid="nav.install.button"
-            onClick={handleInstall}
+          {/* English Hub - mobile */}
+          <a
+            href="https://dubal-ds-english-speaking-hub-lcc.caffeine.xyz"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ocid="nav.english.link"
             className="flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold transition-all duration-200 w-full active:scale-95"
             style={{
-              color: "white",
+              color: "oklch(0.52 0.18 52)",
               background:
-                "linear-gradient(135deg, oklch(0.42 0.22 142) 0%, oklch(0.56 0.20 165) 100%)",
-              boxShadow: "0 2px 8px oklch(0.42 0.22 142 / 0.40)",
+                "linear-gradient(135deg, oklch(0.75 0.18 52 / 0.15) 0%, oklch(0.58 0.19 30 / 0.08) 100%)",
+              border: "1.5px solid oklch(0.75 0.18 52 / 0.40)",
             }}
           >
-            <div className="flex items-center gap-0.5">
-              <Smartphone className="w-4 h-4" />
-              <Download className="w-3.5 h-3.5" />
-            </div>
+            <ExternalLink className="w-5 h-5" />
             <span className="leading-none text-center w-full truncate px-0.5">
-              Install
+              English
             </span>
-          </button>
-        ) : (
-          <div
-            className="flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold w-full"
-            style={{
-              color: "oklch(0.42 0.22 142)",
-              background: "oklch(0.42 0.22 142 / 0.12)",
-              border: "1.5px solid oklch(0.42 0.22 142 / 0.30)",
-            }}
-          >
-            <Smartphone className="w-5 h-5" />
-            <span className="leading-none text-center w-full truncate px-0.5">
-              Installed
-            </span>
-          </div>
-        )}
-      </nav>
+          </a>
 
-      {/* Shimmer accent bar at the very bottom */}
+          {/* Install App - mobile */}
+          {!installed ? (
+            <button
+              type="button"
+              data-ocid="nav.install.button"
+              onClick={handleInstall}
+              className="flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold transition-all duration-200 w-full active:scale-95"
+              style={{
+                color: "white",
+                background:
+                  "linear-gradient(135deg, oklch(0.42 0.22 142) 0%, oklch(0.56 0.20 165) 100%)",
+                boxShadow: "0 2px 8px oklch(0.42 0.22 142 / 0.40)",
+              }}
+            >
+              <div className="flex items-center gap-0.5">
+                <Smartphone className="w-4 h-4" />
+                <Download className="w-3.5 h-3.5" />
+              </div>
+              <span className="leading-none text-center w-full truncate px-0.5">
+                Install
+              </span>
+            </button>
+          ) : (
+            <div
+              className="flex flex-col items-center justify-center gap-1.5 py-3 px-1 rounded-xl text-[11px] font-bold w-full"
+              style={{
+                color: "oklch(0.42 0.22 142)",
+                background: "oklch(0.42 0.22 142 / 0.12)",
+                border: "1.5px solid oklch(0.42 0.22 142 / 0.30)",
+              }}
+            >
+              <Smartphone className="w-5 h-5" />
+              <span className="leading-none text-center w-full truncate px-0.5">
+                Installed
+              </span>
+            </div>
+          )}
+        </nav>
+
+        {/* Collapse handle at bottom of expanded nav */}
+        <button
+          type="button"
+          data-ocid="nav.collapse.toggle"
+          onClick={() => setMobileNavCollapsed(true)}
+          aria-label="Collapse navigation menu"
+          className="lg:hidden w-full flex items-center justify-center gap-1 py-1.5 text-xs font-semibold active:scale-95 transition-all duration-200"
+          style={{
+            background: "oklch(0.95 0.005 258 / 0.9)",
+            borderTop: "1px solid oklch(0.88 0.02 258 / 0.5)",
+            color: "oklch(0.50 0.06 258)",
+          }}
+        >
+          <ChevronUp className="w-4 h-4" />
+          <span>Collapse</span>
+        </button>
+      </div>
+
+      {/* Shimmer accent bar */}
       <div className="h-[3px] w-full shimmer-accent-bar" />
     </header>
   );
