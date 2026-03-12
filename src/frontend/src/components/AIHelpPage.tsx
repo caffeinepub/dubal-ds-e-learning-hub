@@ -99,6 +99,8 @@ const categoryBadgeClass: Record<Category, string> = {
   [Category.NEET]: "badge-neet",
   [Category.CompetitiveExams]: "badge-class10",
   [Category.SSB]: "badge-class12",
+  [Category.Maharashtra10]: "badge-class10",
+  [Category.Bengal10]: "badge-class12",
 };
 
 const askAIExamples = [

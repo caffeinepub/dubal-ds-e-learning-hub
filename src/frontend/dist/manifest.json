@@ -1,0 +1,27 @@
+{
+  "name": "Dubal DS E-learning Hub",
+  "short_name": "Dubal DS",
+  "description": "CBSE Class 10, 12, JEE & NEET study app with syllabus, smart notes, Q&A, AI help, dictionary and more.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5ff",
+  "theme_color": "#3b2fa8",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/generated/dubal-ds-logo-transparent.dim_200x200.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/generated/dubal-ds-logo-transparent.dim_200x200.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education"],
+  "lang": "en-IN",
+  "dir": "ltr"
+}

@@ -8,4 +8,6 @@ export enum Category {
   NEET = "NEET",
   CompetitiveExams = "CompetitiveExams",
   SSB = "SSB",
+  Maharashtra10 = "Maharashtra10",
+  Bengal10 = "Bengal10",
 }

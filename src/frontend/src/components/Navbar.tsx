@@ -17,6 +17,7 @@ import {
   Shield,
   Smartphone,
   Trophy,
+  Wand2,
   Zap,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -59,6 +60,28 @@ const navItems: {
     color: "oklch(0.45 0.16 142)",
     colorLight: "oklch(0.58 0.14 142)",
     shadowColor: "oklch(0.45 0.16 142 / 0.40)",
+  },
+  {
+    id: "maharashtra10" as Section,
+    label: "Maharashtra 10",
+    mobileLabel: "MH 10",
+    icon: <GraduationCap className="w-3.5 h-3.5" />,
+    mobileIcon: <GraduationCap className="w-5 h-5" />,
+    ocid: "nav.maharashtra10.link",
+    color: "oklch(0.55 0.19 48)",
+    colorLight: "oklch(0.68 0.17 48)",
+    shadowColor: "oklch(0.55 0.19 48 / 0.40)",
+  },
+  {
+    id: "bengal10" as Section,
+    label: "Bengal 10",
+    mobileLabel: "WB 10",
+    icon: <GraduationCap className="w-3.5 h-3.5" />,
+    mobileIcon: <GraduationCap className="w-5 h-5" />,
+    ocid: "nav.bengal10.link",
+    color: "oklch(0.50 0.16 178)",
+    colorLight: "oklch(0.62 0.14 178)",
+    shadowColor: "oklch(0.50 0.16 178 / 0.40)",
   },
   {
     id: "class12" as Section,
@@ -202,6 +225,17 @@ const navItems: {
     color: "oklch(0.38 0.18 264)",
     colorLight: "oklch(0.52 0.16 264)",
     shadowColor: "oklch(0.38 0.18 264 / 0.40)",
+  },
+  {
+    id: "aicreate" as Section,
+    label: "AI Create",
+    mobileLabel: "AI Create",
+    icon: <Wand2 className="w-3.5 h-3.5" />,
+    mobileIcon: <Wand2 className="w-5 h-5" />,
+    ocid: "nav.aicreate.link",
+    color: "oklch(0.44 0.20 300)",
+    colorLight: "oklch(0.58 0.18 300)",
+    shadowColor: "oklch(0.44 0.20 300 / 0.40)",
   },
 ];
 

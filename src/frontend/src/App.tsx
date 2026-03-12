@@ -25,6 +25,7 @@ const CompetitiveExamsPage = lazy(
 );
 const SSBPage = lazy(() => import("./components/SSBPage"));
 const ClassPage = lazy(() => import("./components/ClassPage"));
+const AICreatePage = lazy(() => import("./components/AICreatePage"));
 
 function PageLoader() {
   return (
@@ -52,10 +53,13 @@ export type Section =
   | "news"
   | "competitive"
   | "ssb"
+  | "aicreate"
   | "class10"
   | "class12"
   | "jee"
-  | "neet";
+  | "neet"
+  | "maharashtra10"
+  | "bengal10";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("home");
@@ -148,6 +152,7 @@ export default function App() {
           {activeSection === "news" && <DailyNewsPage />}
           {activeSection === "competitive" && <CompetitiveExamsPage />}
           {activeSection === "ssb" && <SSBPage />}
+          {activeSection === "aicreate" && <AICreatePage />}
           {activeSection === "class10" && (
             <ClassPage
               category={Category.Class10}
@@ -166,6 +171,18 @@ export default function App() {
           {activeSection === "neet" && (
             <ClassPage
               category={Category.NEET}
+              onNavigate={navigateToSection}
+            />
+          )}
+          {activeSection === "maharashtra10" && (
+            <ClassPage
+              category={Category.Maharashtra10}
+              onNavigate={navigateToSection}
+            />
+          )}
+          {activeSection === "bengal10" && (
+            <ClassPage
+              category={Category.Bengal10}
               onNavigate={navigateToSection}
             />
           )}

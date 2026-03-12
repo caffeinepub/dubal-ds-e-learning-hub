@@ -2004,6 +2004,617 @@ const SYLLABUS_DATA: SyllabusEntry[] = [
       },
     ],
   },
+
+  {
+    category: Category.Maharashtra10,
+    subjects: [
+      {
+        id: 1n,
+        name: "Mathematics (Algebra)",
+        chapters: [
+          {
+            name: "Linear Equations in Two Variables",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=linear+equations+two+variables+class+10+maharashtra+board+physics+wallah",
+          },
+          {
+            name: "Quadratic Equations",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=quadratic+equations+class+10+maharashtra+board",
+          },
+          {
+            name: "Arithmetic Progression",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=arithmetic+progression+class+10+maharashtra+board",
+          },
+          {
+            name: "Financial Planning",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=financial+planning+class+10+maharashtra+board",
+          },
+          {
+            name: "Probability",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=probability+class+10+maharashtra+board",
+          },
+          {
+            name: "Statistics",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=statistics+class+10+maharashtra+board",
+          },
+        ],
+      },
+      {
+        id: 2n,
+        name: "Mathematics (Geometry)",
+        chapters: [
+          {
+            name: "Similarity",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=similarity+class+10+maharashtra+board+geometry",
+          },
+          {
+            name: "Pythagoras Theorem",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=pythagoras+theorem+class+10+maharashtra+geometry",
+          },
+          {
+            name: "Circle",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=circle+class+10+maharashtra+geometry",
+          },
+          {
+            name: "Geometric Constructions",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=geometric+constructions+class+10+maharashtra",
+          },
+          {
+            name: "Coordinate Geometry",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=coordinate+geometry+class+10+maharashtra+board",
+          },
+          {
+            name: "Trigonometry",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=trigonometry+class+10+maharashtra+board",
+          },
+          {
+            name: "Mensuration",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=mensuration+class+10+maharashtra+board",
+          },
+        ],
+      },
+      {
+        id: 3n,
+        name: "Science & Technology Part 1",
+        chapters: [
+          {
+            name: "Gravitation",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=gravitation+class+10+maharashtra+board+science",
+          },
+          {
+            name: "Periodic Classification of Elements",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=periodic+classification+class+10+maharashtra+board",
+          },
+          {
+            name: "Chemical Reactions and Equations",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=chemical+reactions+class+10+maharashtra+board",
+          },
+          {
+            name: "Effects of Electric Current",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=effects+electric+current+class+10+maharashtra",
+          },
+          {
+            name: "Heat",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=heat+class+10+maharashtra+board+science",
+          },
+          {
+            name: "Refraction of Light",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=refraction+of+light+class+10+maharashtra+board",
+          },
+        ],
+      },
+      {
+        id: 4n,
+        name: "Science & Technology Part 2",
+        chapters: [
+          {
+            name: "Life Processes in Living Organisms",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=life+processes+class+10+maharashtra+board+science",
+          },
+          {
+            name: "Control and Coordination",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=control+coordination+class+10+maharashtra+board",
+          },
+          {
+            name: "Reproduction",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=reproduction+class+10+maharashtra+board+science",
+          },
+          {
+            name: "Heredity and Evolution",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=heredity+evolution+class+10+maharashtra+board",
+          },
+          {
+            name: "Our Environment",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=our+environment+class+10+maharashtra+board",
+          },
+          {
+            name: "Towards Green Energy",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=green+energy+class+10+maharashtra+board+science",
+          },
+        ],
+      },
+      {
+        id: 5n,
+        name: "Social Science",
+        chapters: [
+          {
+            name: "Historiography — Development in the West",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=historiography+class+10+maharashtra+board+social+science",
+          },
+          {
+            name: "Historiography — Indian Tradition",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=indian+historiography+class+10+maharashtra+board",
+          },
+          {
+            name: "Political Parties and Democracy",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=political+parties+democracy+class+10+maharashtra+board",
+          },
+          {
+            name: "Mass Media and Communication",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=mass+media+communication+class+10+maharashtra",
+          },
+          {
+            name: "Maps — An Introduction",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=maps+introduction+class+10+maharashtra+geography",
+          },
+          {
+            name: "Natural Vegetation and Wildlife",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=natural+vegetation+wildlife+class+10+maharashtra",
+          },
+        ],
+      },
+      {
+        id: 6n,
+        name: "English (First Language)",
+        chapters: [
+          {
+            name: "Unit 1: Dawn",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=english+class+10+maharashtra+board+unit+1",
+          },
+          {
+            name: "Unit 2: Insight",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=english+class+10+maharashtra+board+unit+2",
+          },
+          {
+            name: "Unit 3: Panorama",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=english+class+10+maharashtra+board+unit+3",
+          },
+          {
+            name: "Unit 4: Emerge",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=english+class+10+maharashtra+board+unit+4",
+          },
+          {
+            name: "Unit 5: Expressions",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=english+class+10+maharashtra+board+unit+5",
+          },
+        ],
+      },
+      {
+        id: 7n,
+        name: "Marathi (First Language)",
+        chapters: [
+          {
+            name: "Kavita: Aajcha Dinanka",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=marathi+class+10+maharashtra+board+kavita",
+          },
+          {
+            name: "Gadya: Bhagyanath Lalit",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=marathi+class+10+maharashtra+board+gadya",
+          },
+          {
+            name: "Natak: Chimanrao",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=marathi+class+10+maharashtra+board+natak",
+          },
+          {
+            name: "Lekhan: Letter & Essay Writing",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=marathi+lekhan+class+10+maharashtra+board",
+          },
+        ],
+      },
+      {
+        id: 8n,
+        name: "Hindi (Second Language)",
+        chapters: [
+          {
+            name: "Kavita: Aadha Gaon",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=hindi+class+10+maharashtra+board+kavita",
+          },
+          {
+            name: "Gadya: Pehli Kiran",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=hindi+class+10+maharashtra+board+gadya",
+          },
+          {
+            name: "Vyakaran: Grammar",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=hindi+vyakaran+class+10+maharashtra+board",
+          },
+          {
+            name: "Lekhan: Writing Skills",
+            url: "https://mahahsscboard.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=hindi+lekhan+class+10+maharashtra+board",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    category: Category.Bengal10,
+    subjects: [
+      {
+        id: 1n,
+        name: "Mathematics",
+        chapters: [
+          {
+            name: "Real Numbers",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=real+numbers+class+10+west+bengal+board+wbbse",
+          },
+          {
+            name: "Polynomial",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=polynomial+class+10+west+bengal+board+wbbse",
+          },
+          {
+            name: "Linear Equations in Two Variables",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=linear+equations+class+10+west+bengal+wbbse",
+          },
+          {
+            name: "Quadratic Equations with One Variable",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=quadratic+equations+class+10+west+bengal+wbbse",
+          },
+          {
+            name: "Ratio and Proportion",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=ratio+proportion+class+10+west+bengal+board",
+          },
+          {
+            name: "Trigonometry",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=trigonometry+class+10+west+bengal+board+wbbse",
+          },
+          {
+            name: "Statistics",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=statistics+class+10+west+bengal+board",
+          },
+        ],
+      },
+      {
+        id: 2n,
+        name: "Physical Science",
+        chapters: [
+          {
+            name: "Measurement",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=measurement+class+10+west+bengal+board+physical+science",
+          },
+          {
+            name: "Force and Motion",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=force+motion+class+10+west+bengal+board",
+          },
+          {
+            name: "Work, Power and Energy",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=work+power+energy+class+10+west+bengal+wbbse",
+          },
+          {
+            name: "Sound",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=sound+class+10+west+bengal+board+physical+science",
+          },
+          {
+            name: "Light",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=light+class+10+west+bengal+board+physical+science",
+          },
+          {
+            name: "Electricity and Chemical Reactions",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=electricity+chemical+reactions+class+10+west+bengal",
+          },
+        ],
+      },
+      {
+        id: 3n,
+        name: "Life Science",
+        chapters: [
+          {
+            name: "Transport of Materials in Living Organisms",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=transport+living+organisms+class+10+west+bengal+life+science",
+          },
+          {
+            name: "Excretion",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=excretion+class+10+west+bengal+board+life+science",
+          },
+          {
+            name: "Control and Co-ordination",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=control+coordination+class+10+west+bengal+life+science",
+          },
+          {
+            name: "Reproduction",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=reproduction+class+10+west+bengal+board+life+science",
+          },
+          {
+            name: "Heredity and Evolution",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=heredity+evolution+class+10+west+bengal+life+science",
+          },
+          {
+            name: "Environment and its Resources",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=environment+resources+class+10+west+bengal+life+science",
+          },
+        ],
+      },
+      {
+        id: 4n,
+        name: "History",
+        chapters: [
+          {
+            name: "Ideas of History",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=ideas+of+history+class+10+west+bengal+board",
+          },
+          {
+            name: "Reform, Characteristics and Observations",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=reform+class+10+west+bengal+history",
+          },
+          {
+            name: "Resistance and Rebellion",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=resistance+rebellion+class+10+west+bengal+history",
+          },
+          {
+            name: "Consolidation of National Consciousness",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=national+consciousness+class+10+west+bengal+history",
+          },
+          {
+            name: "Alternative Ideas and Initiatives",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=alternative+ideas+class+10+west+bengal+history",
+          },
+          {
+            name: "Era of World Wars",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=world+wars+class+10+west+bengal+history",
+          },
+        ],
+      },
+      {
+        id: 5n,
+        name: "Geography",
+        chapters: [
+          {
+            name: "Exogenic Processes and Landforms",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=exogenic+processes+landforms+class+10+west+bengal+geography",
+          },
+          {
+            name: "Atmosphere",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=atmosphere+class+10+west+bengal+board+geography",
+          },
+          {
+            name: "Hydrosphere",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=hydrosphere+class+10+west+bengal+board+geography",
+          },
+          {
+            name: "Natural Regions of the World",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=natural+regions+world+class+10+west+bengal+geography",
+          },
+          {
+            name: "Resources and Conservation",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=resources+conservation+class+10+west+bengal+geography",
+          },
+          {
+            name: "Biosphere",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=biosphere+class+10+west+bengal+board+geography",
+          },
+        ],
+      },
+      {
+        id: 6n,
+        name: "English (First Language)",
+        chapters: [
+          {
+            name: "Father's Help (Story)",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=fathers+help+class+10+west+bengal+english",
+          },
+          {
+            name: "Fable (Story)",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=fable+class+10+west+bengal+english",
+          },
+          {
+            name: "The Passing Away of Bapu (Essay)",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=passing+away+bapu+class+10+west+bengal+english",
+          },
+          {
+            name: "My Own True Family (Poem)",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=my+own+true+family+poem+class+10+west+bengal",
+          },
+          {
+            name: "Sea Fever (Poem)",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=sea+fever+poem+class+10+west+bengal+english",
+          },
+        ],
+      },
+      {
+        id: 7n,
+        name: "Bengali (First Language)",
+        chapters: [
+          {
+            name: "Kobita: Aamar Shonar Bangla",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=bengali+class+10+west+bengal+board+kobita",
+          },
+          {
+            name: "Golpo: Jiboner Dawabi",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=bengali+class+10+west+bengal+board+golpo",
+          },
+          {
+            name: "Prabandha: Bhasha O Sahitya",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=bengali+class+10+west+bengal+board+prabandha",
+          },
+          {
+            name: "Natak: Bisarjan",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=bisarjan+class+10+west+bengal+board+bengali",
+          },
+          {
+            name: "Vyakaran: Grammar & Composition",
+            url: "https://wbbse.wb.gov.in/",
+            videoUrl:
+              "https://www.youtube.com/results?search_query=bengali+vyakaran+class+10+west+bengal+board",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 // ── Static Question Papers Data ──────────────────────────────────────────────
@@ -2807,6 +3418,367 @@ const PAPERS_DATA: Array<{
         year: 2021n,
         url: "https://neet.nta.nic.in/",
         solutionUrl: "https://neet.nta.nic.in/",
+      },
+    ],
+  },
+
+  {
+    category: Category.Maharashtra10,
+    subject: "Mathematics (Algebra)",
+    papers: [
+      {
+        title: "Maharashtra SSC Mathematics Algebra 2024",
+        year: 2024n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Mathematics Algebra 2023",
+        year: 2023n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Mathematics Algebra 2022",
+        year: 2022n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+    ],
+  },
+  {
+    category: Category.Maharashtra10,
+    subject: "Mathematics (Geometry)",
+    papers: [
+      {
+        title: "Maharashtra SSC Mathematics Geometry 2024",
+        year: 2024n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Mathematics Geometry 2023",
+        year: 2023n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Mathematics Geometry 2022",
+        year: 2022n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+    ],
+  },
+  {
+    category: Category.Maharashtra10,
+    subject: "Science & Technology Part 1",
+    papers: [
+      {
+        title: "Maharashtra SSC Science Part 1 2024",
+        year: 2024n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Science Part 1 2023",
+        year: 2023n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Science Part 1 2022",
+        year: 2022n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+    ],
+  },
+  {
+    category: Category.Maharashtra10,
+    subject: "Science & Technology Part 2",
+    papers: [
+      {
+        title: "Maharashtra SSC Science Part 2 2024",
+        year: 2024n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Science Part 2 2023",
+        year: 2023n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Science Part 2 2022",
+        year: 2022n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+    ],
+  },
+  {
+    category: Category.Maharashtra10,
+    subject: "Social Science",
+    papers: [
+      {
+        title: "Maharashtra SSC Social Science 2024",
+        year: 2024n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Social Science 2023",
+        year: 2023n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Social Science 2022",
+        year: 2022n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+    ],
+  },
+  {
+    category: Category.Maharashtra10,
+    subject: "English (First Language)",
+    papers: [
+      {
+        title: "Maharashtra SSC English 2024",
+        year: 2024n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC English 2023",
+        year: 2023n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC English 2022",
+        year: 2022n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+    ],
+  },
+  {
+    category: Category.Maharashtra10,
+    subject: "Marathi (First Language)",
+    papers: [
+      {
+        title: "Maharashtra SSC Marathi 2024",
+        year: 2024n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Marathi 2023",
+        year: 2023n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Marathi 2022",
+        year: 2022n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+    ],
+  },
+  {
+    category: Category.Maharashtra10,
+    subject: "Hindi (Second Language)",
+    papers: [
+      {
+        title: "Maharashtra SSC Hindi 2024",
+        year: 2024n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Hindi 2023",
+        year: 2023n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+      {
+        title: "Maharashtra SSC Hindi 2022",
+        year: 2022n,
+        url: "https://mahahsscboard.in/question-papers.html",
+        solutionUrl: "https://mahahsscboard.in/question-papers.html",
+      },
+    ],
+  },
+  {
+    category: Category.Bengal10,
+    subject: "Mathematics",
+    papers: [
+      {
+        title: "WBBSE Madhyamik Mathematics 2024",
+        year: 2024n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik Mathematics 2023",
+        year: 2023n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik Mathematics 2022",
+        year: 2022n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+    ],
+  },
+  {
+    category: Category.Bengal10,
+    subject: "Physical Science",
+    papers: [
+      {
+        title: "WBBSE Madhyamik Physical Science 2024",
+        year: 2024n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik Physical Science 2023",
+        year: 2023n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik Physical Science 2022",
+        year: 2022n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+    ],
+  },
+  {
+    category: Category.Bengal10,
+    subject: "Life Science",
+    papers: [
+      {
+        title: "WBBSE Madhyamik Life Science 2024",
+        year: 2024n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik Life Science 2023",
+        year: 2023n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik Life Science 2022",
+        year: 2022n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+    ],
+  },
+  {
+    category: Category.Bengal10,
+    subject: "History",
+    papers: [
+      {
+        title: "WBBSE Madhyamik History 2024",
+        year: 2024n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik History 2023",
+        year: 2023n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik History 2022",
+        year: 2022n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+    ],
+  },
+  {
+    category: Category.Bengal10,
+    subject: "Geography",
+    papers: [
+      {
+        title: "WBBSE Madhyamik Geography 2024",
+        year: 2024n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik Geography 2023",
+        year: 2023n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik Geography 2022",
+        year: 2022n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+    ],
+  },
+  {
+    category: Category.Bengal10,
+    subject: "English (First Language)",
+    papers: [
+      {
+        title: "WBBSE Madhyamik English 2024",
+        year: 2024n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik English 2023",
+        year: 2023n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik English 2022",
+        year: 2022n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+    ],
+  },
+  {
+    category: Category.Bengal10,
+    subject: "Bengali (First Language)",
+    papers: [
+      {
+        title: "WBBSE Madhyamik Bengali 2024",
+        year: 2024n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik Bengali 2023",
+        year: 2023n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
+      },
+      {
+        title: "WBBSE Madhyamik Bengali 2022",
+        year: 2022n,
+        url: "https://wbbse.wb.gov.in/",
+        solutionUrl: "https://wbbse.wb.gov.in/",
       },
     ],
   },

@@ -101,6 +101,28 @@ const categoryMeta: Record<
       "linear-gradient(135deg, oklch(0.20 0.10 264) 0%, oklch(0.28 0.14 276) 60%, oklch(0.22 0.08 290) 100%)",
     badge: "SSB",
   },
+  [Category.Maharashtra10]: {
+    label: "Maharashtra Board Class 10",
+    subtitle:
+      "SSC Board exam — Maths, Science, Social Science, English, Marathi, Hindi",
+    icon: <GraduationCap className="w-8 h-8" />,
+    color: "oklch(0.55 0.19 48)",
+    colorLight: "oklch(0.68 0.17 48)",
+    accentBg:
+      "linear-gradient(135deg, oklch(0.28 0.13 48) 0%, oklch(0.36 0.17 60) 60%, oklch(0.30 0.11 35) 100%)",
+    badge: "MH SSC",
+  },
+  [Category.Bengal10]: {
+    label: "West Bengal Board Class 10 (WBBSE)",
+    subtitle:
+      "Madhyamik exam — Maths, Physical Science, Life Science, History, Geography, English, Bengali",
+    icon: <GraduationCap className="w-8 h-8" />,
+    color: "oklch(0.50 0.16 178)",
+    colorLight: "oklch(0.62 0.14 178)",
+    accentBg:
+      "linear-gradient(135deg, oklch(0.26 0.10 178) 0%, oklch(0.34 0.14 190) 60%, oklch(0.28 0.08 165) 100%)",
+    badge: "WBBSE",
+  },
 };
 
 // Tab config
