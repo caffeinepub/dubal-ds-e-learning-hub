@@ -1,8 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { GLOSSARY } from "../data/glossary";
 import type { GlossaryTerm } from "../data/glossary";
+import { PAPERS_MH12 } from "../data/papersStateMH12";
+import { PAPERS_WB12 } from "../data/papersStateWB12";
 import { QA_BANK } from "../data/qaBank";
 import type { QABankEntry } from "../data/qaBank";
+import { QA_BENGAL12, QA_MAHARASHTRA12 } from "../data/qaStateBoards12";
+import { SYLLABUS_MH12 } from "../data/syllabusStateMH12";
+import { SYLLABUS_WB12 } from "../data/syllabusStateWB12";
 import { Category } from "../types";
 
 // Re-export Category so existing imports from useQueries still work
@@ -2615,6 +2620,8 @@ const SYLLABUS_DATA: SyllabusEntry[] = [
       },
     ],
   },
+  SYLLABUS_MH12 as unknown as SyllabusEntry,
+  SYLLABUS_WB12 as unknown as SyllabusEntry,
 ];
 
 // ── Static Question Papers Data ──────────────────────────────────────────────
@@ -3782,6 +3789,8 @@ const PAPERS_DATA: Array<{
       },
     ],
   },
+  ...PAPERS_MH12,
+  ...PAPERS_WB12,
 ];
 
 // ── Hooks ────────────────────────────────────────────────────────────────────

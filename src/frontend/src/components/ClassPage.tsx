@@ -123,6 +123,28 @@ const categoryMeta: Record<
       "linear-gradient(135deg, oklch(0.26 0.10 178) 0%, oklch(0.34 0.14 190) 60%, oklch(0.28 0.08 165) 100%)",
     badge: "WBBSE",
   },
+  [Category.Maharashtra12]: {
+    label: "Maharashtra Board Class 12 (HSC)",
+    subtitle:
+      "HSC Board exam — Physics, Chemistry, Mathematics, Biology, English, Marathi",
+    icon: <GraduationCap className="w-8 h-8" />,
+    color: "oklch(0.50 0.19 48)",
+    colorLight: "oklch(0.63 0.17 48)",
+    accentBg:
+      "linear-gradient(135deg, oklch(0.26 0.13 48) 0%, oklch(0.34 0.17 60) 60%, oklch(0.28 0.11 35) 100%)",
+    badge: "MH HSC",
+  },
+  [Category.Bengal12]: {
+    label: "West Bengal Board Class 12 (WBCHSE)",
+    subtitle:
+      "Higher Secondary exam — Physics, Chemistry, Maths, Biology, English, Bengali",
+    icon: <GraduationCap className="w-8 h-8" />,
+    color: "oklch(0.45 0.16 178)",
+    colorLight: "oklch(0.57 0.14 178)",
+    accentBg:
+      "linear-gradient(135deg, oklch(0.24 0.10 178) 0%, oklch(0.32 0.14 190) 60%, oklch(0.26 0.08 165) 100%)",
+    badge: "WBCHSE",
+  },
 };
 
 // Tab config

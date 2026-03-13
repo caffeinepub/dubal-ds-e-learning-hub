@@ -146,6 +146,8 @@ const categoryBadgeClass: Record<Category, string> = {
   [Category.SSB]: "badge-class12",
   [Category.Maharashtra10]: "badge-class10",
   [Category.Bengal10]: "badge-class12",
+  [Category.Maharashtra12]: "badge-class10",
+  [Category.Bengal12]: "badge-class12",
 };
 
 const popularTopics = [
@@ -463,6 +465,22 @@ function QABankTab({
       "Life Science",
       "History",
       "Geography",
+      "English",
+      "Bengali",
+    ],
+    [Category.Maharashtra12]: [
+      "Physics",
+      "Chemistry",
+      "Mathematics",
+      "Biology",
+      "English",
+      "Marathi",
+    ],
+    [Category.Bengal12]: [
+      "Physics",
+      "Chemistry",
+      "Mathematics",
+      "Biology",
       "English",
       "Bengali",
     ],

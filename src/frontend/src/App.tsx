@@ -59,7 +59,9 @@ export type Section =
   | "jee"
   | "neet"
   | "maharashtra10"
-  | "bengal10";
+  | "bengal10"
+  | "maharashtra12"
+  | "bengal12";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("home");
@@ -183,6 +185,18 @@ export default function App() {
           {activeSection === "bengal10" && (
             <ClassPage
               category={Category.Bengal10}
+              onNavigate={navigateToSection}
+            />
+          )}
+          {activeSection === "maharashtra12" && (
+            <ClassPage
+              category={Category.Maharashtra12}
+              onNavigate={navigateToSection}
+            />
+          )}
+          {activeSection === "bengal12" && (
+            <ClassPage
+              category={Category.Bengal12}
               onNavigate={navigateToSection}
             />
           )}

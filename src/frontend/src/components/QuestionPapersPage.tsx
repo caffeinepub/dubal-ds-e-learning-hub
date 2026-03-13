@@ -39,6 +39,8 @@ const categoryLabels: Record<Category, string> = {
   [Category.SSB]: "SSB",
   [Category.Maharashtra10]: "Maharashtra Board Class 10",
   [Category.Bengal10]: "West Bengal Board Class 10",
+  [Category.Maharashtra12]: "Maharashtra Board Class 12",
+  [Category.Bengal12]: "West Bengal Board Class 12",
 };
 
 function PaperCardSkeleton() {

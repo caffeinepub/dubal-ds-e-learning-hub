@@ -10,4 +10,6 @@ export enum Category {
   SSB = "SSB",
   Maharashtra10 = "Maharashtra10",
   Bengal10 = "Bengal10",
+  Maharashtra12 = "Maharashtra12",
+  Bengal12 = "Bengal12",
 }
