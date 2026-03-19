@@ -145,6 +145,17 @@ const categoryMeta: Record<
       "linear-gradient(135deg, oklch(0.24 0.10 178) 0%, oklch(0.32 0.14 190) 60%, oklch(0.26 0.08 165) 100%)",
     badge: "WBCHSE",
   },
+  [Category.BengalNEET]: {
+    label: "WB NEET Preparation",
+    subtitle:
+      "NEET for West Bengal — Biology, Physics, Chemistry + WB state counseling",
+    icon: <HeartPulse className="w-8 h-8" />,
+    color: "oklch(0.40 0.17 178)",
+    colorLight: "oklch(0.54 0.15 178)",
+    accentBg:
+      "linear-gradient(135deg, oklch(0.20 0.10 178) 0%, oklch(0.28 0.13 190) 60%, oklch(0.22 0.08 160) 100%)",
+    badge: "WB NEET",
+  },
 };
 
 // Tab config
@@ -316,12 +327,6 @@ export default function ClassPage({ category, onNavigate }: ClassPageProps) {
                 value={tab.value}
                 data-ocid={tab.ocid}
                 className="flex items-center gap-1.5 font-semibold whitespace-nowrap rounded-lg text-sm px-4 py-2 data-[state=active]:text-white flex-shrink-0"
-                style={
-                  {
-                    // Active color via CSS var trick — Tailwind can't do dynamic OKLCH in data-state
-                    // We use inline style on the parent and let Radix handle [data-state=active]
-                  }
-                }
               >
                 {tab.icon}
                 <span className="hidden sm:inline">{tab.label}</span>

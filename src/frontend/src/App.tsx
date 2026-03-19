@@ -1,7 +1,9 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/sonner";
+import { Eye } from "lucide-react";
 import { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
+import { useActor } from "./hooks/useActor";
 import { Category } from "./types";
 
 // Lazy load heavy pages so they only load when visited (fixes blank screen on mobile)
@@ -26,6 +28,7 @@ const CompetitiveExamsPage = lazy(
 const SSBPage = lazy(() => import("./components/SSBPage"));
 const ClassPage = lazy(() => import("./components/ClassPage"));
 const AICreatePage = lazy(() => import("./components/AICreatePage"));
+const WBNeetPage = lazy(() => import("./components/WBNeetPage"));
 
 function PageLoader() {
   return (
@@ -61,7 +64,8 @@ export type Section =
   | "maharashtra10"
   | "bengal10"
   | "maharashtra12"
-  | "bengal12";
+  | "bengal12"
+  | "bengalneet";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("home");
@@ -71,6 +75,29 @@ export default function App() {
   const [smartNotesTopic, setSmartNotesTopic] = useState<string | undefined>(
     undefined,
   );
+  const [visitCount, setVisitCount] = useState<number | null>(null);
+  const actorHook = useActor();
+  const actor = actorHook.actor;
+
+  // Record visit on mount and fetch count
+  useEffect(() => {
+    if (!actor) return;
+    const record = async () => {
+      const a = actor as any;
+      try {
+        const count = await a.recordVisit();
+        setVisitCount(Number(count));
+      } catch {
+        try {
+          const count = await a.getVisitCount();
+          setVisitCount(Number(count));
+        } catch {
+          // ignore
+        }
+      }
+    };
+    record();
+  }, [actor]);
 
   // AI voice welcome greeting — plays once per browser session on first load
   useEffect(() => {
@@ -108,6 +135,33 @@ export default function App() {
         activeSection={activeSection}
         onNavigate={(s) => navigateToSection(s)}
       />
+
+      {/* Visitor Counter Banner */}
+      {visitCount !== null && (
+        <div
+          className="w-full flex items-center justify-center gap-2 py-1.5 text-xs font-semibold"
+          style={{
+            background:
+              "linear-gradient(90deg, oklch(0.96 0.010 258) 0%, oklch(0.98 0.006 256) 50%, oklch(0.96 0.010 258) 100%)",
+            borderBottom: "1px solid oklch(0.88 0.02 258 / 0.5)",
+          }}
+          data-ocid="app.visitor_counter"
+        >
+          <Eye
+            className="w-3.5 h-3.5"
+            style={{ color: "oklch(0.44 0.17 335)" }}
+          />
+          <span style={{ color: "oklch(0.40 0.08 258)" }}>
+            Total Website Visits:
+          </span>
+          <span
+            className="font-bold tabular-nums"
+            style={{ color: "oklch(0.44 0.17 335)" }}
+          >
+            {visitCount.toLocaleString("en-IN")}
+          </span>
+        </div>
+      )}
 
       <main className="flex-1">
         <Suspense fallback={<PageLoader />}>
@@ -199,6 +253,9 @@ export default function App() {
               category={Category.Bengal12}
               onNavigate={navigateToSection}
             />
+          )}
+          {activeSection === "bengalneet" && (
+            <WBNeetPage onNavigate={navigateToSection} />
           )}
         </Suspense>
       </main>

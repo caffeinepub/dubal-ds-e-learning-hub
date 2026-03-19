@@ -148,6 +148,7 @@ const categoryBadgeClass: Record<Category, string> = {
   [Category.Bengal10]: "badge-class12",
   [Category.Maharashtra12]: "badge-class10",
   [Category.Bengal12]: "badge-class12",
+  [Category.BengalNEET]: "badge-neet",
 };
 
 const popularTopics = [
@@ -435,6 +436,7 @@ function QABankTab({
     ],
     [Category.JEE]: ["Physics", "Chemistry", "Mathematics"],
     [Category.NEET]: ["Biology", "Physics", "Chemistry"],
+    [Category.BengalNEET]: ["Biology", "Physics", "Chemistry"],
     [Category.CompetitiveExams]: [
       "GK",
       "GS",

@@ -81,6 +81,9 @@ actor {
   let qaBankMap = Map.empty<Nat, QABankEntry>();
   let glossaryMap = Map.empty<Nat, GlossaryTerm>();
 
+  // Stable visitor counter
+  stable var visitCount : Nat = 0;
+
   let emptySyllabus = {
     category = #Class10;
     subjects = [];
@@ -133,6 +136,16 @@ actor {
       }
     );
     filtered.toArray();
+  };
+
+  // Visitor counter functions
+  public func recordVisit() : async Nat {
+    visitCount += 1;
+    visitCount
+  };
+
+  public query func getVisitCount() : async Nat {
+    visitCount
   };
 
   system func preupgrade() {};

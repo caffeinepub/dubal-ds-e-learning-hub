@@ -49,4 +49,6 @@ export interface backendInterface {
     getSyllabus(category: Category): Promise<SyllabusEntry>;
     searchGlossary(keyword: string): Promise<Array<GlossaryTerm>>;
     searchQABank(keyword: string): Promise<Array<QABankEntry>>;
+    recordVisit(): Promise<bigint>;
+    getVisitCount(): Promise<bigint>;
 }

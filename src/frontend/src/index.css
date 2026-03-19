@@ -1,0 +1,709 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Fonts ───────────────────────────────────────────────── */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque[opsz,wdth,wght].woff2")
+    format("woff2");
+  font-display: swap;
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans[wght].woff2") format("woff2");
+  font-display: swap;
+  font-weight: 200 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces[opsz,SOFT,WONK,wght].woff2") format("woff2");
+  font-display: swap;
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* ─── Dubal DS E-learning Hub: Rich Deep Indigo + Saffron — high-contrast ─── */
+    --background: 0.97 0.008 255;
+    --foreground: 0.12 0.04 258;
+
+    --card: 0.99 0.004 255;
+    --card-foreground: 0.12 0.04 258;
+
+    --popover: 1 0 0;
+    --popover-foreground: 0.12 0.04 258;
+
+    /* Deep indigo primary */
+    --primary: 0.35 0.16 264;
+    --primary-foreground: 0.98 0 0;
+
+    /* Lighter indigo secondary */
+    --secondary: 0.9 0.05 258;
+    --secondary-foreground: 0.22 0.12 264;
+
+    --muted: 0.92 0.02 258;
+    --muted-foreground: 0.42 0.06 258;
+
+    /* Saffron accent */
+    --accent: 0.72 0.19 52;
+    --accent-foreground: 0.12 0.04 52;
+
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    --border: 0.84 0.03 258;
+    --input: 0.84 0.03 258;
+    --ring: 0.35 0.16 264;
+
+    /* Category colors */
+    --class10: 0.5 0.18 142;
+    --class12: 0.42 0.2 264;
+    --jee: 0.52 0.22 30;
+    --neet: 0.46 0.2 335;
+
+    --chart-1: 0.5 0.18 142;
+    --chart-2: 0.42 0.2 264;
+    --chart-3: 0.52 0.22 30;
+    --chart-4: 0.46 0.2 335;
+    --chart-5: 0.68 0.2 52;
+
+    --sidebar: 0.16 0.08 264;
+    --sidebar-foreground: 0.94 0.02 258;
+    --sidebar-primary: 0.7 0.2 52;
+    --sidebar-primary-foreground: 0.12 0.04 52;
+    --sidebar-accent: 0.25 0.1 264;
+    --sidebar-accent-foreground: 0.94 0.02 258;
+    --sidebar-border: 0.28 0.08 264;
+    --sidebar-ring: 0.5 0.16 264;
+  }
+
+  .dark {
+    --background: 0.14 0.035 264;
+    --foreground: 0.93 0.015 258;
+
+    --card: 0.19 0.045 264;
+    --card-foreground: 0.93 0.015 258;
+
+    --popover: 0.22 0.05 264;
+    --popover-foreground: 0.93 0.015 258;
+
+    --primary: 0.65 0.16 264;
+    --primary-foreground: 0.12 0.03 264;
+
+    --secondary: 0.25 0.06 264;
+    --secondary-foreground: 0.88 0.02 258;
+
+    --muted: 0.24 0.05 264;
+    --muted-foreground: 0.65 0.04 258;
+
+    --accent: 0.78 0.18 52;
+    --accent-foreground: 0.12 0.04 52;
+
+    --destructive: 0.704 0.191 22.216;
+    --destructive-foreground: 0.12 0 0;
+
+    --border: 0.28 0.06 264;
+    --input: 0.28 0.06 264;
+    --ring: 0.65 0.16 264;
+
+    --sidebar: 0.12 0.035 264;
+    --sidebar-foreground: 0.88 0.02 258;
+    --sidebar-primary: 0.75 0.18 52;
+    --sidebar-primary-foreground: 0.12 0.04 52;
+    --sidebar-accent: 0.22 0.06 264;
+    --sidebar-accent-foreground: 0.88 0.02 258;
+    --sidebar-border: 0.25 0.055 264;
+    --sidebar-ring: 0.55 0.14 264;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Bricolage Grotesque", sans-serif;
+  }
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-border rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/40;
+}
+
+/* ─── Category badge colors ─────────────────────────────── */
+.badge-class10 {
+  background-color: oklch(0.86 0.08 142);
+  color: oklch(0.22 0.14 142);
+  border-color: oklch(0.72 0.12 142);
+}
+.badge-class12 {
+  background-color: oklch(0.84 0.09 264);
+  color: oklch(0.22 0.14 264);
+  border-color: oklch(0.7 0.12 264);
+}
+.badge-jee {
+  background-color: oklch(0.88 0.09 30);
+  color: oklch(0.25 0.16 30);
+  border-color: oklch(0.74 0.13 30);
+}
+.badge-neet {
+  background-color: oklch(0.86 0.09 335);
+  color: oklch(0.25 0.15 335);
+  border-color: oklch(0.72 0.12 335);
+}
+
+/* ─── Hero gradient overlay ─────────────────────────────── */
+.hero-overlay {
+  background: linear-gradient(
+    135deg,
+    oklch(0.22 0.1 264 / 0.88) 0%,
+    oklch(0.28 0.08 264 / 0.75) 50%,
+    oklch(0.2 0.06 280 / 0.85) 100%
+  );
+}
+
+/* ─── Glass card ────────────────────────────────────────── */
+.glass-card {
+  background: oklch(1 0 0 / 0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid oklch(1 0 0 / 0.15);
+}
+
+/* ─── Category card hovers ──────────────────────────────── */
+.cat-card-class10:hover {
+  box-shadow: 0 8px 32px oklch(0.55 0.16 142 / 0.25);
+}
+.cat-card-class12:hover {
+  box-shadow: 0 8px 32px oklch(0.48 0.18 264 / 0.25);
+}
+.cat-card-jee:hover {
+  box-shadow: 0 8px 32px oklch(0.58 0.19 30 / 0.25);
+}
+.cat-card-neet:hover {
+  box-shadow: 0 8px 32px oklch(0.52 0.17 335 / 0.25);
+}
+
+/* ─── Accordion custom ──────────────────────────────────── */
+.subject-accordion [data-state="open"] > div {
+  @apply bg-secondary/50;
+}
+
+/* ─── Print / Animations ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Navbar animations ─────────────────────────────────── */
+@keyframes logo-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 oklch(0.38 0.14 264 / 0.4), 0 0 0 0
+      oklch(0.75 0.18 52 / 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 8px oklch(0.38 0.14 264 / 0), 0 0 0 14px
+      oklch(0.75 0.18 52 / 0);
+  }
+}
+.logo-pulse {
+  animation: logo-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.nav-item-enter {
+  animation: fade-in-up 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes shimmer-bar {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+.shimmer-accent-bar {
+  background: linear-gradient(
+    90deg,
+    oklch(0.38 0.14 264) 0%,
+    oklch(0.75 0.18 52) 25%,
+    oklch(0.52 0.17 335) 50%,
+    oklch(0.58 0.19 30) 75%,
+    oklch(0.38 0.14 264) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer-bar 3s linear infinite;
+}
+
+@keyframes logo-spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* active-nav-glow removed — box-shadow is now applied inline per-item using item.color */
+
+@keyframes nav-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.navbar-entrance {
+  animation: nav-entrance 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ─── Profile Avatar Spark Animations ───────────────────── */
+
+/* Avatar gentle zoom/breathe pulse */
+@keyframes avatarZoom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+.avatar-zoom {
+  animation: avatarZoom 3s ease-in-out infinite;
+}
+
+/* Rotating conic-gradient ring around avatar */
+@keyframes ringRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.avatar-ring {
+  animation: ringRotate 2.8s linear infinite;
+}
+
+/* Floating spark particles upward and fade */
+@keyframes sparkFloat {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  60% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--sx, 0px), var(--sy, -28px)) scale(0.3);
+  }
+}
+
+/* Blinking star sparks */
+@keyframes sparkBlink {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.3) rotate(90deg);
+  }
+  60% {
+    opacity: 0.6;
+    transform: scale(0.8) rotate(180deg);
+  }
+}
+
+/* Random orbit drift */
+@keyframes sparkOrbit {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(var(--ox, 6px), var(--oy, -8px)) scale(1);
+  }
+  80% {
+    opacity: 0.5;
+    transform: translate(var(--ex, 14px), var(--ey, -18px)) scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--fx, 20px), var(--fy, -26px)) scale(0);
+  }
+}
+
+/* Spark dot classes */
+.spark-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkOrbit 2s ease-out infinite;
+}
+.spark-particle:nth-child(1) {
+  width: 6px;
+  height: 6px;
+  background: oklch(0.82 0.22 52);
+  top: -4px;
+  left: 50%;
+  --ox: -8px;
+  --oy: -14px;
+  --ex: -14px;
+  --ey: -22px;
+  --fx: -18px;
+  --fy: -30px;
+  animation-delay: 0s;
+  animation-duration: 1.8s;
+}
+.spark-particle:nth-child(2) {
+  width: 5px;
+  height: 5px;
+  background: oklch(0.7 0.24 335);
+  top: 20%;
+  right: -6px;
+  --ox: 12px;
+  --oy: -10px;
+  --ex: 18px;
+  --ey: -18px;
+  --fx: 22px;
+  --fy: -26px;
+  animation-delay: 0.5s;
+  animation-duration: 2.2s;
+}
+.spark-particle:nth-child(3) {
+  width: 4px;
+  height: 4px;
+  background: oklch(0.72 0.2 142);
+  bottom: 10%;
+  right: -2px;
+  --ox: 10px;
+  --oy: 8px;
+  --ex: 16px;
+  --ey: 14px;
+  --fx: 20px;
+  --fy: 20px;
+  animation-delay: 1.2s;
+  animation-duration: 2s;
+}
+.spark-particle:nth-child(4) {
+  width: 5px;
+  height: 5px;
+  background: oklch(0.68 0.22 264);
+  bottom: -4px;
+  left: 30%;
+  --ox: -6px;
+  --oy: 12px;
+  --ex: -10px;
+  --ey: 20px;
+  --fx: -14px;
+  --fy: 28px;
+  animation-delay: 1.8s;
+  animation-duration: 1.9s;
+}
+.spark-particle:nth-child(5) {
+  width: 7px;
+  height: 7px;
+  background: oklch(0.78 0.2 200);
+  top: 40%;
+  left: -6px;
+  --ox: -14px;
+  --oy: -6px;
+  --ex: -20px;
+  --ey: -12px;
+  --fx: -26px;
+  --fy: -18px;
+  animation-delay: 2.5s;
+  animation-duration: 2.1s;
+}
+
+/* Star spark shapes (cross/plus) */
+.spark-star {
+  position: absolute;
+  pointer-events: none;
+  animation: sparkBlink 2.4s ease-in-out infinite;
+}
+.spark-star::before,
+.spark-star::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+  border-radius: 1px;
+}
+.spark-star::before {
+  width: 8px;
+  height: 2px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+.spark-star::after {
+  width: 2px;
+  height: 8px;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.spark-star:nth-of-type(1) {
+  width: 8px;
+  height: 8px;
+  color: oklch(0.82 0.22 52);
+  top: -8px;
+  right: 4px;
+  animation-delay: 0.3s;
+  animation-duration: 2s;
+}
+.spark-star:nth-of-type(2) {
+  width: 6px;
+  height: 6px;
+  color: oklch(0.7 0.24 335);
+  top: 4px;
+  right: -10px;
+  animation-delay: 1.4s;
+  animation-duration: 2.6s;
+}
+.spark-star:nth-of-type(3) {
+  width: 7px;
+  height: 7px;
+  color: oklch(0.72 0.2 142);
+  bottom: 2px;
+  left: -8px;
+  animation-delay: 0.8s;
+  animation-duration: 2.2s;
+}
+
+/* ─── Hero background shimmer ─────────────────────────────── */
+@keyframes hero-shimmer {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1) translate(0, 0);
+  }
+  33% {
+    opacity: 0.65;
+    transform: scale(1.08) translate(10px, -8px);
+  }
+  66% {
+    opacity: 0.5;
+    transform: scale(0.95) translate(-8px, 6px);
+  }
+}
+@keyframes hero-shimmer-2 {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1) translate(0, 0);
+  }
+  40% {
+    opacity: 0.55;
+    transform: scale(1.1) translate(-12px, 10px);
+  }
+  70% {
+    opacity: 0.4;
+    transform: scale(0.92) translate(6px, -5px);
+  }
+}
+@keyframes hero-shimmer-3 {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(1.05) translate(0, 0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.9) translate(15px, 12px);
+  }
+}
+.hero-blob-1 {
+  animation: hero-shimmer 7s ease-in-out infinite;
+}
+.hero-blob-2 {
+  animation: hero-shimmer-2 9s ease-in-out infinite;
+}
+.hero-blob-3 {
+  animation: hero-shimmer-3 11s ease-in-out infinite;
+}
+.hero-blob-4 {
+  animation: hero-shimmer 6s ease-in-out infinite reverse;
+}
+
+/* ─── Counter-up animation ───────────────────────────────── */
+@keyframes count-up-fade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.stat-animate {
+  animation: count-up-fade 0.6s ease-out forwards;
+}
+
+/* ─── Marquee infinite scroll ────────────────────────────── */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 22s linear infinite;
+}
+.marquee-container {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ─── CTA banner gradient ────────────────────────────────── */
+.cta-banner {
+  background: linear-gradient(
+    135deg,
+    oklch(0.15 0.06 264) 0%,
+    oklch(0.22 0.1 280) 40%,
+    oklch(0.2 0.08 300) 70%,
+    oklch(0.18 0.07 264) 100%
+  );
+}
+
+/* ─── Ripple effect on CTA buttons ──────────────────────── */
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+}
+.ripple-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, oklch(1 0 0 / 0.3) 0%, transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.5s;
+  border-radius: inherit;
+}
+.ripple-btn:active::after {
+  transform: scale(2.5);
+  opacity: 1;
+  transition: 0s;
+}
+
+/* ─── Feature card glow ──────────────────────────────────── */
+@keyframes feature-glow-pulse {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}
+.feature-icon-glow::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity 0.3s;
+}
+.group:hover .feature-icon-glow::before {
+  opacity: 1;
+}
+
+/* ─── Badge badge animate ─────────────────────────────────── */
+@keyframes badge-shimmer {
+  0%,
+  100% {
+    background-position: -200% center;
+  }
+  50% {
+    background-position: 200% center;
+  }
+}
+.badge-animated {
+  background: linear-gradient(
+    90deg,
+    oklch(0.75 0.18 52 / 0.15),
+    oklch(0.75 0.18 52 / 0.3),
+    oklch(0.75 0.18 52 / 0.15)
+  );
+  background-size: 200% auto;
+  animation: badge-shimmer 3s ease-in-out infinite;
+}

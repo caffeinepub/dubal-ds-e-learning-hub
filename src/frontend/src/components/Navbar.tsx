@@ -139,6 +139,17 @@ const navItems: {
     shadowColor: "oklch(0.44 0.17 335 / 0.40)",
   },
   {
+    id: "bengalneet" as Section,
+    label: "WB NEET",
+    mobileLabel: "WB NEET",
+    icon: <HeartPulse className="w-3.5 h-3.5" />,
+    mobileIcon: <HeartPulse className="w-5 h-5" />,
+    ocid: "nav.bengalneet.link",
+    color: "oklch(0.40 0.17 178)",
+    colorLight: "oklch(0.54 0.15 178)",
+    shadowColor: "oklch(0.40 0.17 178 / 0.40)",
+  },
+  {
     id: "syllabus",
     label: "Syllabus",
     mobileLabel: "Syllabus",
@@ -329,7 +340,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
   const handleInstall = async () => {
     if (!deferredPrompt.current) {
       alert(
-        "To install this app:\n\n📱 Android (Chrome): Tap the 3-dot menu → 'Add to Home screen'\n🍎 iPhone (Safari): Tap Share → 'Add to Home Screen'\n💻 Desktop (Chrome): Click the install icon in the address bar",
+        "To install this app:\n\n\uD83D\uDCF1 Android (Chrome): Tap the 3-dot menu \u2192 'Add to Home screen'\n\uD83C\uDF4E iPhone (Safari): Tap Share \u2192 'Add to Home Screen'\n\uD83D\uDCBB Desktop (Chrome): Click the install icon in the address bar",
       );
       return;
     }
